@@ -11,3 +11,4 @@ encoding.egg-info/
 *.o
 *.so
 *.ninja*
+encoding/models/resnet50-19c8e357.pth

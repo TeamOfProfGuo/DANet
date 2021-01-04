@@ -1,0 +1,49 @@
+
+model: deeplab
+backbone: resnet50
+dataset:  pascal_voc
+
+workers: 4         #'dataloader threads'
+base-size: 520     # 'base image size'
+crop-size: 480     #'crop image size'
+train-split: train #'dataset train split (default: train)'
+
+# training hyper params
+aux: False         #'Auxilary Loss'
+aux-weight: 0.2    #'Auxilary loss weight (default: 0.2)
+se-loss: False     #'Semantic Encoding Loss SE-loss'
+se-weight: 0.2     #'SE-loss weight (default: 0.2)'
+epochs: 100        #'number of epochs to train (default: auto)'
+start_epoch: 0     #'start epochs (default:0)'
+batch-size: 12      #'input batch size for training (default: auto)'
+test-batch-size: 12  #'input batch size for testing (default: same as batch size)'
+
+# optimizer params
+lr: 0.01           # learning rate (default: auto)
+lr-scheduler: poly #'learning rate scheduler (default: poly)'
+momentum: 0.9      #'momentum (default: 0.9)'
+weight-decay: 1e-4 # w-decay (default: 1e-4)'
+
+# cuda, seed and logging
+use-cuda: True  #'disables CUDA training'
+seed: 1        #'random seed (default: 1)'
+
+# checking point
+resume: None       #'put the path to resuming file if needed'
+checkname: default #'set the checkpoint name'
+model-zoo: None,   #'evaluating on model zoo model'
+# finetuning pre-trained models
+ft: False          #'finetuning on a different dataset'
+
+# evaluation option
+eval: False      #'evaluating mIoU'
+test-val: False  #'generate masks on val set'
+no-val: False    #'skip validation during training'
+
+# test option
+test-folder: None      #'path to test image folder'
+
+# multi grid dilation option
+multi-grid: False    #"use multi grid dilation policy"
+multi-dilation: None #"multi grid dilation list"
+os: 8                #'output stride default:8'

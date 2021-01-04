@@ -100,8 +100,7 @@ def batch_pix_accuracy(output, target):
 
     pixel_labeled = np.sum(target > 0)
     pixel_correct = np.sum((predict == target)*(target > 0))
-    assert pixel_correct <= pixel_labeled, \
-        "Correct area should be smaller than Labeled"
+    assert pixel_correct <= pixel_labeled,  "Correct area should be smaller than Labeled"
     return pixel_correct, pixel_labeled
 
 

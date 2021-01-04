@@ -9,9 +9,10 @@
 import math
 import torch
 import torch.nn as nn
+import os
 
-from ...nn import SplAtConv2d, DropBlock2D, GlobalAvgPool2d, RFConv2d
-from ..model_store import get_model_file
+from encoding.nn import SplAtConv2d, DropBlock2D, GlobalAvgPool2d, RFConv2d
+from encoding.models.model_store import get_model_file
 
 __all__ = ['ResNet', 'Bottleneck',
            'resnet50', 'resnet101', 'resnet152']
@@ -142,7 +143,7 @@ class ResNet(nn.Module):
     # pylint: disable=unused-variable
     def __init__(self, block, layers, radix=1, groups=1, bottleneck_width=64,
                  num_classes=1000, dilated=False, dilation=1,
-                 deep_stem=True, stem_width=64, avg_down=False,
+                 deep_stem=False, stem_width=64, avg_down=False,
                  rectified_conv=False, rectify_avg=False,
                  avd=False, avd_first=False,
                  final_drop=0.0, dropblock_prob=0,
@@ -338,7 +339,7 @@ class ResNet(nn.Module):
 
         return x
 
-def resnet50(pretrained=False, root='~/.encoding/models', **kwargs):
+def resnet50(pretrained=False, root='./encoding/models', **kwargs):
     """Constructs a ResNet-50 model.
 
     Args:
@@ -346,8 +347,13 @@ def resnet50(pretrained=False, root='~/.encoding/models', **kwargs):
     """
     model = ResNet(Bottleneck, [3, 4, 6, 3], **kwargs)
     if pretrained:
-        model.load_state_dict(torch.load(
-            get_model_file('resnet50', root=root)), strict=False)
+        file_path = os.path.abspath(os.path.join(root, 'resnet50-19c8e357.pth'))
+        if os.path.exists(file_path):
+            model.load_state_dict(torch.load(file_path), strict=False)
+            print('===========finished loading pretrained params for resNet50=============')
+        else:
+            print('=========need to download pretrained model for resNet====================')
+            model.load_state_dict(torch.load(get_model_file('resnet50', root=root)), strict=False)
     return model
 
 

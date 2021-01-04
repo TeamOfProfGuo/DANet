@@ -16,7 +16,7 @@ from torch.nn.parallel.scatter_gather import scatter
 
 from ...utils import batch_pix_accuracy, batch_intersection_union
 
-from ..backbone import *
+from encoding.models.backbone import *
 
 up_kwargs = {'mode': 'bilinear', 'align_corners': True}
 

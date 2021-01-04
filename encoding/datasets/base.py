@@ -13,9 +13,7 @@ import torch.utils.data as data
 __all__ = ['BaseDataset', 'test_batchify_fn']
 
 class BaseDataset(data.Dataset):
-    def __init__(self, root, split, mode=None, transform=None, 
-                 target_transform=None, base_size=520, crop_size=480):
-        self.root = root
+    def __init__(self, split, mode=None, transform=None, target_transform=None, base_size=520, crop_size=480):
         self.transform = transform
         self.target_transform = target_transform
         self.split = split
@@ -23,8 +21,7 @@ class BaseDataset(data.Dataset):
         self.base_size = base_size
         self.crop_size = crop_size
         if self.mode == 'train':
-            print('BaseDataset: base_size {}, crop_size {}'. \
-                format(base_size, crop_size))
+            print('BaseDataset: base_size {}, crop_size {}'.format(base_size, crop_size))
 
     def __getitem__(self, index):
         raise NotImplemented
@@ -62,11 +59,13 @@ class BaseDataset(data.Dataset):
         return img, self._mask_transform(mask)
 
     def _sync_transform(self, img, mask):
+        """ img and mask transform synchronously"""
         # random mirror
         if random.random() < 0.5:
             img = img.transpose(Image.FLIP_LEFT_RIGHT)
             mask = mask.transpose(Image.FLIP_LEFT_RIGHT)
         crop_size = self.crop_size
+
         # random scale (short edge)
         w, h = img.size
         long_size = random.randint(int(self.base_size*0.5), int(self.base_size*2.0))
@@ -80,12 +79,14 @@ class BaseDataset(data.Dataset):
             short_size = oh
         img = img.resize((ow, oh), Image.BILINEAR)
         mask = mask.resize((ow, oh), Image.NEAREST)
+
         # pad crop
         if short_size < crop_size:
             padh = crop_size - oh if oh < crop_size else 0
             padw = crop_size - ow if ow < crop_size else 0
             img = ImageOps.expand(img, border=(0, 0, padw, padh), fill=0)
             mask = ImageOps.expand(mask, border=(0, 0, padw, padh), fill=0)
+
         # random crop crop_size
         w, h = img.size
         x1 = random.randint(0, w - crop_size)
@@ -93,7 +94,7 @@ class BaseDataset(data.Dataset):
         img = img.crop((x1, y1, x1+crop_size, y1+crop_size))
         mask = mask.crop((x1, y1, x1+crop_size, y1+crop_size))
         # final transform
-        return img, self._mask_transform(mask)
+        return img, self._mask_transform(mask) # convert mask to tensor
 
     def _mask_transform(self, mask):
         return torch.from_numpy(np.array(mask)).long()

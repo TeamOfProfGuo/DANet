@@ -16,7 +16,7 @@ __all__ = ['resnest50', 'resnest101', 'resnest200', 'resnest269']
 _url_format = 'https://hangzh.s3.amazonaws.com/encoding/models/{}-{}.pth'
 
 
-def resnest50(pretrained=False, root='~/.encoding/models', **kwargs):
+def resnest50(pretrained=False, root='~/Documents/semantic_seg/models/DANet/encoding/models', **kwargs):
     model = ResNet(Bottleneck, [3, 4, 6, 3],
                    radix=2, groups=1, bottleneck_width=64,
                    deep_stem=True, stem_width=32, avg_down=True,
