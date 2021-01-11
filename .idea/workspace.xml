@@ -24,7 +24,56 @@
     <select />
   </component>
   <component name="ChangeListManager">
+<<<<<<< Updated upstream
     <list default="true" id="6cd52ca4-a295-46f6-99e8-bf9638bd9273" name="Default Changelist" comment="" />
+=======
+    <list default="true" id="6cd52ca4-a295-46f6-99e8-bf9638bd9273" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/experiments/test_ref.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/encoding/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/encoding/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/encoding/datasets/base.py" beforeDir="false" afterPath="$PROJECT_DIR$/encoding/datasets/base.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/encoding/datasets/cityscapes.py" beforeDir="false" afterPath="$PROJECT_DIR$/encoding/datasets/cityscapes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/encoding/datasets/cityscapes_v0.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/encoding/datasets/pascal_voc.py" beforeDir="false" afterPath="$PROJECT_DIR$/encoding/datasets/pascal_voc.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/encoding/functions/customize.py" beforeDir="false" afterPath="$PROJECT_DIR$/encoding/functions/customize.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/encoding/functions/dist_syncbn.py" beforeDir="false" afterPath="$PROJECT_DIR$/encoding/functions/dist_syncbn.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/encoding/functions/encoding.py" beforeDir="false" afterPath="$PROJECT_DIR$/encoding/functions/encoding.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/encoding/functions/rectify.py" beforeDir="false" afterPath="$PROJECT_DIR$/encoding/functions/rectify.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/encoding/functions/syncbn.py" beforeDir="false" afterPath="$PROJECT_DIR$/encoding/functions/syncbn.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/encoding/lib/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/encoding/lib/cpu/rectify_cpu.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/encoding/lib/cpu/rectify_cpu.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/encoding/lib/cpu/roi_align_cpu.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/encoding/lib/cpu/roi_align_cpu.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/encoding/lib/cpu/setup.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/encoding/lib/gpu/activation_kernel.cu" beforeDir="false" afterPath="$PROJECT_DIR$/encoding/lib/gpu/activation_kernel.cu" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/encoding/lib/gpu/device_tensor.h" beforeDir="false" afterPath="$PROJECT_DIR$/encoding/lib/gpu/device_tensor.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/encoding/lib/gpu/encoding_kernel.cu" beforeDir="false" afterPath="$PROJECT_DIR$/encoding/lib/gpu/encoding_kernel.cu" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/encoding/lib/gpu/lib_ssd.cu" beforeDir="false" afterPath="$PROJECT_DIR$/encoding/lib/gpu/lib_ssd.cu" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/encoding/lib/gpu/nms_kernel.cu" beforeDir="false" afterPath="$PROJECT_DIR$/encoding/lib/gpu/nms_kernel.cu" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/encoding/lib/gpu/rectify_cuda.cu" beforeDir="false" afterPath="$PROJECT_DIR$/encoding/lib/gpu/rectify_cuda.cu" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/encoding/lib/gpu/roi_align_kernel.cu" beforeDir="false" afterPath="$PROJECT_DIR$/encoding/lib/gpu/roi_align_kernel.cu" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/encoding/lib/gpu/setup.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/encoding/lib/gpu/syncbn_kernel.cu" beforeDir="false" afterPath="$PROJECT_DIR$/encoding/lib/gpu/syncbn_kernel.cu" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/encoding/models/backbone/resnest.py" beforeDir="false" afterPath="$PROJECT_DIR$/encoding/models/backbone/resnest.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/encoding/models/backbone/resnet.py" beforeDir="false" afterPath="$PROJECT_DIR$/encoding/models/backbone/resnet.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/encoding/models/model_store.py" beforeDir="false" afterPath="$PROJECT_DIR$/encoding/models/model_store.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/encoding/models/sseg/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/encoding/models/sseg/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/encoding/models/sseg/base.py" beforeDir="false" afterPath="$PROJECT_DIR$/encoding/models/sseg/base.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/encoding/models/sseg/danet.py" beforeDir="false" afterPath="$PROJECT_DIR$/encoding/models/sseg/danet.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/encoding/models/sseg/deeplab.py" beforeDir="false" afterPath="$PROJECT_DIR$/encoding/models/sseg/deeplab.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/encoding/models/sseg/dran.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/encoding/nn/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/encoding/nn/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/encoding/nn/da_att.py" beforeDir="false" afterPath="$PROJECT_DIR$/encoding/nn/da_att.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/encoding/nn/dran_att.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/encoding/utils/files.py" beforeDir="false" afterPath="$PROJECT_DIR$/encoding/utils/files.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/encoding/utils/metrics.py" beforeDir="false" afterPath="$PROJECT_DIR$/encoding/utils/metrics.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/train.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/train_tp.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/train_tp.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/deeplab_resnet50/config.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/results/deeplab_resnet50/config.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/torch_encoding.egg-info/PKG-INFO" beforeDir="false" afterPath="$PROJECT_DIR$/torch_encoding.egg-info/PKG-INFO" afterDir="false" />
+    </list>
+>>>>>>> Stashed changes
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -70,7 +119,10 @@
         </entry>
       </map>
     </option>
+<<<<<<< Updated upstream
     <option name="oldMeFiltersMigrated" value="true" />
+=======
+>>>>>>> Stashed changes
   </component>
   <component name="WindowStateProjectService">
     <state x="461" y="365" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1609838365690">

@@ -60,11 +60,10 @@ class Trainer():
         # model
         model = get_segmentation_model(args.model, dataset=args.dataset,
                                        backbone=args.backbone, aux=args.aux,
-                                       se_loss=args.se_loss, norm_layer=SyncBatchNorm,
+                                       se_loss=args.se_loss, #norm_layer=SyncBatchNorm,
                                        base_size=args.base_size, crop_size=args.crop_size,
-                                       multi_grid=args.multi_grid,
-                                       multi_dilation=args.multi_dilation,
-                                       os=args.os)
+                                       # multi_grid=args.multi_grid, multi_dilation=args.multi_dilation, os=args.os
+                                       )
         print(model)
         # optimizer using different LR
         params_list = [{'params': model.pretrained.parameters(), 'lr': args.lr}, ]
@@ -88,7 +87,7 @@ class Trainer():
             self.model = DataParallelModel(self.model).cuda()
             self.criterion = DataParallelCriterion(self.criterion).cuda()
         # resuming checkpoint
-        if args.resume is not None:
+        if args.resume is not None and args.resume != 'None':
             if not os.path.isfile(args.resume):
                 raise RuntimeError("=> no checkpoint found at '{}'".format(args.resume))
             checkpoint = torch.load(args.resume)
@@ -117,14 +116,14 @@ class Trainer():
             self.scheduler(self.optimizer, i, epoch, self.best_pred)
             self.optimizer.zero_grad()
             outputs = self.model(image)
-            loss = self.criterion(outputs, target)
+            loss = self.criterion(*outputs, target)
             loss.backward()
             self.optimizer.step()
 
             train_loss += loss.item()
-            if i % 500 == 0:
-                print('epoch {}, step {}, loss {}'.format(epoch + 1, i + 1, train_loss / 500))
-                self.writer.add_scalar('train_loss', train_loss / 500, epoch * len(self.trainloader) + i)
+            if (i+1) % 50 == 0:
+                print('epoch {}, step {}, loss {}'.format(epoch + 1, i + 1, train_loss / 50))
+                self.writer.add_scalar('train_loss', train_loss / 50, epoch * len(self.trainloader) + i)
                 train_loss = 0.0
 
     def train_n_evaluate(self):
@@ -157,7 +156,7 @@ class Trainer():
         # Fast test during the training
         def eval_batch(model, image, target):
             outputs = model(image)
-            outputs = gather(outputs, 0, dim=0)  # check this line for parallel computing
+            # outputs = gather(outputs, 0, dim=0)  # check this line for parallel computing
             pred = outputs[0]
             loss = self.criterion(pred, target)
             target = target.cuda()
@@ -167,7 +166,7 @@ class Trainer():
             return correct, labeled, inter, union, loss
 
         self.model.eval()
-        total_inter, total_union, total_correct, total_label, total_loss = 0, 0, 0, 0
+        total_inter, total_union, total_correct, total_label, total_loss = 0, 0, 0, 0, 0
         for i, (image, target) in enumerate(self.valloader):
             with torch.no_grad():
                 correct, labeled, inter, union, loss = eval_batch(self.model, image, target)
@@ -196,9 +195,12 @@ if __name__ == "__main__":
     # configuration
     args = Dict(yaml.safe_load(open(config.config_path)))
     args.cuda = (args.use_cuda and torch.cuda.is_available())
+    args.resume = None if args.resume=='None' else args.resume
     torch.manual_seed(args.seed)
 
+
     trainer = Trainer(args)
+    # import pdb; pdb.set_trace()
     print('Starting Epoch:', trainer.args.start_epoch)
     print('Total Epoches:', trainer.args.epochs)
     trainer.train_n_evaluate()

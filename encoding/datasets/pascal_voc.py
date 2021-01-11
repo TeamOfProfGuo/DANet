@@ -5,7 +5,7 @@ from PIL import Image, ImageOps, ImageFilter
 from tqdm import tqdm
 
 import torch
-from encoding.datasets.base import BaseDataset
+from .base import BaseDataset
 
 class VOCSegmentation(BaseDataset):
     CLASSES = [
@@ -15,9 +15,13 @@ class VOCSegmentation(BaseDataset):
         'tv/monitor', 'ambigious'
     ]
     NUM_CLASS = 21
+    #BASE_DIR = 'VOCdevkit/VOC2012'
     BASE_DIR = '../dataset/VOCdevkit/VOC2012'
-    def __init__(self, split='train', mode=None, transform=None, target_transform=None, **kwargs):
-        super(VOCSegmentation, self).__init__(split, mode, transform, target_transform, **kwargs)
+    def __init__(self, root=os.path.expanduser('~/.encoding/data'), split='train',
+                 mode=None, transform=None, target_transform=None, **kwargs):
+        super(VOCSegmentation, self).__init__(root, split, mode, transform,
+                                              target_transform, **kwargs)
+        #_voc_root = os.path.join(self.root, self.BASE_DIR)
         _voc_root = os.path.abspath(self.BASE_DIR)
         _mask_dir = os.path.join(_voc_root, 'SegmentationClass')
         _image_dir = os.path.join(_voc_root, 'JPEGImages')
@@ -53,7 +57,6 @@ class VOCSegmentation(BaseDataset):
                 img = self.transform(img)
             return img, os.path.basename(self.images[index])
         target = Image.open(self.masks[index])
-
         # synchrosized transform
         if self.mode == 'train':
             img, target = self._sync_transform( img, target)
@@ -61,7 +64,7 @@ class VOCSegmentation(BaseDataset):
             img, target = self._val_sync_transform( img, target)
         else:
             assert self.mode == 'testval'
-            mask = self._mask_transform(target)
+            mask = self._mask_transform(mask)
         # general resize, normalize and toTensor
         if self.transform is not None:
             img = self.transform(img)
@@ -70,7 +73,6 @@ class VOCSegmentation(BaseDataset):
         return img, target
 
     def _mask_transform(self, mask):
-        """pascal_voc has different _mask_transform"""
         target = np.array(mask).astype('int32')
         target[target == 255] = -1
         return torch.from_numpy(target).long()

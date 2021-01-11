@@ -15,3 +15,7 @@ encoding/models/resnet50-19c8e357.pth
 results/deeplab_resnet50/events.out.tfevents.1610087949.agpu3
 runs/pascal_voc/deeplab/resnet50/default/checkpoint.pth.tar
 runs/pascal_voc/deeplab/resnet50/default/model_best.pth.tar
+*.pth
+*.pth
+*.pth
+encoding0/models/resnet50-19c8e357.pth

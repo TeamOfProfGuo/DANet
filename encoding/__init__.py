@@ -9,9 +9,5 @@
 ##+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 """An optimized PyTorch package with CUDA backend."""
-# from .version import __version__
-from . import nn, functions
-from . import parallel, utils
-from . import models
-from . import datasets
-from . import transforms
+from .version import __version__
+from . import nn, functions, parallel, utils, models, datasets, transforms
