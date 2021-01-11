@@ -30,7 +30,7 @@ class Options():
                             help='model name (default: encnet)')
         parser.add_argument('--backbone', type=str, default='resnet50',
                             help='backbone name (default: resnet50)')
-        parser.add_argument('--dataset', type=str, default='ade20k',
+        parser.add_argument('--dataset', type=str, default='pascal12',
                             help='dataset name (default: pascal12)')
         parser.add_argument('--workers', type=int, default=16,
                             metavar='N', help='dataloader threads')
