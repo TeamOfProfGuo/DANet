@@ -1,0 +1,2934 @@
+0it [00:00, ?it/s]2it [00:00, 16.03it/s]6it [00:00, 18.78it/s]10it [00:00, 21.50it/s]15it [00:00, 25.28it/s]20it [00:00, 29.13it/s]24it [00:00, 30.44it/s]28it [00:00, 31.78it/s]34it [00:00, 36.42it/s]40it [00:01, 39.96it/s]45it [00:01, 39.65it/s]50it [00:01, 39.09it/s]55it [00:01, 38.58it/s]60it [00:01, 38.93it/s]66it [00:01, 43.46it/s]71it [00:01, 44.69it/s]77it [00:01, 46.97it/s]83it [00:01, 50.08it/s]89it [00:02, 50.12it/s]95it [00:02, 49.63it/s]101it [00:02, 50.89it/s]108it [00:02, 55.25it/s]115it [00:02, 56.85it/s]121it [00:02, 45.81it/s]127it [00:02, 48.01it/s]133it [00:03, 46.08it/s]138it [00:03, 43.06it/s]146it [00:03, 48.78it/s]154it [00:03, 54.14it/s]161it [00:03, 56.49it/s]168it [00:03, 56.10it/s]174it [00:03, 55.00it/s]180it [00:03, 46.08it/s]185it [00:04, 46.55it/s]193it [00:04, 53.10it/s]201it [00:04, 57.93it/s]208it [00:04, 56.56it/s]215it [00:04, 59.22it/s]222it [00:04, 61.51it/s]229it [00:04, 55.97it/s]235it [00:04, 56.86it/s]241it [00:04, 50.52it/s]247it [00:05, 49.25it/s]254it [00:05, 52.63it/s]260it [00:05, 53.19it/s]269it [00:05, 59.64it/s]276it [00:05, 56.47it/s]282it [00:05, 52.09it/s]288it [00:05, 48.42it/s]296it [00:05, 52.10it/s]302it [00:06, 53.69it/s]308it [00:06, 49.49it/s]315it [00:06, 53.90it/s]324it [00:06, 61.01it/s]331it [00:06, 62.22it/s]339it [00:06, 63.34it/s]347it [00:06, 67.41it/s]354it [00:06, 64.86it/s]361it [00:06, 61.91it/s]368it [00:07, 61.07it/s]375it [00:07, 60.65it/s]382it [00:07, 55.34it/s]388it [00:07, 55.73it/s]396it [00:07, 58.40it/s]402it [00:07, 57.68it/s]408it [00:07, 56.24it/s]414it [00:07, 56.77it/s]422it [00:08, 59.47it/s]430it [00:08, 62.31it/s]439it [00:08, 67.41it/s]446it [00:08, 65.73it/s]453it [00:08, 64.66it/s]460it [00:08, 66.02it/s]467it [00:08, 64.71it/s]474it [00:08, 64.12it/s]481it [00:08, 60.11it/s]489it [00:09, 63.03it/s]496it [00:09, 55.82it/s]505it [00:09, 62.50it/s]519it [00:09, 73.77it/s]528it [00:09, 68.82it/s]536it [00:09, 67.53it/s]544it [00:09, 68.87it/s]552it [00:09, 68.22it/s]560it [00:10, 62.50it/s]567it [00:10, 63.86it/s]577it [00:10, 69.99it/s]585it [00:10, 65.33it/s]592it [00:10, 64.92it/s]599it [00:10, 64.38it/s]606it [00:10, 56.57it/s]616it [00:10, 64.01it/s]623it [00:11, 65.44it/s]631it [00:11, 68.66it/s]641it [00:11, 74.65it/s]650it [00:11, 77.10it/s]658it [00:11, 73.38it/s]666it [00:11, 70.39it/s]674it [00:11, 65.54it/s]682it [00:11, 67.49it/s]691it [00:11, 71.02it/s]702it [00:12, 79.45it/s]711it [00:12, 71.25it/s]721it [00:12, 77.13it/s]730it [00:12, 70.85it/s]739it [00:12, 73.15it/s]747it [00:12, 74.52it/s]755it [00:12, 72.39it/s]763it [00:12, 73.64it/s]771it [00:13, 69.87it/s]779it [00:13, 72.40it/s]788it [00:13, 74.13it/s]796it [00:13, 68.23it/s]803it [00:13, 67.15it/s]812it [00:13, 70.33it/s]820it [00:13, 69.49it/s]828it [00:13, 61.09it/s]835it [00:14, 60.68it/s]844it [00:14, 67.08it/s]852it [00:14, 66.49it/s]862it [00:14, 73.65it/s]873it [00:14, 79.08it/s]882it [00:14, 74.85it/s]890it [00:14, 65.31it/s]897it [00:14, 65.16it/s]907it [00:14, 71.54it/s]916it [00:15, 73.31it/s]924it [00:15, 65.96it/s]932it [00:15, 69.08it/s]940it [00:15, 67.45it/s]949it [00:15, 72.80it/s]958it [00:15, 77.11it/s]966it [00:15, 75.12it/s]974it [00:15, 76.16it/s]982it [00:16, 67.19it/s]990it [00:16, 65.32it/s]998it [00:16, 68.44it/s]1006it [00:16, 67.88it/s]1013it [00:16, 64.59it/s]1024it [00:16, 72.65it/s]1032it [00:16, 72.06it/s]1040it [00:16, 74.24it/s]1048it [00:16, 68.12it/s]1056it [00:17, 68.74it/s]1065it [00:17, 69.39it/s]1074it [00:17, 74.25it/s]1083it [00:17, 77.52it/s]1094it [00:17, 84.88it/s]1103it [00:17, 81.78it/s]1112it [00:17, 76.93it/s]1120it [00:17, 77.13it/s]1128it [00:18, 71.12it/s]1140it [00:18, 80.33it/s]1150it [00:18, 84.38it/s]1159it [00:18, 76.05it/s]1170it [00:18, 81.54it/s]1179it [00:18, 79.95it/s]1188it [00:18, 77.09it/s]1196it [00:18, 77.09it/s]1205it [00:18, 78.00it/s]1215it [00:19, 83.32it/s]1227it [00:19, 87.90it/s]1236it [00:19, 77.20it/s]1245it [00:19, 74.24it/s]1253it [00:19, 67.48it/s]1261it [00:19, 65.49it/s]1268it [00:19, 66.77it/s]1276it [00:19, 68.80it/s]1284it [00:20, 68.66it/s]1291it [00:20, 67.85it/s]1300it [00:20, 70.01it/s]1308it [00:20, 67.40it/s]1317it [00:20, 71.01it/s]1325it [00:20, 66.60it/s]1332it [00:20, 61.84it/s]1340it [00:20, 64.62it/s]1348it [00:20, 67.77it/s]1355it [00:21, 61.68it/s]1362it [00:21, 60.60it/s]1369it [00:21, 61.65it/s]1379it [00:21, 69.04it/s]1387it [00:21, 66.13it/s]1396it [00:21, 69.36it/s]1404it [00:21, 70.34it/s]1412it [00:21, 66.95it/s]1419it [00:22, 60.75it/s]1426it [00:22, 60.55it/s]1434it [00:22, 64.72it/s]1442it [00:22, 67.66it/s]1452it [00:22, 70.89it/s]1460it [00:22, 65.31it/s]1467it [00:22, 59.58it/s]1474it [00:22, 57.31it/s]1480it [00:23, 55.79it/s]1486it [00:23, 55.31it/s]1493it [00:23, 58.21it/s]1501it [00:23, 62.61it/s]1508it [00:23, 64.39it/s]1515it [00:23, 62.29it/s]1522it [00:23, 62.36it/s]1529it [00:23, 62.65it/s]1536it [00:23, 62.27it/s]1543it [00:24, 54.07it/s]1551it [00:24, 59.49it/s]1559it [00:24, 61.67it/s]1566it [00:24, 55.00it/s]1572it [00:24, 56.18it/s]1579it [00:24, 57.41it/s]1588it [00:24, 59.79it/s]1598it [00:24, 66.85it/s]1606it [00:25, 61.03it/s]1613it [00:25, 59.35it/s]1622it [00:25, 64.37it/s]1629it [00:25, 63.21it/s]1636it [00:25, 60.31it/s]1648it [00:25, 68.11it/s]1656it [00:25, 60.86it/s]1664it [00:26, 63.24it/s]1672it [00:26, 66.49it/s]1681it [00:26, 69.93it/s]1689it [00:26, 69.78it/s]1697it [00:26, 71.42it/s]1705it [00:26, 65.50it/s]1713it [00:26, 68.67it/s]1721it [00:26, 66.05it/s]1729it [00:26, 68.24it/s]1737it [00:27, 67.79it/s]1744it [00:27, 65.74it/s]1751it [00:27, 53.73it/s]1759it [00:27, 57.23it/s]1766it [00:27, 58.95it/s]1774it [00:27, 62.27it/s]1781it [00:27, 60.77it/s]1788it [00:27, 54.98it/s]1794it [00:28, 55.84it/s]1802it [00:28, 59.52it/s]1809it [00:28, 53.02it/s]1816it [00:28, 55.04it/s]1822it [00:28, 53.55it/s]1828it [00:28, 53.85it/s]1836it [00:28, 56.02it/s]1844it [00:28, 59.93it/s]1851it [00:29, 61.55it/s]1858it [00:29, 52.91it/s]1864it [00:29, 52.16it/s]1872it [00:29, 56.81it/s]1878it [00:29, 56.95it/s]1885it [00:29, 58.68it/s]1892it [00:29, 60.68it/s]1899it [00:29, 59.23it/s]1906it [00:30, 61.87it/s]1915it [00:30, 66.90it/s]1922it [00:30, 63.84it/s]1929it [00:30, 58.50it/s]1936it [00:30, 60.92it/s]1943it [00:30, 59.68it/s]1950it [00:30, 58.00it/s]1957it [00:30, 59.83it/s]1964it [00:30, 55.41it/s]1971it [00:31, 59.05it/s]1978it [00:31, 54.53it/s]1986it [00:31, 58.10it/s]1992it [00:31, 54.45it/s]1998it [00:31, 49.52it/s]2005it [00:31, 53.38it/s]2011it [00:31, 52.49it/s]2018it [00:31, 55.56it/s]2025it [00:32, 59.17it/s]2032it [00:32, 57.28it/s]2038it [00:32, 55.36it/s]2045it [00:32, 57.50it/s]2051it [00:32, 57.80it/s]2057it [00:32, 57.31it/s]2064it [00:32, 58.84it/s]2071it [00:32, 59.38it/s]2078it [00:32, 60.81it/s]2085it [00:33, 58.53it/s]2092it [00:33, 60.30it/s]2102it [00:33, 65.60it/s]2109it [00:33, 63.20it/s]2117it [00:33, 64.90it/s]2125it [00:33, 65.64it/s]2132it [00:33, 66.05it/s]2139it [00:33, 66.74it/s]2146it [00:34, 62.32it/s]2153it [00:34, 57.27it/s]2160it [00:34, 60.52it/s]2167it [00:34, 59.14it/s]2174it [00:34, 61.65it/s]2182it [00:34, 65.87it/s]2189it [00:34, 64.19it/s]2196it [00:34, 65.79it/s]2203it [00:34, 63.61it/s]2211it [00:35, 64.46it/s]2218it [00:35, 64.77it/s]2225it [00:35, 64.61it/s]2232it [00:35, 63.15it/s]2239it [00:35, 64.66it/s]2246it [00:35, 65.32it/s]2253it [00:35, 64.44it/s]2260it [00:35, 60.71it/s]2267it [00:35, 59.27it/s]2277it [00:36, 65.50it/s]2284it [00:36, 63.70it/s]2291it [00:36, 60.81it/s]2298it [00:36, 62.74it/s]2306it [00:36, 66.59it/s]2314it [00:36, 68.96it/s]2322it [00:36, 62.20it/s]2329it [00:36, 63.24it/s]2336it [00:37, 61.84it/s]2343it [00:37, 62.45it/s]2351it [00:37, 64.16it/s]2358it [00:37, 54.96it/s]2365it [00:37, 57.74it/s]2372it [00:37, 59.39it/s]2381it [00:37, 65.08it/s]2388it [00:37, 58.34it/s]2397it [00:37, 63.95it/s]2407it [00:38, 70.40it/s]2415it [00:38, 67.19it/s]2423it [00:38, 64.47it/s]2430it [00:38, 56.59it/s]2438it [00:38, 59.67it/s]2445it [00:38, 56.88it/s]2451it [00:38, 56.28it/s]2458it [00:38, 58.09it/s]2465it [00:39, 58.45it/s]2471it [00:39, 57.62it/s]2479it [00:39, 62.16it/s]2486it [00:39, 59.60it/s]2493it [00:39, 54.83it/s]2500it [00:39, 55.82it/s]2507it [00:39, 58.29it/s]2513it [00:39, 56.89it/s]2519it [00:40, 53.23it/s]2525it [00:40, 53.69it/s]2532it [00:40, 55.90it/s]2538it [00:40, 57.05it/s]2548it [00:40, 64.48it/s]2555it [00:40, 61.46it/s]2562it [00:40, 62.61it/s]2569it [00:40, 61.87it/s]2578it [00:40, 68.25it/s]2586it [00:41, 61.90it/s]2593it [00:41, 63.36it/s]2600it [00:41, 64.69it/s]2609it [00:41, 67.43it/s]2617it [00:41, 69.13it/s]2625it [00:41, 68.86it/s]2632it [00:41, 69.17it/s]2640it [00:41, 70.10it/s]2648it [00:42, 66.20it/s]2656it [00:42, 67.35it/s]2663it [00:42, 66.60it/s]2670it [00:42, 60.97it/s]2677it [00:42, 62.17it/s]2685it [00:42, 64.67it/s]2692it [00:42, 62.03it/s]2699it [00:42, 63.29it/s]2709it [00:42, 70.91it/s]2717it [00:43, 65.40it/s]2725it [00:43, 68.42it/s]2733it [00:43, 68.71it/s]2741it [00:43, 67.20it/s]2748it [00:43, 67.81it/s]2755it [00:43, 64.14it/s]2762it [00:43, 60.26it/s]2769it [00:43, 62.86it/s]2776it [00:43, 60.33it/s]2783it [00:44, 60.05it/s]2790it [00:44, 62.68it/s]2798it [00:44, 65.48it/s]2805it [00:44, 65.38it/s]2814it [00:44, 69.43it/s]2822it [00:44, 67.77it/s]2830it [00:44, 69.88it/s]2838it [00:44, 69.27it/s]2845it [00:45, 66.21it/s]2852it [00:45, 57.16it/s]2861it [00:45, 62.44it/s]2870it [00:45, 66.42it/s]2877it [00:45, 67.08it/s]2884it [00:45, 65.19it/s]2893it [00:45, 69.63it/s]2906it [00:45, 78.99it/s]2913it [00:45, 63.41it/s]
+0it [00:00, ?it/s]8it [00:00, 65.76it/s]19it [00:00, 72.51it/s]37it [00:00, 86.40it/s]46it [00:00, 87.17it/s]56it [00:00, 87.87it/s]65it [00:00, 83.36it/s]80it [00:00, 95.59it/s]90it [00:00, 86.29it/s]100it [00:01, 87.80it/s]110it [00:01, 83.71it/s]119it [00:01, 84.74it/s]128it [00:01, 85.14it/s]137it [00:01, 83.26it/s]149it [00:01, 88.77it/s]161it [00:01, 92.09it/s]171it [00:01, 83.69it/s]187it [00:01, 96.05it/s]202it [00:02, 105.20it/s]219it [00:02, 117.33it/s]232it [00:02, 104.03it/s]244it [00:02, 96.57it/s] 256it [00:02, 99.29it/s]267it [00:02, 101.59it/s]278it [00:02, 97.75it/s] 289it [00:03, 83.44it/s]304it [00:03, 92.89it/s]315it [00:03, 92.64it/s]329it [00:03, 99.52it/s]340it [00:03, 98.07it/s]352it [00:03, 99.43it/s]363it [00:03, 98.25it/s]374it [00:03, 93.70it/s]384it [00:03, 88.03it/s]395it [00:04, 93.61it/s]405it [00:04, 86.15it/s]416it [00:04, 88.73it/s]426it [00:04, 79.82it/s]436it [00:04, 83.19it/s]445it [00:04, 80.68it/s]454it [00:04, 81.73it/s]472it [00:04, 96.71it/s]489it [00:05, 110.99it/s]504it [00:05, 117.45it/s]529it [00:05, 135.90it/s]548it [00:05, 148.19it/s]570it [00:05, 162.31it/s]588it [00:05, 162.83it/s]606it [00:05, 145.66it/s]622it [00:05, 148.40it/s]639it [00:05, 151.06it/s]655it [00:06, 135.43it/s]672it [00:06, 143.76it/s]689it [00:06, 146.83it/s]710it [00:06, 160.03it/s]731it [00:06, 169.48it/s]749it [00:06, 150.59it/s]770it [00:06, 163.90it/s]788it [00:06, 155.65it/s]805it [00:07, 142.90it/s]825it [00:07, 155.90it/s]842it [00:07, 145.52it/s]858it [00:07, 133.02it/s]875it [00:07, 138.53it/s]890it [00:07, 120.76it/s]903it [00:07, 123.33it/s]916it [00:07, 112.08it/s]928it [00:08, 102.55it/s]939it [00:08, 102.99it/s]950it [00:08, 104.71it/s]966it [00:08, 116.80it/s]979it [00:08, 118.90it/s]1003it [00:08, 140.10it/s]1019it [00:08, 136.99it/s]1035it [00:08, 141.95it/s]1052it [00:08, 147.27it/s]1081it [00:09, 170.22it/s]1103it [00:09, 177.98it/s]1123it [00:09, 171.70it/s]1149it [00:09, 187.44it/s]1169it [00:09, 188.80it/s]1189it [00:09, 158.26it/s]1219it [00:09, 184.20it/s]1241it [00:09, 192.80it/s]1263it [00:09, 192.03it/s]1299it [00:10, 219.13it/s]1399it [00:10, 286.16it/s]1449it [00:10, 142.33it/s]BaseDataset: base_size 520, crop_size 480
+/gpfsnyu/scratch/lg154/semantic_seg/DANet/encoding/models/resnet50-19c8e357.pth
+existTrue
+DeepLabV3(
+  (pretrained): ResNet(
+    (conv1): Conv2d(3, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
+    (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (relu): ReLU(inplace=True)
+    (maxpool): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
+    (layer1): Sequential(
+      (0): Bottleneck(
+        (conv1): Conv2d(64, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv2d(64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (downsample): Sequential(
+          (0): Conv2d(64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): Bottleneck(
+        (conv1): Conv2d(256, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv2d(64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+      )
+      (2): Bottleneck(
+        (conv1): Conv2d(256, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv2d(64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+      )
+    )
+    (layer2): Sequential(
+      (0): Bottleneck(
+        (conv1): Conv2d(256, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv2d(128, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (downsample): Sequential(
+          (0): Conv2d(256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): Bottleneck(
+        (conv1): Conv2d(512, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv2d(128, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+      )
+      (2): Bottleneck(
+        (conv1): Conv2d(512, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv2d(128, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+      )
+      (3): Bottleneck(
+        (conv1): Conv2d(512, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv2d(128, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+      )
+    )
+    (layer3): Sequential(
+      (0): Bottleneck(
+        (conv1): Conv2d(512, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (downsample): Sequential(
+          (0): Conv2d(512, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (1): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): Bottleneck(
+        (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(2, 2), dilation=(2, 2), bias=False)
+        (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+      )
+      (2): Bottleneck(
+        (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(2, 2), dilation=(2, 2), bias=False)
+        (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+      )
+      (3): Bottleneck(
+        (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(2, 2), dilation=(2, 2), bias=False)
+        (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+      )
+      (4): Bottleneck(
+        (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(2, 2), dilation=(2, 2), bias=False)
+        (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+      )
+      (5): Bottleneck(
+        (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(2, 2), dilation=(2, 2), bias=False)
+        (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+      )
+    )
+    (layer4): Sequential(
+      (0): Bottleneck(
+        (conv1): Conv2d(1024, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(2, 2), dilation=(2, 2), bias=False)
+        (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv2d(512, 2048, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): BatchNorm2d(2048, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (downsample): Sequential(
+          (0): Conv2d(1024, 2048, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (1): BatchNorm2d(2048, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): Bottleneck(
+        (conv1): Conv2d(2048, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(4, 4), dilation=(4, 4), bias=False)
+        (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv2d(512, 2048, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): BatchNorm2d(2048, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+      )
+      (2): Bottleneck(
+        (conv1): Conv2d(2048, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(4, 4), dilation=(4, 4), bias=False)
+        (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv2d(512, 2048, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): BatchNorm2d(2048, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+      )
+    )
+    (avgpool): GlobalAvgPool2d()
+    (fc): None
+  )
+  (head): DeepLabV3Head(
+    (aspp): ASPP_Module(
+      (b0): Sequential(
+        (0): Conv2d(2048, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU(inplace=True)
+      )
+      (b1): Sequential(
+        (0): Conv2d(2048, 256, kernel_size=(3, 3), stride=(1, 1), padding=(12, 12), dilation=(12, 12), bias=False)
+        (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU(inplace=True)
+      )
+      (b2): Sequential(
+        (0): Conv2d(2048, 256, kernel_size=(3, 3), stride=(1, 1), padding=(24, 24), dilation=(24, 24), bias=False)
+        (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU(inplace=True)
+      )
+      (b3): Sequential(
+        (0): Conv2d(2048, 256, kernel_size=(3, 3), stride=(1, 1), padding=(36, 36), dilation=(36, 36), bias=False)
+        (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU(inplace=True)
+      )
+      (b4): AsppPooling(
+        (gap): Sequential(
+          (0): AdaptiveAvgPool2d(output_size=1)
+          (1): Conv2d(2048, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (3): ReLU(inplace=True)
+        )
+      )
+      (project): Sequential(
+        (0): Conv2d(1280, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU(inplace=True)
+        (3): Dropout2d(p=0.5, inplace=False)
+      )
+    )
+    (block): Sequential(
+      (0): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): ReLU(inplace=True)
+      (3): Dropout(p=0.1, inplace=False)
+      (4): Conv2d(256, 21, kernel_size=(1, 1), stride=(1, 1))
+    )
+  )
+)
+Using poly LR scheduler with warm-up epochs of 0!
+Starting Epoch: 0
+Total Epoches: 100
+
+===============train epoch 1/100 ==========================
+
+
+
+=>Epoch 0, learning rate = 0.0100,                     previous best = 0.0000
+epoch 1, step 1, loss 0.006443181991577149
+epoch 1, step 51, loss 0.12743188607692718
+epoch 1, step 101, loss 0.14667616260051727
+epoch 1, step 151, loss 0.12990666902065276
+epoch 1, step 201, loss 0.1270825446844101
+epoch 1, step 251, loss 0.1145035926103592
+epoch 1, step 301, loss 0.11828656363487243
+epoch 1, step 351, loss 0.11420689964294434
+
+===============start testing, training epoch 0
+
+eval mean IOU 0.02735080112586103
+eval mean IOU 0.03441062204272458
+eval mean IOU 0.034740862734529976
+eval mean IOU 0.03492824579015325
+eval mean IOU 0.03532268837170374
+eval mean IOU 0.03572816110614767
+eval mean IOU 0.03545027092581158
+eval mean IOU 0.035326146830022206
+eval mean IOU 0.0356704560423194
+eval mean IOU 0.03649007410273125
+eval mean IOU 0.03643108724923755
+eval mean IOU 0.03638093561179639
+eval mean IOU 0.036725687751956754
+eval mean IOU 0.036733746632167365
+eval mean IOU 0.03626798490405667
+eval mean IOU 0.03606154991772208
+eval mean IOU 0.03638287364862776
+eval mean IOU 0.03652004458095275
+eval mean IOU 0.03643344539873171
+evaluation pixel acc 0.6848543660891135, mean IOU 0.036422310630045876, loss 1.3390024644987923
+
+===============train epoch 2/100 ==========================
+
+
+=>Epoch 1, learning rate = 0.0099,                     previous best = 0.3606
+epoch 2, step 1, loss 0.0019790607690811156
+epoch 2, step 51, loss 0.10745965218544007
+epoch 2, step 101, loss 0.11617015361785889
+epoch 2, step 151, loss 0.11098863422870636
+epoch 2, step 201, loss 0.10413746464252471
+epoch 2, step 251, loss 0.10480862593650818
+epoch 2, step 301, loss 0.11532321214675903
+epoch 2, step 351, loss 0.1088964033126831
+
+===============start testing, training epoch 1
+
+eval mean IOU 0.04294767657066942
+eval mean IOU 0.055301648035205576
+eval mean IOU 0.05877317681150701
+eval mean IOU 0.05783487482374527
+eval mean IOU 0.058998120298927044
+eval mean IOU 0.05986318029908072
+eval mean IOU 0.06153846902197561
+eval mean IOU 0.06016656240414526
+eval mean IOU 0.059508846832791444
+eval mean IOU 0.05863171170612066
+eval mean IOU 0.05951062766846711
+eval mean IOU 0.05919325099698878
+eval mean IOU 0.05907205977547686
+eval mean IOU 0.059194026443704445
+eval mean IOU 0.05859878825177064
+eval mean IOU 0.05800696342062756
+eval mean IOU 0.05827009062385987
+eval mean IOU 0.05860544259961908
+eval mean IOU 0.05845917945654276
+evaluation pixel acc 0.700078037355491, mean IOU 0.05844037075581773, loss 1.1357442631826296
+
+===============train epoch 3/100 ==========================
+
+
+=>Epoch 2, learning rate = 0.0098,                     previous best = 0.3793
+epoch 3, step 1, loss 0.002253321647644043
+epoch 3, step 51, loss 0.10107847499847412
+epoch 3, step 101, loss 0.09993214511871337
+epoch 3, step 151, loss 0.10465702700614929
+epoch 3, step 201, loss 0.10148094111680984
+epoch 3, step 251, loss 0.09096020340919495
+epoch 3, step 301, loss 0.09673772692680359
+epoch 3, step 351, loss 0.09766077864170074
+
+===============start testing, training epoch 2
+
+eval mean IOU 0.06291822415079654
+eval mean IOU 0.08061626268598845
+eval mean IOU 0.08044130400216426
+eval mean IOU 0.08140198125228627
+eval mean IOU 0.07911513485586472
+eval mean IOU 0.0801010835416319
+eval mean IOU 0.08128611846587021
+eval mean IOU 0.08092184948173764
+eval mean IOU 0.07994790796637107
+eval mean IOU 0.07958976455677812
+eval mean IOU 0.08152384374447477
+eval mean IOU 0.08289689204126807
+eval mean IOU 0.083445798048765
+eval mean IOU 0.08342441645300755
+eval mean IOU 0.08440280592727746
+eval mean IOU 0.08429690765142116
+eval mean IOU 0.08383686268212609
+eval mean IOU 0.08457836096875954
+eval mean IOU 0.08452688131982476
+evaluation pixel acc 0.7132154699438606, mean IOU 0.08447578949815966, loss 1.107422487093852
+
+===============train epoch 4/100 ==========================
+
+
+=>Epoch 3, learning rate = 0.0097,                     previous best = 0.3988
+epoch 4, step 1, loss 0.0018312634229660034
+epoch 4, step 51, loss 0.09414963811635971
+epoch 4, step 101, loss 0.09049941897392273
+epoch 4, step 151, loss 0.08617773765325547
+epoch 4, step 201, loss 0.09351866960525512
+epoch 4, step 251, loss 0.08350407087802887
+epoch 4, step 301, loss 0.09458333760499954
+epoch 4, step 351, loss 0.08603379428386689
+
+===============start testing, training epoch 3
+
+eval mean IOU 0.07960376976503362
+eval mean IOU 0.11199279168672069
+eval mean IOU 0.11346917629731688
+eval mean IOU 0.11284113209203074
+eval mean IOU 0.11058963712630254
+eval mean IOU 0.1094399097998058
+eval mean IOU 0.11692144952375141
+eval mean IOU 0.11906806506413124
+eval mean IOU 0.12106251695647197
+eval mean IOU 0.12437839379710423
+eval mean IOU 0.12597987907428856
+eval mean IOU 0.12886464916873114
+eval mean IOU 0.13202134359060777
+eval mean IOU 0.13231098510562653
+eval mean IOU 0.13208156782591673
+eval mean IOU 0.13000938716934096
+eval mean IOU 0.1309751716169225
+eval mean IOU 0.13126849022575177
+eval mean IOU 0.13120536273646416
+evaluation pixel acc 0.7309291068630002, mean IOU 0.13104482467032014, loss 0.9664973531450544
+
+===============train epoch 5/100 ==========================
+
+
+=>Epoch 4, learning rate = 0.0096,                     previous best = 0.4310
+epoch 5, step 1, loss 0.0016897447109222412
+epoch 5, step 51, loss 0.08390556740760803
+epoch 5, step 101, loss 0.08721096277236938
+epoch 5, step 151, loss 0.08507046312093734
+epoch 5, step 201, loss 0.07911998242139816
+epoch 5, step 251, loss 0.08262146311998367
+epoch 5, step 301, loss 0.07815233713388443
+epoch 5, step 351, loss 0.08311604166030884
+
+===============start testing, training epoch 4
+
+eval mean IOU 0.0803056967383892
+eval mean IOU 0.10994402685390843
+eval mean IOU 0.11811299039009941
+eval mean IOU 0.12202233036565412
+eval mean IOU 0.12419032129735214
+eval mean IOU 0.12628209878019941
+eval mean IOU 0.13663656900090096
+eval mean IOU 0.13939471683762172
+eval mean IOU 0.13712143477207622
+eval mean IOU 0.139204511135198
+eval mean IOU 0.13990517645765443
+eval mean IOU 0.1438213534581246
+eval mean IOU 0.14631909969028964
+eval mean IOU 0.1470013203371178
+eval mean IOU 0.1477367500376508
+eval mean IOU 0.14857598865511246
+eval mean IOU 0.14831432875450215
+eval mean IOU 0.14797244709930504
+eval mean IOU 0.14834835558716342
+evaluation pixel acc 0.7538289277082988, mean IOU 0.14833038006854893, loss 0.8355385610362985
+
+===============train epoch 6/100 ==========================
+
+
+=>Epoch 5, learning rate = 0.0095,                     previous best = 0.4511
+epoch 6, step 1, loss 0.0023942058086395264
+epoch 6, step 51, loss 0.0825657161474228
+epoch 6, step 101, loss 0.0788763884305954
+epoch 6, step 151, loss 0.07400467920303344
+epoch 6, step 201, loss 0.07784874123334885
+epoch 6, step 251, loss 0.07933640307188033
+epoch 6, step 301, loss 0.07449217903614044
+epoch 6, step 351, loss 0.06532780182361603
+
+===============start testing, training epoch 5
+
+eval mean IOU 0.1429360229866109
+eval mean IOU 0.2075483441774562
+eval mean IOU 0.23542433358652107
+eval mean IOU 0.24572216886599488
+eval mean IOU 0.2365587333559909
+eval mean IOU 0.2278132797664584
+eval mean IOU 0.23525166560197772
+eval mean IOU 0.2409829401081985
+eval mean IOU 0.24121237439789245
+eval mean IOU 0.24159396299417946
+eval mean IOU 0.2449608376508617
+eval mean IOU 0.24614521779787069
+eval mean IOU 0.24681106631773503
+eval mean IOU 0.2478907809623945
+eval mean IOU 0.2483338161592605
+eval mean IOU 0.2452451703388775
+eval mean IOU 0.24445800304087106
+eval mean IOU 0.24546756924152544
+eval mean IOU 0.24509234570827693
+evaluation pixel acc 0.7810690803851356, mean IOU 0.24496834586146848, loss 0.6984885428305511
+
+===============train epoch 7/100 ==========================
+
+
+=>Epoch 6, learning rate = 0.0095,                     previous best = 0.5130
+epoch 7, step 1, loss 0.0015193878412246705
+epoch 7, step 51, loss 0.07790957087278366
+epoch 7, step 101, loss 0.07375142854452134
+epoch 7, step 151, loss 0.06695472204685211
+epoch 7, step 201, loss 0.06443236196041108
+epoch 7, step 251, loss 0.06923079752922058
+epoch 7, step 301, loss 0.0742623924612999
+epoch 7, step 351, loss 0.06829222428798676
+
+===============start testing, training epoch 6
+
+eval mean IOU 0.1676573444845217
+eval mean IOU 0.19716038212824735
+eval mean IOU 0.22226512176760765
+eval mean IOU 0.22441647492463906
+eval mean IOU 0.22739562527098803
+eval mean IOU 0.2190040078405017
+eval mean IOU 0.23300273160971133
+eval mean IOU 0.23471375780953102
+eval mean IOU 0.23059646030869865
+eval mean IOU 0.2322730763153285
+eval mean IOU 0.2312129389869401
+eval mean IOU 0.23161677311427883
+eval mean IOU 0.23412478226156277
+eval mean IOU 0.23504989013604463
+eval mean IOU 0.23743952344607527
+eval mean IOU 0.23666297155670715
+eval mean IOU 0.23627550158027139
+eval mean IOU 0.23662827446863727
+eval mean IOU 0.23777297977638062
+evaluation pixel acc 0.7775206756454898, mean IOU 0.23760784796739443, loss 0.7578034509014298
+
+===============train epoch 8/100 ==========================
+
+
+=>Epoch 7, learning rate = 0.0094,                     previous best = 0.5130
+epoch 8, step 1, loss 0.0019484578371047974
+epoch 8, step 51, loss 0.06485234397649765
+epoch 8, step 101, loss 0.059738729655742645
+epoch 8, step 151, loss 0.057389664530754086
+epoch 8, step 201, loss 0.06954095077514648
+epoch 8, step 251, loss 0.07125651779770852
+epoch 8, step 301, loss 0.0651267266869545
+epoch 8, step 351, loss 0.06529872786998749
+
+===============start testing, training epoch 7
+
+eval mean IOU 0.1322284255419212
+eval mean IOU 0.2774999531353699
+eval mean IOU 0.2778711983615833
+eval mean IOU 0.31214484781635427
+eval mean IOU 0.3121582824811669
+eval mean IOU 0.30586305721489687
+eval mean IOU 0.30828168910897646
+eval mean IOU 0.30805049276134366
+eval mean IOU 0.3050259743662505
+eval mean IOU 0.3054049714464205
+eval mean IOU 0.30422651498459835
+eval mean IOU 0.30554158269733744
+eval mean IOU 0.3073516898537922
+eval mean IOU 0.30834399069586954
+eval mean IOU 0.3080650574985882
+eval mean IOU 0.30770254382236456
+eval mean IOU 0.30741055178530863
+eval mean IOU 0.3108043429068441
+eval mean IOU 0.3114894060317376
+evaluation pixel acc 0.8133669133625083, mean IOU 0.31157905491292665, loss 0.573550667654682
+
+===============train epoch 9/100 ==========================
+
+
+=>Epoch 8, learning rate = 0.0093,                     previous best = 0.5625
+epoch 9, step 1, loss 0.0017656160593032837
+epoch 9, step 51, loss 0.06309977942705154
+epoch 9, step 101, loss 0.06339182424545288
+epoch 9, step 151, loss 0.05657784834504127
+epoch 9, step 201, loss 0.05676904958486557
+epoch 9, step 251, loss 0.06837152451276779
+epoch 9, step 301, loss 0.06560520046949386
+epoch 9, step 351, loss 0.059285887122154234
+
+===============start testing, training epoch 8
+
+eval mean IOU 0.1785393982419328
+eval mean IOU 0.25748445199681835
+eval mean IOU 0.294969431302498
+eval mean IOU 0.3137063902975627
+eval mean IOU 0.3079106645685678
+eval mean IOU 0.30000173977475925
+eval mean IOU 0.31491392380931393
+eval mean IOU 0.30766488575992823
+eval mean IOU 0.30480489581575326
+eval mean IOU 0.3005598347970128
+eval mean IOU 0.3033615818002418
+eval mean IOU 0.29844703958930524
+eval mean IOU 0.30534171319137493
+eval mean IOU 0.307584943134782
+eval mean IOU 0.3027596064603125
+eval mean IOU 0.3052730885009317
+eval mean IOU 0.305913297313829
+eval mean IOU 0.30438102603993694
+eval mean IOU 0.30415071895952767
+evaluation pixel acc 0.7930784754563094, mean IOU 0.3038351960336697, loss 0.6569090990738554
+
+===============train epoch 10/100 ==========================
+
+
+=>Epoch 9, learning rate = 0.0092,                     previous best = 0.5625
+epoch 10, step 1, loss 0.0013620860576629638
+epoch 10, step 51, loss 0.059658763438463214
+epoch 10, step 101, loss 0.0620615199804306
+epoch 10, step 151, loss 0.052929059326648716
+epoch 10, step 201, loss 0.05775000500679016
+epoch 10, step 251, loss 0.05551410126686096
+epoch 10, step 301, loss 0.0618015142083168
+epoch 10, step 351, loss 0.057780572175979615
+
+===============start testing, training epoch 9
+
+eval mean IOU 0.16777328071015324
+eval mean IOU 0.32152407158107527
+eval mean IOU 0.3479231845082977
+eval mean IOU 0.35935056919818387
+eval mean IOU 0.37004991335091014
+eval mean IOU 0.37053277475454954
+eval mean IOU 0.375162866191984
+eval mean IOU 0.3813023360706602
+eval mean IOU 0.38827501869581915
+eval mean IOU 0.38457407298775437
+eval mean IOU 0.3882951833943962
+eval mean IOU 0.39129433192015833
+eval mean IOU 0.3920301947783665
+eval mean IOU 0.3930697882247426
+eval mean IOU 0.39042337191486914
+eval mean IOU 0.39483531118643905
+eval mean IOU 0.3972076830504728
+eval mean IOU 0.39782403461624793
+eval mean IOU 0.3949661906071958
+evaluation pixel acc 0.8349429142637225, mean IOU 0.39582269274817844, loss 0.5039579592399545
+
+===============train epoch 11/100 ==========================
+
+
+=>Epoch 10, learning rate = 0.0091,                     previous best = 0.6154
+epoch 11, step 1, loss 0.002008138418197632
+epoch 11, step 51, loss 0.05300701966881752
+epoch 11, step 101, loss 0.051782786518335344
+epoch 11, step 151, loss 0.05551485586166382
+epoch 11, step 201, loss 0.04865148362517357
+epoch 11, step 251, loss 0.05461236575245857
+epoch 11, step 301, loss 0.044134807705879214
+epoch 11, step 351, loss 0.04566078719496727
+
+===============start testing, training epoch 10
+
+eval mean IOU 0.2005176656084758
+eval mean IOU 0.36442030417646215
+eval mean IOU 0.38494523912479184
+eval mean IOU 0.38781420205079736
+eval mean IOU 0.39050208327857827
+eval mean IOU 0.3810830664664734
+eval mean IOU 0.3971139739392442
+eval mean IOU 0.39122824949653323
+eval mean IOU 0.39765704927095363
+eval mean IOU 0.4014771332574733
+eval mean IOU 0.4024738267441607
+eval mean IOU 0.39805370538876667
+eval mean IOU 0.39831477990129766
+eval mean IOU 0.3980387782157545
+eval mean IOU 0.3951690800103097
+eval mean IOU 0.3945223164226629
+eval mean IOU 0.39626684808170637
+eval mean IOU 0.3969405726204418
+eval mean IOU 0.39575635955947014
+evaluation pixel acc 0.8297074637107498, mean IOU 0.39672136456656015, loss 0.5311854006006167
+
+===============train epoch 12/100 ==========================
+
+
+=>Epoch 11, learning rate = 0.0090,                     previous best = 0.6154
+epoch 12, step 1, loss 0.000691485583782196
+epoch 12, step 51, loss 0.05049866420030594
+epoch 12, step 101, loss 0.04773024037480354
+epoch 12, step 151, loss 0.04912712222337723
+epoch 12, step 201, loss 0.05148848038911819
+epoch 12, step 251, loss 0.05224987244606018
+epoch 12, step 301, loss 0.045825849950313566
+epoch 12, step 351, loss 0.047421116650104525
+
+===============start testing, training epoch 11
+
+eval mean IOU 0.17034859992931142
+eval mean IOU 0.3497736424101469
+eval mean IOU 0.3816930724912125
+eval mean IOU 0.38148553731803614
+eval mean IOU 0.38922067448612274
+eval mean IOU 0.3881407712813259
+eval mean IOU 0.40326273683679237
+eval mean IOU 0.41011563891653097
+eval mean IOU 0.41090202639783996
+eval mean IOU 0.41364305587418115
+eval mean IOU 0.41360621381855517
+eval mean IOU 0.416246892665166
+eval mean IOU 0.4200693080854587
+eval mean IOU 0.4149335686574601
+eval mean IOU 0.4117644284430263
+eval mean IOU 0.4106429420236453
+eval mean IOU 0.40990883974830167
+eval mean IOU 0.4089452195278825
+eval mean IOU 0.4057937034138382
+evaluation pixel acc 0.8119817602597423, mean IOU 0.40644726610167065, loss 0.6260382641966526
+
+===============train epoch 13/100 ==========================
+
+
+=>Epoch 12, learning rate = 0.0089,                     previous best = 0.6154
+epoch 13, step 1, loss 0.0012508418560028076
+epoch 13, step 51, loss 0.0556404478251934
+epoch 13, step 101, loss 0.051118970900774004
+epoch 13, step 151, loss 0.04758693337440491
+epoch 13, step 201, loss 0.0450202916264534
+epoch 13, step 251, loss 0.041125025928020476
+epoch 13, step 301, loss 0.048308733701705936
+epoch 13, step 351, loss 0.04576021680235863
+
+===============start testing, training epoch 12
+
+eval mean IOU 0.20927182842475073
+eval mean IOU 0.44386095272294424
+eval mean IOU 0.48025675112013255
+eval mean IOU 0.4961524715134165
+eval mean IOU 0.4863575154231438
+eval mean IOU 0.4797119871665953
+eval mean IOU 0.4940866551456912
+eval mean IOU 0.503416833996216
+eval mean IOU 0.512235973580726
+eval mean IOU 0.5170141792951778
+eval mean IOU 0.5148291734912283
+eval mean IOU 0.5137090934807086
+eval mean IOU 0.5218609043514989
+eval mean IOU 0.5268224055911084
+eval mean IOU 0.5251693356709813
+eval mean IOU 0.5198171602309878
+eval mean IOU 0.5177359496529733
+eval mean IOU 0.5196525870483475
+eval mean IOU 0.5212933405673954
+evaluation pixel acc 0.8740689704417286, mean IOU 0.5220210505450313, loss 0.3960684425719492
+
+===============train epoch 14/100 ==========================
+
+
+=>Epoch 13, learning rate = 0.0088,                     previous best = 0.6980
+epoch 14, step 1, loss 0.0009848383069038392
+epoch 14, step 51, loss 0.04231958857178688
+epoch 14, step 101, loss 0.05162256708741188
+epoch 14, step 151, loss 0.05036566972732544
+epoch 14, step 201, loss 0.03919289538264275
+epoch 14, step 251, loss 0.04630616676807404
+epoch 14, step 301, loss 0.045090952545404434
+epoch 14, step 351, loss 0.04427668878436088
+
+===============start testing, training epoch 13
+
+eval mean IOU 0.17725679650349496
+eval mean IOU 0.43681870344894347
+eval mean IOU 0.48941009291150855
+eval mean IOU 0.49712069672731907
+eval mean IOU 0.49330248805461513
+eval mean IOU 0.489390902410384
+eval mean IOU 0.4943268612775017
+eval mean IOU 0.5048370205337276
+eval mean IOU 0.506457122592164
+eval mean IOU 0.5063732604604146
+eval mean IOU 0.5061199139035071
+eval mean IOU 0.5103028593625997
+eval mean IOU 0.5166030737357133
+eval mean IOU 0.517279325779708
+eval mean IOU 0.5115290046221891
+eval mean IOU 0.5120535019969582
+eval mean IOU 0.515112808507067
+eval mean IOU 0.515277207695621
+eval mean IOU 0.5169521945781121
+evaluation pixel acc 0.8661856219099925, mean IOU 0.5175569212253731, loss 0.42414498472442996
+
+===============train epoch 15/100 ==========================
+
+
+=>Epoch 14, learning rate = 0.0087,                     previous best = 0.6980
+epoch 15, step 1, loss 0.0007835537195205689
+epoch 15, step 51, loss 0.038866234630346295
+epoch 15, step 101, loss 0.04593032664060593
+epoch 15, step 151, loss 0.04069823044538498
+epoch 15, step 201, loss 0.04176754185557365
+epoch 15, step 251, loss 0.04238781669735908
+epoch 15, step 301, loss 0.042944432586431505
+epoch 15, step 351, loss 0.04036473673582077
+
+===============start testing, training epoch 14
+
+eval mean IOU 0.25624702813107897
+eval mean IOU 0.5587024959625496
+eval mean IOU 0.5620613899690069
+eval mean IOU 0.5665904489096475
+eval mean IOU 0.5564749782178215
+eval mean IOU 0.5520327189653954
+eval mean IOU 0.563394594509744
+eval mean IOU 0.5739197706682804
+eval mean IOU 0.5776060388307566
+eval mean IOU 0.5748431292644651
+eval mean IOU 0.5728719502241916
+eval mean IOU 0.5762070997536201
+eval mean IOU 0.5810037538274226
+eval mean IOU 0.583484531680188
+eval mean IOU 0.5820478485415665
+eval mean IOU 0.577228956191291
+eval mean IOU 0.5770439204115195
+eval mean IOU 0.5763232340116065
+eval mean IOU 0.5754582871197413
+evaluation pixel acc 0.8929073597990156, mean IOU 0.5760512964297371, loss 0.3216013644750302
+
+===============train epoch 16/100 ==========================
+
+
+=>Epoch 15, learning rate = 0.0086,                     previous best = 0.7345
+epoch 16, step 1, loss 0.00073880934715271
+epoch 16, step 51, loss 0.037082424759864806
+epoch 16, step 101, loss 0.04226723191142082
+epoch 16, step 151, loss 0.04264698323607445
+epoch 16, step 201, loss 0.03986873963475227
+epoch 16, step 251, loss 0.04294287919998169
+epoch 16, step 301, loss 0.03767196422815323
+epoch 16, step 351, loss 0.039125677227973936
+
+===============start testing, training epoch 15
+
+eval mean IOU 0.26381913149863845
+eval mean IOU 0.5578044947645712
+eval mean IOU 0.572489115758844
+eval mean IOU 0.5458365389194985
+eval mean IOU 0.5443117827008093
+eval mean IOU 0.5415032523126173
+eval mean IOU 0.5542264324224355
+eval mean IOU 0.5618102628071974
+eval mean IOU 0.5640861529748499
+eval mean IOU 0.5668687911731728
+eval mean IOU 0.5639074402063164
+eval mean IOU 0.5660837053961887
+eval mean IOU 0.5680618403312467
+eval mean IOU 0.5711131837751782
+eval mean IOU 0.5669215545608821
+eval mean IOU 0.5679010676465764
+eval mean IOU 0.5675780508498735
+eval mean IOU 0.5632803065282965
+eval mean IOU 0.5623074332926494
+evaluation pixel acc 0.8727644913607121, mean IOU 0.5626521786717683, loss 0.3853526353672311
+
+===============train epoch 17/100 ==========================
+
+
+=>Epoch 16, learning rate = 0.0085,                     previous best = 0.7345
+epoch 17, step 1, loss 0.0011996257305145264
+epoch 17, step 51, loss 0.03908838656544685
+epoch 17, step 101, loss 0.04013868847489357
+epoch 17, step 151, loss 0.035902245566248894
+epoch 17, step 201, loss 0.04290986552834511
+epoch 17, step 251, loss 0.03506420320272446
+epoch 17, step 301, loss 0.03735525071620941
+epoch 17, step 351, loss 0.04172627609968185
+
+===============start testing, training epoch 16
+
+eval mean IOU 0.24851378298304566
+eval mean IOU 0.5243768224104612
+eval mean IOU 0.5630662637854622
+eval mean IOU 0.565570490149573
+eval mean IOU 0.565718435926689
+eval mean IOU 0.563871568312815
+eval mean IOU 0.5704627779954619
+eval mean IOU 0.5838951810333223
+eval mean IOU 0.5835570348906647
+eval mean IOU 0.5793729866837625
+eval mean IOU 0.5794439095104695
+eval mean IOU 0.5860359859893717
+eval mean IOU 0.5912823223194363
+eval mean IOU 0.5911784354621324
+eval mean IOU 0.5854666757904443
+eval mean IOU 0.5836537443836203
+eval mean IOU 0.5850244628857543
+eval mean IOU 0.5842479784467155
+eval mean IOU 0.5844768804843731
+evaluation pixel acc 0.8866041534073288, mean IOU 0.5848558516177315, loss 0.35684108754599486
+
+===============train epoch 18/100 ==========================
+
+
+=>Epoch 17, learning rate = 0.0085,                     previous best = 0.7357
+epoch 18, step 1, loss 0.0006649852395057679
+epoch 18, step 51, loss 0.03676665070652962
+epoch 18, step 101, loss 0.037718301951885226
+epoch 18, step 151, loss 0.038066634893417356
+epoch 18, step 201, loss 0.03992077872157097
+epoch 18, step 251, loss 0.03976255992054939
+epoch 18, step 301, loss 0.03799513408541679
+epoch 18, step 351, loss 0.03100491237640381
+
+===============start testing, training epoch 17
+
+eval mean IOU 0.27010007422458004
+eval mean IOU 0.5814748628103604
+eval mean IOU 0.5656220875912352
+eval mean IOU 0.5673883589421922
+eval mean IOU 0.5720953188251132
+eval mean IOU 0.5680101307844404
+eval mean IOU 0.573845633843926
+eval mean IOU 0.5802182355353777
+eval mean IOU 0.5835300093481668
+eval mean IOU 0.5862094622861389
+eval mean IOU 0.5829896352893394
+eval mean IOU 0.581954432313087
+eval mean IOU 0.5848510252003265
+eval mean IOU 0.5869122441122706
+eval mean IOU 0.5908869741823961
+eval mean IOU 0.5915453810862696
+eval mean IOU 0.5904732808745381
+eval mean IOU 0.5890377317865417
+eval mean IOU 0.5898049167169945
+evaluation pixel acc 0.8925110346076068, mean IOU 0.5903315490551271, loss 0.34298980821456226
+
+===============train epoch 19/100 ==========================
+
+
+=>Epoch 18, learning rate = 0.0084,                     previous best = 0.7414
+epoch 19, step 1, loss 0.000784116506576538
+epoch 19, step 51, loss 0.03481375695765018
+epoch 19, step 101, loss 0.03274382629990578
+epoch 19, step 151, loss 0.035818412125110624
+epoch 19, step 201, loss 0.040328256338834766
+epoch 19, step 251, loss 0.03661876463890076
+epoch 19, step 301, loss 0.03606878623366356
+epoch 19, step 351, loss 0.03530588644742966
+
+===============start testing, training epoch 18
+
+eval mean IOU 0.2728704383891117
+eval mean IOU 0.5895687802797637
+eval mean IOU 0.54548583031883
+eval mean IOU 0.5608002642498453
+eval mean IOU 0.558390935494201
+eval mean IOU 0.5549110123818662
+eval mean IOU 0.5633064473787224
+eval mean IOU 0.5670928846836836
+eval mean IOU 0.5763362190286949
+eval mean IOU 0.5797058530177488
+eval mean IOU 0.5833037100631466
+eval mean IOU 0.5851120848001439
+eval mean IOU 0.5869730304360319
+eval mean IOU 0.5872989957651483
+eval mean IOU 0.5802258854065941
+eval mean IOU 0.5827049807803543
+eval mean IOU 0.5828907489418892
+eval mean IOU 0.5778410802179746
+eval mean IOU 0.5788646786116733
+evaluation pixel acc 0.8731335131162675, mean IOU 0.5795020248155547, loss 0.38650320679113104
+
+===============train epoch 20/100 ==========================
+
+
+=>Epoch 19, learning rate = 0.0083,                     previous best = 0.7414
+epoch 20, step 1, loss 0.00047342571616172793
+epoch 20, step 51, loss 0.034207659795880314
+epoch 20, step 101, loss 0.039517463356256485
+epoch 20, step 151, loss 0.03928016422688961
+epoch 20, step 201, loss 0.036864448472857476
+epoch 20, step 251, loss 0.0326842096298933
+epoch 20, step 301, loss 0.03829526478052139
+epoch 20, step 351, loss 0.03383391252160072
+
+===============start testing, training epoch 19
+
+eval mean IOU 0.236476597009924
+eval mean IOU 0.4852398249914634
+eval mean IOU 0.5169731097337088
+eval mean IOU 0.513794760900827
+eval mean IOU 0.5114150340082143
+eval mean IOU 0.506729402330116
+eval mean IOU 0.5060250147013559
+eval mean IOU 0.5159488985066749
+eval mean IOU 0.5137373450246132
+eval mean IOU 0.5123361753997229
+eval mean IOU 0.5126529466852418
+eval mean IOU 0.5118483074098833
+eval mean IOU 0.5162071287981054
+eval mean IOU 0.5220502397089722
+eval mean IOU 0.5220497799456683
+eval mean IOU 0.5203788178220903
+eval mean IOU 0.5206022726757319
+eval mean IOU 0.5167924154796483
+eval mean IOU 0.5139713454265072
+evaluation pixel acc 0.8477690545458062, mean IOU 0.5146118655636085, loss 0.4797679634949008
+
+===============train epoch 21/100 ==========================
+
+
+=>Epoch 20, learning rate = 0.0082,                     previous best = 0.7414
+epoch 21, step 1, loss 0.0004387570023536682
+epoch 21, step 51, loss 0.031759214341640474
+epoch 21, step 101, loss 0.03209918060898781
+epoch 21, step 151, loss 0.03518282388150692
+epoch 21, step 201, loss 0.033725039914250375
+epoch 21, step 251, loss 0.03874210526049137
+epoch 21, step 301, loss 0.038288189977407454
+epoch 21, step 351, loss 0.03753397382795811
+
+===============start testing, training epoch 20
+
+eval mean IOU 0.2656686212100163
+eval mean IOU 0.6281260639533842
+eval mean IOU 0.6350917390628884
+eval mean IOU 0.6371193992564732
+eval mean IOU 0.6365030182223742
+eval mean IOU 0.6365721703815486
+eval mean IOU 0.6414805036269149
+eval mean IOU 0.6492439286390317
+eval mean IOU 0.6529786134172659
+eval mean IOU 0.6513220442089643
+eval mean IOU 0.6435250847670837
+eval mean IOU 0.6404667665379085
+eval mean IOU 0.6422010876452383
+eval mean IOU 0.6431194432052376
+eval mean IOU 0.6458222856296624
+eval mean IOU 0.6458796467389158
+eval mean IOU 0.6467280376635482
+eval mean IOU 0.6415550663301363
+eval mean IOU 0.6404610226071867
+evaluation pixel acc 0.8994443803377855, mean IOU 0.6408858348796274, loss 0.31568310851906684
+
+===============train epoch 22/100 ==========================
+
+
+=>Epoch 21, learning rate = 0.0081,                     previous best = 0.7702
+epoch 22, step 1, loss 0.0009816655516624452
+epoch 22, step 51, loss 0.031407199159264564
+epoch 22, step 101, loss 0.03289956617355347
+epoch 22, step 151, loss 0.033454744562506675
+epoch 22, step 201, loss 0.03440026094019413
+epoch 22, step 251, loss 0.036785506367683414
+epoch 22, step 301, loss 0.03669961392879486
+epoch 22, step 351, loss 0.031665961384773254
+
+===============start testing, training epoch 21
+
+eval mean IOU 0.2795892563248822
+eval mean IOU 0.6054430489788778
+eval mean IOU 0.5787783451295697
+eval mean IOU 0.5996807044312599
+eval mean IOU 0.6018535158054898
+eval mean IOU 0.6051783442974207
+eval mean IOU 0.6193784486973625
+eval mean IOU 0.6276619799725683
+eval mean IOU 0.6300676540783273
+eval mean IOU 0.6305256531580723
+eval mean IOU 0.6344799836292512
+eval mean IOU 0.6291029540450316
+eval mean IOU 0.6337224781224414
+eval mean IOU 0.6370819355842682
+eval mean IOU 0.6349145109244976
+eval mean IOU 0.6368168552979216
+eval mean IOU 0.6317768717942664
+eval mean IOU 0.6317672771406597
+eval mean IOU 0.6312404627226273
+evaluation pixel acc 0.906265921859695, mean IOU 0.629765583168725, loss 0.28809353385816566
+
+===============train epoch 23/100 ==========================
+
+
+=>Epoch 22, learning rate = 0.0080,                     previous best = 0.7702
+epoch 23, step 1, loss 0.0008496713042259217
+epoch 23, step 51, loss 0.03594810003042221
+epoch 23, step 101, loss 0.03552867436408996
+epoch 23, step 151, loss 0.035350395813584325
+epoch 23, step 201, loss 0.03547506232559681
+epoch 23, step 251, loss 0.02941919219493866
+epoch 23, step 301, loss 0.030851894706487654
+epoch 23, step 351, loss 0.029703505635261536
+
+===============start testing, training epoch 22
+
+eval mean IOU 0.26164702806640405
+eval mean IOU 0.6098036500198892
+eval mean IOU 0.6331447526299668
+eval mean IOU 0.6348186314538251
+eval mean IOU 0.6403214109299634
+eval mean IOU 0.6395603691949019
+eval mean IOU 0.648989596658578
+eval mean IOU 0.6529246143022929
+eval mean IOU 0.654051515316085
+eval mean IOU 0.6505502646663442
+eval mean IOU 0.6468167440652746
+eval mean IOU 0.647529545774507
+eval mean IOU 0.6510597960131814
+eval mean IOU 0.6512585896155293
+eval mean IOU 0.6477999045401168
+eval mean IOU 0.6486114459734837
+eval mean IOU 0.6498798023927497
+eval mean IOU 0.6460200147251862
+eval mean IOU 0.6452835464204101
+evaluation pixel acc 0.8922391250142567, mean IOU 0.6457600127422058, loss 0.3390984162278883
+
+===============train epoch 24/100 ==========================
+
+
+=>Epoch 23, learning rate = 0.0079,                     previous best = 0.7702
+epoch 24, step 1, loss 0.00020711016654968262
+epoch 24, step 51, loss 0.038253178775310516
+epoch 24, step 101, loss 0.034286233246326445
+epoch 24, step 151, loss 0.03065451489388943
+epoch 24, step 201, loss 0.02870115786790848
+epoch 24, step 251, loss 0.025740778535604476
+epoch 24, step 301, loss 0.03081466703116894
+epoch 24, step 351, loss 0.03557184626162052
+
+===============start testing, training epoch 23
+
+eval mean IOU 0.27742434940168015
+eval mean IOU 0.6513880672438181
+eval mean IOU 0.6654134861941273
+eval mean IOU 0.6659262111187961
+eval mean IOU 0.6642242851302855
+eval mean IOU 0.666210711644086
+eval mean IOU 0.676591744689629
+eval mean IOU 0.6825013810406569
+eval mean IOU 0.688870309743863
+eval mean IOU 0.6921901616611392
+eval mean IOU 0.6905820918788189
+eval mean IOU 0.6913834358867679
+eval mean IOU 0.6947898960525575
+eval mean IOU 0.7001865062751156
+eval mean IOU 0.6982339736741042
+eval mean IOU 0.7000089504703113
+eval mean IOU 0.7028195309854562
+eval mean IOU 0.6996223968029702
+eval mean IOU 0.6991056384990233
+evaluation pixel acc 0.9193885476950702, mean IOU 0.699480792313266, loss 0.2522811814937945
+
+===============train epoch 25/100 ==========================
+
+
+=>Epoch 24, learning rate = 0.0078,                     previous best = 0.8094
+epoch 25, step 1, loss 0.0014781296253204347
+epoch 25, step 51, loss 0.030644903928041457
+epoch 25, step 101, loss 0.031224375709891318
+epoch 25, step 151, loss 0.02738713189959526
+epoch 25, step 201, loss 0.030641794949769974
+epoch 25, step 251, loss 0.031333937168121336
+epoch 25, step 301, loss 0.028567355550825596
+epoch 25, step 351, loss 0.02732174053788185
+
+===============start testing, training epoch 24
+
+eval mean IOU 0.29720762119296057
+eval mean IOU 0.6882088707438121
+eval mean IOU 0.7189534414211052
+eval mean IOU 0.7163896972618718
+eval mean IOU 0.7068334054255746
+eval mean IOU 0.7070541251858032
+eval mean IOU 0.7091260308583381
+eval mean IOU 0.7157101238320049
+eval mean IOU 0.7152346793445874
+eval mean IOU 0.7194913755383944
+eval mean IOU 0.7186852332985897
+eval mean IOU 0.7129924818172357
+eval mean IOU 0.7155509188249719
+eval mean IOU 0.721380087190359
+eval mean IOU 0.7232056962215956
+eval mean IOU 0.7255357455334825
+eval mean IOU 0.7241966389042618
+eval mean IOU 0.7216769096058149
+eval mean IOU 0.7172860180642412
+evaluation pixel acc 0.9250538337947871, mean IOU 0.717570915607272, loss 0.23363352452333158
+
+===============train epoch 26/100 ==========================
+
+
+=>Epoch 25, learning rate = 0.0077,                     previous best = 0.8213
+epoch 26, step 1, loss 0.0002545293569564819
+epoch 26, step 51, loss 0.03508222942054272
+epoch 26, step 101, loss 0.029970125034451484
+epoch 26, step 151, loss 0.02495681431889534
+epoch 26, step 201, loss 0.026306295543909074
+epoch 26, step 251, loss 0.03158293390274048
+epoch 26, step 301, loss 0.028901655942201614
+epoch 26, step 351, loss 0.030028002172708512
+
+===============start testing, training epoch 25
+
+eval mean IOU 0.3014957996724131
+eval mean IOU 0.6678302436196744
+eval mean IOU 0.665142994979834
+eval mean IOU 0.6781181995256051
+eval mean IOU 0.6774048219710519
+eval mean IOU 0.6778022823914666
+eval mean IOU 0.6829228699498671
+eval mean IOU 0.6863934664155715
+eval mean IOU 0.6866103773608474
+eval mean IOU 0.6846247070878562
+eval mean IOU 0.6833999095835144
+eval mean IOU 0.6798254941626022
+eval mean IOU 0.6848597691114962
+eval mean IOU 0.6932954354089491
+eval mean IOU 0.6912200120083116
+eval mean IOU 0.6908487118852749
+eval mean IOU 0.6907782565215713
+eval mean IOU 0.6903663859177894
+eval mean IOU 0.6919279998011539
+evaluation pixel acc 0.9208797728458648, mean IOU 0.6924233934578071, loss 0.2476183166215708
+
+===============train epoch 27/100 ==========================
+
+
+=>Epoch 26, learning rate = 0.0076,                     previous best = 0.8213
+epoch 27, step 1, loss 0.0005926787853240967
+epoch 27, step 51, loss 0.025834770053625108
+epoch 27, step 101, loss 0.028713597789406776
+epoch 27, step 151, loss 0.029750786662101746
+epoch 27, step 201, loss 0.028853609383106233
+epoch 27, step 251, loss 0.028435497432947158
+epoch 27, step 301, loss 0.034058109164237974
+epoch 27, step 351, loss 0.02932064138352871
+
+===============start testing, training epoch 26
+
+eval mean IOU 0.2901075452949823
+eval mean IOU 0.6401130527849271
+eval mean IOU 0.6414721912090232
+eval mean IOU 0.654912207085553
+eval mean IOU 0.6430742601791501
+eval mean IOU 0.6436294105685605
+eval mean IOU 0.643320191345031
+eval mean IOU 0.6536650381962632
+eval mean IOU 0.659507636791986
+eval mean IOU 0.6647920356991355
+eval mean IOU 0.6664396937841582
+eval mean IOU 0.662539082318227
+eval mean IOU 0.6651432702695261
+eval mean IOU 0.6662481708409158
+eval mean IOU 0.6678055453682107
+eval mean IOU 0.6673992622228987
+eval mean IOU 0.666725501263014
+eval mean IOU 0.6642466012402545
+eval mean IOU 0.6622650925570739
+evaluation pixel acc 0.9000090953037277, mean IOU 0.6626220151833563, loss 0.31983736206542007
+
+===============train epoch 28/100 ==========================
+
+
+=>Epoch 27, learning rate = 0.0075,                     previous best = 0.8213
+epoch 28, step 1, loss 0.00038896548748016356
+epoch 28, step 51, loss 0.027837162867188455
+epoch 28, step 101, loss 0.024357588425278662
+epoch 28, step 151, loss 0.029382140636444093
+epoch 28, step 201, loss 0.028177473098039627
+epoch 28, step 251, loss 0.02502432356774807
+epoch 28, step 301, loss 0.025012486845254898
+epoch 28, step 351, loss 0.026745615988969802
+
+===============start testing, training epoch 27
+
+eval mean IOU 0.2997786584028884
+eval mean IOU 0.683430754757653
+eval mean IOU 0.681139018895767
+eval mean IOU 0.6923377282847616
+eval mean IOU 0.6784377497797315
+eval mean IOU 0.6806586449968558
+eval mean IOU 0.6876985775073824
+eval mean IOU 0.689907791744033
+eval mean IOU 0.6909593783448846
+eval mean IOU 0.6984736140581629
+eval mean IOU 0.6963368748429006
+eval mean IOU 0.695604241455569
+eval mean IOU 0.6959103122268239
+eval mean IOU 0.7019764100133978
+eval mean IOU 0.6967115534149226
+eval mean IOU 0.6942083969312025
+eval mean IOU 0.6947536823804917
+eval mean IOU 0.6901642038785861
+eval mean IOU 0.6905908572639111
+evaluation pixel acc 0.9173137605923287, mean IOU 0.6909340014985352, loss 0.2620596847404818
+
+===============train epoch 29/100 ==========================
+
+
+=>Epoch 28, learning rate = 0.0074,                     previous best = 0.8213
+epoch 29, step 1, loss 0.0006333786845207214
+epoch 29, step 51, loss 0.022727259770035743
+epoch 29, step 101, loss 0.025171842902898787
+epoch 29, step 151, loss 0.027697824597358704
+epoch 29, step 201, loss 0.023679792612791063
+epoch 29, step 251, loss 0.02832035394012928
+epoch 29, step 301, loss 0.028950307071208953
+epoch 29, step 351, loss 0.0246150726377964
+
+===============start testing, training epoch 28
+
+eval mean IOU 0.32619785631739706
+eval mean IOU 0.6359465174620874
+eval mean IOU 0.651714921718504
+eval mean IOU 0.6627242116133994
+eval mean IOU 0.660781094775106
+eval mean IOU 0.666157237034174
+eval mean IOU 0.6704240296539739
+eval mean IOU 0.67612954700452
+eval mean IOU 0.6804900009423913
+eval mean IOU 0.6861958977432913
+eval mean IOU 0.6780894970501199
+eval mean IOU 0.6782082942349166
+eval mean IOU 0.6840170246996345
+eval mean IOU 0.6876214669291724
+eval mean IOU 0.6901551440169115
+eval mean IOU 0.6883362844169015
+eval mean IOU 0.689802269133814
+eval mean IOU 0.6899058316635029
+eval mean IOU 0.6892163997123341
+evaluation pixel acc 0.9157119866368975, mean IOU 0.6897649219895593, loss 0.2505456217779563
+
+===============train epoch 30/100 ==========================
+
+
+=>Epoch 29, learning rate = 0.0073,                     previous best = 0.8213
+epoch 30, step 1, loss 0.00043632814288139344
+epoch 30, step 51, loss 0.029745059087872505
+epoch 30, step 101, loss 0.026230695560574533
+epoch 30, step 151, loss 0.02585801723599434
+epoch 30, step 201, loss 0.026321094840765
+epoch 30, step 251, loss 0.022130534276366232
+epoch 30, step 301, loss 0.0274032194763422
+epoch 30, step 351, loss 0.0239698169529438
+
+===============start testing, training epoch 29
+
+eval mean IOU 0.3090912132774054
+eval mean IOU 0.6840065025857639
+eval mean IOU 0.7207616555587214
+eval mean IOU 0.727440189146339
+eval mean IOU 0.7192174780340093
+eval mean IOU 0.72426292283795
+eval mean IOU 0.732206400165462
+eval mean IOU 0.7410091207644226
+eval mean IOU 0.7427513517461934
+eval mean IOU 0.7523578630942865
+eval mean IOU 0.74578890993786
+eval mean IOU 0.7456039332484065
+eval mean IOU 0.7507586077656526
+eval mean IOU 0.7511357372916464
+eval mean IOU 0.7501126416516888
+eval mean IOU 0.7468386470859101
+eval mean IOU 0.7477533040119708
+eval mean IOU 0.7457920654926005
+eval mean IOU 0.7437126405560179
+evaluation pixel acc 0.9338201389269807, mean IOU 0.7439154240106315, loss 0.1962026368908502
+
+===============train epoch 31/100 ==========================
+
+
+=>Epoch 30, learning rate = 0.0073,                     previous best = 0.8389
+epoch 31, step 1, loss 0.00033070376515388487
+epoch 31, step 51, loss 0.022673951670527458
+epoch 31, step 101, loss 0.024184620037674905
+epoch 31, step 151, loss 0.02524985046684742
+epoch 31, step 201, loss 0.02716245438158512
+epoch 31, step 251, loss 0.029574177861213684
+epoch 31, step 301, loss 0.02608711338043213
+epoch 31, step 351, loss 0.027018917888402938
+
+===============start testing, training epoch 30
+
+eval mean IOU 0.3342026364290066
+eval mean IOU 0.7434213630672014
+eval mean IOU 0.7577507530022126
+eval mean IOU 0.7579143495889283
+eval mean IOU 0.7474101084808119
+eval mean IOU 0.7513518092458726
+eval mean IOU 0.7542944047269134
+eval mean IOU 0.7565508930398663
+eval mean IOU 0.7630696998271885
+eval mean IOU 0.7679217230170645
+eval mean IOU 0.7667972627386289
+eval mean IOU 0.7675813461868417
+eval mean IOU 0.7697687843541455
+eval mean IOU 0.7736745843189244
+eval mean IOU 0.7741838676198554
+eval mean IOU 0.7725579372999046
+eval mean IOU 0.7728852572272192
+eval mean IOU 0.7695964727320552
+eval mean IOU 0.7690584966697271
+evaluation pixel acc 0.9379910103859638, mean IOU 0.7691092555250443, loss 0.19563574914994475
+
+===============train epoch 32/100 ==========================
+
+
+=>Epoch 31, learning rate = 0.0072,                     previous best = 0.8536
+epoch 32, step 1, loss 0.00022772477567195893
+epoch 32, step 51, loss 0.02153359051793814
+epoch 32, step 101, loss 0.02129779152572155
+epoch 32, step 151, loss 0.020798891328275202
+epoch 32, step 201, loss 0.02385770155489445
+epoch 32, step 251, loss 0.027771304324269296
+epoch 32, step 301, loss 0.025894271060824394
+epoch 32, step 351, loss 0.026247314795851708
+
+===============start testing, training epoch 31
+
+eval mean IOU 0.30177776373038423
+eval mean IOU 0.7012356761240619
+eval mean IOU 0.7262821411650741
+eval mean IOU 0.7298056350763265
+eval mean IOU 0.720072670546696
+eval mean IOU 0.7214611280127513
+eval mean IOU 0.7277561367517922
+eval mean IOU 0.7291007050892423
+eval mean IOU 0.7323135417760914
+eval mean IOU 0.7384069826567651
+eval mean IOU 0.7356830265835189
+eval mean IOU 0.732968356503553
+eval mean IOU 0.7348838891254081
+eval mean IOU 0.7329174036710677
+eval mean IOU 0.7336031644782672
+eval mean IOU 0.7314705629789718
+eval mean IOU 0.7313320232766658
+eval mean IOU 0.7278476280196144
+eval mean IOU 0.7288634189350001
+evaluation pixel acc 0.9269328894514981, mean IOU 0.7293708793022097, loss 0.2228978796667614
+
+===============train epoch 33/100 ==========================
+
+
+=>Epoch 32, learning rate = 0.0071,                     previous best = 0.8536
+epoch 33, step 1, loss 0.00029808807373046873
+epoch 33, step 51, loss 0.019424690946936607
+epoch 33, step 101, loss 0.024398600667715074
+epoch 33, step 151, loss 0.023932723596692084
+epoch 33, step 201, loss 0.023079578921198846
+epoch 33, step 251, loss 0.02587794837355614
+epoch 33, step 301, loss 0.026448973506689073
+epoch 33, step 351, loss 0.02313245779275894
+
+===============start testing, training epoch 32
+
+eval mean IOU 0.29403178569367566
+eval mean IOU 0.7204192021000173
+eval mean IOU 0.722328620786567
+eval mean IOU 0.7129883937584284
+eval mean IOU 0.7072804831756314
+eval mean IOU 0.7095474766368307
+eval mean IOU 0.7134103692014215
+eval mean IOU 0.7149148747738435
+eval mean IOU 0.7149736369882974
+eval mean IOU 0.7181974021430124
+eval mean IOU 0.7152105681502618
+eval mean IOU 0.7164330882979371
+eval mean IOU 0.7143903262211758
+eval mean IOU 0.7160866127939911
+eval mean IOU 0.7163638275892862
+eval mean IOU 0.7154263810684659
+eval mean IOU 0.7147089992598977
+eval mean IOU 0.7136609714331809
+eval mean IOU 0.7131225476789325
+evaluation pixel acc 0.9143616088520103, mean IOU 0.7134451068588868, loss 0.2638419453095604
+
+===============train epoch 34/100 ==========================
+
+
+=>Epoch 33, learning rate = 0.0070,                     previous best = 0.8536
+epoch 34, step 1, loss 0.00024557684361934664
+epoch 34, step 51, loss 0.02406281666457653
+epoch 34, step 101, loss 0.02426174645125866
+epoch 34, step 151, loss 0.02337651151418686
+epoch 34, step 201, loss 0.020167470082640648
+epoch 34, step 251, loss 0.02206080488860607
+epoch 34, step 301, loss 0.020799338459968567
+epoch 34, step 351, loss 0.0254358881264925
+
+===============start testing, training epoch 33
+
+eval mean IOU 0.30065199145979776
+eval mean IOU 0.7311247082444635
+eval mean IOU 0.7666619784139421
+eval mean IOU 0.76801305340049
+eval mean IOU 0.7654608304875036
+eval mean IOU 0.7652271330241014
+eval mean IOU 0.7684185422470394
+eval mean IOU 0.7683332844891462
+eval mean IOU 0.7695368852764762
+eval mean IOU 0.7723838642449999
+eval mean IOU 0.7691115469463421
+eval mean IOU 0.7713740192078284
+eval mean IOU 0.7730613999590112
+eval mean IOU 0.7766973450481837
+eval mean IOU 0.7763900671821948
+eval mean IOU 0.7760350199721106
+eval mean IOU 0.7754921514783716
+eval mean IOU 0.7745587895654049
+eval mean IOU 0.7746577330661976
+evaluation pixel acc 0.9372323483040269, mean IOU 0.7751048721270182, loss 0.19704054296016693
+
+===============train epoch 35/100 ==========================
+
+
+=>Epoch 34, learning rate = 0.0069,                     previous best = 0.8562
+epoch 35, step 1, loss 0.0003980234265327454
+epoch 35, step 51, loss 0.022088171154260636
+epoch 35, step 101, loss 0.021989640451967715
+epoch 35, step 151, loss 0.02066186836361885
+epoch 35, step 201, loss 0.019745927833020687
+epoch 35, step 251, loss 0.018881755344569682
+epoch 35, step 301, loss 0.019165655434131623
+epoch 35, step 351, loss 0.019185957238078116
+
+===============start testing, training epoch 34
+
+eval mean IOU 0.3176603484224763
+eval mean IOU 0.7697964972922581
+eval mean IOU 0.7650522869202503
+eval mean IOU 0.7552601410354856
+eval mean IOU 0.7440785597777951
+eval mean IOU 0.7474702108130541
+eval mean IOU 0.7570065118189925
+eval mean IOU 0.7520681055093154
+eval mean IOU 0.747881834040243
+eval mean IOU 0.7482069644793012
+eval mean IOU 0.7428821142700894
+eval mean IOU 0.7434592909933132
+eval mean IOU 0.7470875944301562
+eval mean IOU 0.7526132550174063
+eval mean IOU 0.7538479373675652
+eval mean IOU 0.7518293265831909
+eval mean IOU 0.7525366470861026
+eval mean IOU 0.7487212334000887
+eval mean IOU 0.7477686337116969
+evaluation pixel acc 0.933714653158821, mean IOU 0.7479666086302967, loss 0.20296993709404718
+
+===============train epoch 36/100 ==========================
+
+
+=>Epoch 35, learning rate = 0.0068,                     previous best = 0.8562
+epoch 36, step 1, loss 0.00019086909294128418
+epoch 36, step 51, loss 0.02061130605638027
+epoch 36, step 101, loss 0.021397352248430253
+epoch 36, step 151, loss 0.01879205970466137
+epoch 36, step 201, loss 0.02033553658425808
+epoch 36, step 251, loss 0.01910249972343445
+epoch 36, step 301, loss 0.022372876688838004
+epoch 36, step 351, loss 0.019097555831074715
+
+===============start testing, training epoch 35
+
+eval mean IOU 0.3182438312919055
+eval mean IOU 0.7741867897771458
+eval mean IOU 0.7792975590234962
+eval mean IOU 0.7913177678945301
+eval mean IOU 0.7910780205300053
+eval mean IOU 0.7913859325478557
+eval mean IOU 0.7960831917076632
+eval mean IOU 0.7904938368547378
+eval mean IOU 0.790619521019466
+eval mean IOU 0.7926034139765706
+eval mean IOU 0.7917191717659064
+eval mean IOU 0.7929063716608812
+eval mean IOU 0.794295713343397
+eval mean IOU 0.7980020073693643
+eval mean IOU 0.7971320776080763
+eval mean IOU 0.7956676497450295
+eval mean IOU 0.795230542856247
+eval mean IOU 0.7951867148521905
+eval mean IOU 0.795073650330831
+evaluation pixel acc 0.9442456352061189, mean IOU 0.7954807224891551, loss 0.16964391564725192
+
+===============train epoch 37/100 ==========================
+
+
+=>Epoch 36, learning rate = 0.0067,                     previous best = 0.8699
+epoch 37, step 1, loss 0.0006439602971076966
+epoch 37, step 51, loss 0.025123411647975446
+epoch 37, step 101, loss 0.024363675966858865
+epoch 37, step 151, loss 0.022543806239962577
+epoch 37, step 201, loss 0.019933060213923454
+epoch 37, step 251, loss 0.018349358662962913
+epoch 37, step 301, loss 0.023052625194191934
+epoch 37, step 351, loss 0.023450900189578534
+
+===============start testing, training epoch 36
+
+eval mean IOU 0.31726941201737047
+eval mean IOU 0.7520462640774479
+eval mean IOU 0.7699769552500756
+eval mean IOU 0.7597195879397962
+eval mean IOU 0.7499473077849597
+eval mean IOU 0.7493047121638179
+eval mean IOU 0.7534063898582335
+eval mean IOU 0.7591279590591563
+eval mean IOU 0.7620894382956573
+eval mean IOU 0.7651435355619883
+eval mean IOU 0.7642537056907011
+eval mean IOU 0.7641512529912807
+eval mean IOU 0.7641474578102949
+eval mean IOU 0.7677876001310812
+eval mean IOU 0.7690991291439541
+eval mean IOU 0.7666505837200067
+eval mean IOU 0.765499069861057
+eval mean IOU 0.7658698237125969
+eval mean IOU 0.7645700203663368
+evaluation pixel acc 0.9325614406566003, mean IOU 0.7648554597683065, loss 0.21709076096150245
+
+===============train epoch 38/100 ==========================
+
+
+=>Epoch 37, learning rate = 0.0066,                     previous best = 0.8699
+epoch 38, step 1, loss 0.0002892509400844574
+epoch 38, step 51, loss 0.02006379149854183
+epoch 38, step 101, loss 0.015732733085751533
+epoch 38, step 151, loss 0.019220760799944402
+epoch 38, step 201, loss 0.025866610124707222
+epoch 38, step 251, loss 0.01778710164129734
+epoch 38, step 301, loss 0.01610137756168842
+epoch 38, step 351, loss 0.020307281948626042
+
+===============start testing, training epoch 37
+
+eval mean IOU 0.31543183616965376
+eval mean IOU 0.717274005982228
+eval mean IOU 0.7045578382341555
+eval mean IOU 0.7057994718366908
+eval mean IOU 0.7092961215609573
+eval mean IOU 0.7174371203405576
+eval mean IOU 0.721767950888265
+eval mean IOU 0.7317025102455332
+eval mean IOU 0.7383379990128168
+eval mean IOU 0.7423030854481537
+eval mean IOU 0.7388368397510939
+eval mean IOU 0.7364436235986113
+eval mean IOU 0.7405034532062426
+eval mean IOU 0.748722392802056
+eval mean IOU 0.7474699634494439
+eval mean IOU 0.7492734548631544
+eval mean IOU 0.7502913918355504
+eval mean IOU 0.7504986983783615
+eval mean IOU 0.7484353156220795
+evaluation pixel acc 0.9378668082702486, mean IOU 0.7487166738236531, loss 0.19333066901826595
+
+===============train epoch 39/100 ==========================
+
+
+=>Epoch 38, learning rate = 0.0065,                     previous best = 0.8699
+epoch 39, step 1, loss 0.0003181755542755127
+epoch 39, step 51, loss 0.022069073364138603
+epoch 39, step 101, loss 0.0241975599527359
+epoch 39, step 151, loss 0.020965807124972344
+epoch 39, step 201, loss 0.019031187132000922
+epoch 39, step 251, loss 0.02180803433805704
+epoch 39, step 301, loss 0.01951763519644737
+epoch 39, step 351, loss 0.02141642551869154
+
+===============start testing, training epoch 38
+
+eval mean IOU 0.31226937737150695
+eval mean IOU 0.7529110379415065
+eval mean IOU 0.7881482257662917
+eval mean IOU 0.7857005821257217
+eval mean IOU 0.7865582483086349
+eval mean IOU 0.7883500403882833
+eval mean IOU 0.7934705156706989
+eval mean IOU 0.7965857188815604
+eval mean IOU 0.8000088811450994
+eval mean IOU 0.8027453719843798
+eval mean IOU 0.7986758623437347
+eval mean IOU 0.7984188737367889
+eval mean IOU 0.7988823281043157
+eval mean IOU 0.8034757827561287
+eval mean IOU 0.8025458605021737
+eval mean IOU 0.8022038376400201
+eval mean IOU 0.801525990221624
+eval mean IOU 0.8011085052639246
+eval mean IOU 0.7978664175845464
+evaluation pixel acc 0.9477568430371228, mean IOU 0.798092559312214, loss 0.15834637352644088
+
+===============train epoch 40/100 ==========================
+
+
+=>Epoch 39, learning rate = 0.0064,                     previous best = 0.8729
+epoch 40, step 1, loss 0.0004284670352935791
+epoch 40, step 51, loss 0.021189486846327783
+epoch 40, step 101, loss 0.01652197577804327
+epoch 40, step 151, loss 0.02086451342701912
+epoch 40, step 201, loss 0.018937209770083428
+epoch 40, step 251, loss 0.017466094702482223
+epoch 40, step 301, loss 0.020166293025016786
+epoch 40, step 351, loss 0.02014031168818474
+
+===============start testing, training epoch 39
+
+eval mean IOU 0.30834383971893525
+eval mean IOU 0.7203760736318231
+eval mean IOU 0.7415811436280865
+eval mean IOU 0.742426565416511
+eval mean IOU 0.7377761668299888
+eval mean IOU 0.742287423839859
+eval mean IOU 0.745098533530521
+eval mean IOU 0.7507912846889956
+eval mean IOU 0.7521754110498838
+eval mean IOU 0.7517620310639463
+eval mean IOU 0.748954228965188
+eval mean IOU 0.7510062051608367
+eval mean IOU 0.7501658421578862
+eval mean IOU 0.753320780767199
+eval mean IOU 0.7537396340072489
+eval mean IOU 0.7518071904898437
+eval mean IOU 0.7513954757807486
+eval mean IOU 0.7515308792046069
+eval mean IOU 0.7507906032238466
+evaluation pixel acc 0.923021214234359, mean IOU 0.7511476456674672, loss 0.23273055951346408
+
+===============train epoch 41/100 ==========================
+
+
+=>Epoch 40, learning rate = 0.0063,                     previous best = 0.8729
+epoch 41, step 1, loss 0.00020668959617614746
+epoch 41, step 51, loss 0.018915826134383678
+epoch 41, step 101, loss 0.01793170168995857
+epoch 41, step 151, loss 0.015768965542316438
+epoch 41, step 201, loss 0.01659909625351429
+epoch 41, step 251, loss 0.018119805321097374
+epoch 41, step 301, loss 0.01676666534692049
+epoch 41, step 351, loss 0.019652196556329726
+
+===============start testing, training epoch 40
+
+eval mean IOU 0.31146903542249477
+eval mean IOU 0.7541867601163121
+eval mean IOU 0.767843563661658
+eval mean IOU 0.7756640152272515
+eval mean IOU 0.7740091450293256
+eval mean IOU 0.7773910183331574
+eval mean IOU 0.7838734160386429
+eval mean IOU 0.7902784507426417
+eval mean IOU 0.7921377304749161
+eval mean IOU 0.7940833479634244
+eval mean IOU 0.7934694883287955
+eval mean IOU 0.7928418493502294
+eval mean IOU 0.791222261406941
+eval mean IOU 0.7934569446720415
+eval mean IOU 0.7925762819765089
+eval mean IOU 0.7930348861922224
+eval mean IOU 0.792194830354316
+eval mean IOU 0.7930506427372059
+eval mean IOU 0.7929471907424874
+evaluation pixel acc 0.9457133135730464, mean IOU 0.7930907782755189, loss 0.1750031776501091
+
+===============train epoch 42/100 ==========================
+
+
+=>Epoch 41, learning rate = 0.0062,                     previous best = 0.8729
+epoch 42, step 1, loss 0.00024270008504390716
+epoch 42, step 51, loss 0.017233451530337333
+epoch 42, step 101, loss 0.017593632832169533
+epoch 42, step 151, loss 0.01619363398104906
+epoch 42, step 201, loss 0.01676284397393465
+epoch 42, step 251, loss 0.017442446157336235
+epoch 42, step 301, loss 0.019370422288775443
+epoch 42, step 351, loss 0.01646491825580597
+
+===============start testing, training epoch 41
+
+eval mean IOU 0.3346192311506912
+eval mean IOU 0.7602453941509414
+eval mean IOU 0.776027466972615
+eval mean IOU 0.7851834939713253
+eval mean IOU 0.7727568086805789
+eval mean IOU 0.7721855346490761
+eval mean IOU 0.7781650037619625
+eval mean IOU 0.783019792556525
+eval mean IOU 0.7876728040601405
+eval mean IOU 0.7888706223349852
+eval mean IOU 0.7859104027665824
+eval mean IOU 0.7879223811448979
+eval mean IOU 0.7867519316882815
+eval mean IOU 0.7894332977399056
+eval mean IOU 0.788964651386526
+eval mean IOU 0.7868413100447709
+eval mean IOU 0.7881314014513657
+eval mean IOU 0.7875427630603197
+eval mean IOU 0.7864518885849703
+evaluation pixel acc 0.9414667291670746, mean IOU 0.7867067307225822, loss 0.18335998913907742
+
+===============train epoch 43/100 ==========================
+
+
+=>Epoch 42, learning rate = 0.0061,                     previous best = 0.8729
+epoch 43, step 1, loss 0.0004139898717403412
+epoch 43, step 51, loss 0.016534001387655733
+epoch 43, step 101, loss 0.017539127841591836
+epoch 43, step 151, loss 0.016694049634039403
+epoch 43, step 201, loss 0.017699787192046644
+epoch 43, step 251, loss 0.01927677173167467
+epoch 43, step 301, loss 0.015496879979968072
+epoch 43, step 351, loss 0.018318806022405626
+
+===============start testing, training epoch 42
+
+eval mean IOU 0.3261660407150561
+eval mean IOU 0.7939315324732086
+eval mean IOU 0.8040114833269809
+eval mean IOU 0.7986335808479558
+eval mean IOU 0.7868954899389762
+eval mean IOU 0.7922674825350873
+eval mean IOU 0.7907318645808016
+eval mean IOU 0.7916025985905555
+eval mean IOU 0.7980348117906702
+eval mean IOU 0.7995865553844351
+eval mean IOU 0.800847440554775
+eval mean IOU 0.7997193802879875
+eval mean IOU 0.8019122702528672
+eval mean IOU 0.8074973966444652
+eval mean IOU 0.8071560321435838
+eval mean IOU 0.8082137630296413
+eval mean IOU 0.8081129775241698
+eval mean IOU 0.8074317572581607
+eval mean IOU 0.8056121953001609
+evaluation pixel acc 0.9520151466678665, mean IOU 0.8057898130875937, loss 0.14925708685193087
+
+===============train epoch 44/100 ==========================
+
+
+=>Epoch 43, learning rate = 0.0060,                     previous best = 0.8789
+epoch 44, step 1, loss 0.00016600453853607178
+epoch 44, step 51, loss 0.01848872371017933
+epoch 44, step 101, loss 0.016123923696577547
+epoch 44, step 151, loss 0.017623971052467824
+epoch 44, step 201, loss 0.013504578225314617
+epoch 44, step 251, loss 0.01753089777380228
+epoch 44, step 301, loss 0.01883598471432924
+epoch 44, step 351, loss 0.020735021322965622
+
+===============start testing, training epoch 43
+
+eval mean IOU 0.33619553513904626
+eval mean IOU 0.7840975588685927
+eval mean IOU 0.8003559076312027
+eval mean IOU 0.7941482850037334
+eval mean IOU 0.7881949145661589
+eval mean IOU 0.7873870418986264
+eval mean IOU 0.7865559820469137
+eval mean IOU 0.7949199276097578
+eval mean IOU 0.8011531452461194
+eval mean IOU 0.8013494450433211
+eval mean IOU 0.8001176283367324
+eval mean IOU 0.7997192766812495
+eval mean IOU 0.8010922627256188
+eval mean IOU 0.80642602814138
+eval mean IOU 0.8068580006050811
+eval mean IOU 0.8067004673712687
+eval mean IOU 0.8076428420018645
+eval mean IOU 0.8050414193467317
+eval mean IOU 0.8042447482892741
+evaluation pixel acc 0.9517118201206695, mean IOU 0.8043651826585164, loss 0.14847165577441127
+
+===============train epoch 45/100 ==========================
+
+
+=>Epoch 44, learning rate = 0.0059,                     previous best = 0.8789
+epoch 45, step 1, loss 0.00019712617993354798
+epoch 45, step 51, loss 0.017012253291904925
+epoch 45, step 101, loss 0.01458868920058012
+epoch 45, step 151, loss 0.017595965646207332
+epoch 45, step 201, loss 0.017054839067161084
+epoch 45, step 251, loss 0.013573756091296673
+epoch 45, step 301, loss 0.014324028193950653
+epoch 45, step 351, loss 0.01733946017920971
+
+===============start testing, training epoch 44
+
+eval mean IOU 0.32326510140887965
+eval mean IOU 0.7978694369074468
+eval mean IOU 0.8072727634846532
+eval mean IOU 0.8141777627775206
+eval mean IOU 0.8116307364879521
+eval mean IOU 0.8173834928127685
+eval mean IOU 0.8219846404796529
+eval mean IOU 0.8246863987099935
+eval mean IOU 0.8245876452209769
+eval mean IOU 0.8248063041416008
+eval mean IOU 0.8236248127872061
+eval mean IOU 0.8245717813919319
+eval mean IOU 0.8262617785572114
+eval mean IOU 0.8285059604434958
+eval mean IOU 0.8286803237671316
+eval mean IOU 0.830698259236148
+eval mean IOU 0.8304385862288477
+eval mean IOU 0.8288232171501329
+eval mean IOU 0.828328242798373
+evaluation pixel acc 0.9572450434936022, mean IOU 0.8284515186123358, loss 0.13508605443268687
+
+===============train epoch 46/100 ==========================
+
+
+=>Epoch 45, learning rate = 0.0058,                     previous best = 0.8928
+epoch 46, step 1, loss 0.00028583604097366335
+epoch 46, step 51, loss 0.015385495528578758
+epoch 46, step 101, loss 0.013214117802679538
+epoch 46, step 151, loss 0.013182257585227489
+epoch 46, step 201, loss 0.012479333281517029
+epoch 46, step 251, loss 0.014571034789085387
+epoch 46, step 301, loss 0.01677858878672123
+epoch 46, step 351, loss 0.015518363691866398
+
+===============start testing, training epoch 45
+
+eval mean IOU 0.320323611719994
+eval mean IOU 0.8247222581318706
+eval mean IOU 0.8273253157024933
+eval mean IOU 0.8295885171038396
+eval mean IOU 0.8222947793144044
+eval mean IOU 0.8283142387257265
+eval mean IOU 0.8324387086893077
+eval mean IOU 0.8381271707694266
+eval mean IOU 0.8395639050394402
+eval mean IOU 0.8414800983195088
+eval mean IOU 0.8394278657105064
+eval mean IOU 0.8396254468139713
+eval mean IOU 0.8406046296835269
+eval mean IOU 0.8437371376914151
+eval mean IOU 0.8434632509996925
+eval mean IOU 0.844165852852169
+eval mean IOU 0.843946566683047
+eval mean IOU 0.8436442047858951
+eval mean IOU 0.8430421659105084
+evaluation pixel acc 0.9588489968807202, mean IOU 0.8430752180807368, loss 0.13262834401985446
+
+===============train epoch 47/100 ==========================
+
+
+=>Epoch 46, learning rate = 0.0057,                     previous best = 0.9010
+epoch 47, step 1, loss 0.000234332874417305
+epoch 47, step 51, loss 0.013144613012671471
+epoch 47, step 101, loss 0.011197094097733498
+epoch 47, step 151, loss 0.012305232025682926
+epoch 47, step 201, loss 0.015734957851469517
+epoch 47, step 251, loss 0.013139802187681198
+epoch 47, step 301, loss 0.01769637582451105
+epoch 47, step 351, loss 0.016409067802131177
+
+===============start testing, training epoch 46
+
+eval mean IOU 0.3250639082654735
+eval mean IOU 0.8105185246069764
+eval mean IOU 0.8237389921942155
+eval mean IOU 0.8159219387505408
+eval mean IOU 0.8141018036780088
+eval mean IOU 0.8188979596307998
+eval mean IOU 0.8208028218407403
+eval mean IOU 0.8264545237261517
+eval mean IOU 0.8281991248708215
+eval mean IOU 0.8302588591268406
+eval mean IOU 0.8291881629750558
+eval mean IOU 0.8288793430874462
+eval mean IOU 0.8298709273218517
+eval mean IOU 0.8327823750252398
+eval mean IOU 0.8324614994234112
+eval mean IOU 0.8320516692903862
+eval mean IOU 0.8321419448799755
+eval mean IOU 0.8315894673698244
+eval mean IOU 0.8306617154333876
+evaluation pixel acc 0.9549559328631168, mean IOU 0.8307507061159362, loss 0.14218814043676134
+
+===============train epoch 48/100 ==========================
+
+
+=>Epoch 47, learning rate = 0.0056,                     previous best = 0.9010
+epoch 48, step 1, loss 0.00013109587132930755
+epoch 48, step 51, loss 0.013365311704576015
+epoch 48, step 101, loss 0.014238704696297646
+epoch 48, step 151, loss 0.013283385820686817
+epoch 48, step 201, loss 0.01500181370228529
+epoch 48, step 251, loss 0.015725654631853103
+epoch 48, step 301, loss 0.013489985022693872
+epoch 48, step 351, loss 0.01208231483399868
+
+===============start testing, training epoch 47
+
+eval mean IOU 0.34279114110655395
+eval mean IOU 0.8395673953203943
+eval mean IOU 0.8494673155155194
+eval mean IOU 0.8476169184154208
+eval mean IOU 0.8440548128643893
+eval mean IOU 0.8473022252158264
+eval mean IOU 0.850073847170669
+eval mean IOU 0.8559401729662992
+eval mean IOU 0.8580842319224137
+eval mean IOU 0.8602000636233236
+eval mean IOU 0.8610393686080575
+eval mean IOU 0.8590702277212249
+eval mean IOU 0.86114568143152
+eval mean IOU 0.8640786674646991
+eval mean IOU 0.8631611631752256
+eval mean IOU 0.8646024484415236
+eval mean IOU 0.8640661089920744
+eval mean IOU 0.8630408150818679
+eval mean IOU 0.8621343695114713
+evaluation pixel acc 0.9656191879332388, mean IOU 0.8623670555978775, loss 0.10808867715544752
+
+===============train epoch 49/100 ==========================
+
+
+=>Epoch 48, learning rate = 0.0056,                     previous best = 0.9140
+epoch 49, step 1, loss 0.00028057879209518433
+epoch 49, step 51, loss 0.011883390814065933
+epoch 49, step 101, loss 0.011098109103739262
+epoch 49, step 151, loss 0.011232142940163612
+epoch 49, step 201, loss 0.014463206730782985
+epoch 49, step 251, loss 0.012065261282026767
+epoch 49, step 301, loss 0.012228944666683674
+epoch 49, step 351, loss 0.017948570005595684
+
+===============start testing, training epoch 48
+
+eval mean IOU 0.3355009754881965
+eval mean IOU 0.8295001858939702
+eval mean IOU 0.8351580661901337
+eval mean IOU 0.8328006660081393
+eval mean IOU 0.8170625599666834
+eval mean IOU 0.824287682345452
+eval mean IOU 0.8250215564110583
+eval mean IOU 0.8288527422592074
+eval mean IOU 0.8313839123295107
+eval mean IOU 0.8346278914027716
+eval mean IOU 0.8314505509579294
+eval mean IOU 0.8321796245748271
+eval mean IOU 0.8331015156326436
+eval mean IOU 0.8367697728823176
+eval mean IOU 0.8378841029073734
+eval mean IOU 0.8382688988975104
+eval mean IOU 0.837379499525361
+eval mean IOU 0.8369600461746264
+eval mean IOU 0.8362580375039121
+evaluation pixel acc 0.9583948848865764, mean IOU 0.836207882652724, loss 0.13060805119655944
+
+===============train epoch 50/100 ==========================
+
+
+=>Epoch 49, learning rate = 0.0055,                     previous best = 0.9140
+epoch 50, step 1, loss 0.000273014634847641
+epoch 50, step 51, loss 0.016063901603221895
+epoch 50, step 101, loss 0.011844018444418907
+epoch 50, step 151, loss 0.016533978268504144
+epoch 50, step 201, loss 0.02021406002342701
+epoch 50, step 251, loss 0.01806162093579769
+epoch 50, step 301, loss 0.014761107228696346
+epoch 50, step 351, loss 0.013459094330668449
+
+===============start testing, training epoch 49
+
+eval mean IOU 0.33471605329759285
+eval mean IOU 0.8248276550419278
+eval mean IOU 0.8406403289269235
+eval mean IOU 0.8533289708504904
+eval mean IOU 0.8382702656837718
+eval mean IOU 0.8399925262266508
+eval mean IOU 0.843061050903988
+eval mean IOU 0.8434727778358009
+eval mean IOU 0.8460800937543889
+eval mean IOU 0.8482514491785279
+eval mean IOU 0.8465585321629024
+eval mean IOU 0.8465902097089555
+eval mean IOU 0.8474595867135386
+eval mean IOU 0.8504767298810201
+eval mean IOU 0.848422438772723
+eval mean IOU 0.8494127051224858
+eval mean IOU 0.8497184029971686
+eval mean IOU 0.8500774470037533
+eval mean IOU 0.8499885550879045
+evaluation pixel acc 0.9622971700669014, mean IOU 0.8501939751758198, loss 0.11650996476125258
+
+===============train epoch 51/100 ==========================
+
+
+=>Epoch 50, learning rate = 0.0054,                     previous best = 0.9140
+epoch 51, step 1, loss 0.0005375967621803284
+epoch 51, step 51, loss 0.018911616310477258
+epoch 51, step 101, loss 0.013798074454069137
+epoch 51, step 151, loss 0.01293694430589676
+epoch 51, step 201, loss 0.012762475661933422
+epoch 51, step 251, loss 0.012983919106423854
+epoch 51, step 301, loss 0.01192841936647892
+epoch 51, step 351, loss 0.013709824346005917
+
+===============start testing, training epoch 50
+
+eval mean IOU 0.33744724561079936
+eval mean IOU 0.8256939809594561
+eval mean IOU 0.8423469055763307
+eval mean IOU 0.8387414512759852
+eval mean IOU 0.827370093900444
+eval mean IOU 0.8275255272064941
+eval mean IOU 0.8330995936754041
+eval mean IOU 0.8375461529365937
+eval mean IOU 0.838733061916831
+eval mean IOU 0.8398842057047895
+eval mean IOU 0.8388006588657995
+eval mean IOU 0.8394261693312098
+eval mean IOU 0.8410242736399125
+eval mean IOU 0.8428039292693787
+eval mean IOU 0.8417520776066554
+eval mean IOU 0.8416030061510408
+eval mean IOU 0.8395825450285935
+eval mean IOU 0.839064460174564
+eval mean IOU 0.8371484315931113
+evaluation pixel acc 0.9586755026477626, mean IOU 0.8373752933414509, loss 0.12602303918082636
+
+===============train epoch 52/100 ==========================
+
+
+=>Epoch 51, learning rate = 0.0053,                     previous best = 0.9140
+epoch 52, step 1, loss 0.0002442376911640167
+epoch 52, step 51, loss 0.01182106651365757
+epoch 52, step 101, loss 0.011793661817908287
+epoch 52, step 151, loss 0.011563274584710598
+epoch 52, step 201, loss 0.01276116207614541
+epoch 52, step 251, loss 0.013423411950469017
+epoch 52, step 301, loss 0.01258909759297967
+epoch 52, step 351, loss 0.012058181181550026
+
+===============start testing, training epoch 51
+
+eval mean IOU 0.3375331820576005
+eval mean IOU 0.8638091405920867
+eval mean IOU 0.8702687972762734
+eval mean IOU 0.8754123591903868
+eval mean IOU 0.865670445608603
+eval mean IOU 0.8712243066482441
+eval mean IOU 0.875441673950259
+eval mean IOU 0.8805023028032899
+eval mean IOU 0.8799587467476897
+eval mean IOU 0.8809162395844597
+eval mean IOU 0.8808733921904855
+eval mean IOU 0.8813760126012055
+eval mean IOU 0.8820255566430067
+eval mean IOU 0.8840498605801702
+eval mean IOU 0.8813996107567458
+eval mean IOU 0.8820610612674853
+eval mean IOU 0.8806867104921621
+eval mean IOU 0.8795069164989119
+eval mean IOU 0.8793270927019622
+evaluation pixel acc 0.9707074726801945, mean IOU 0.8793734413121929, loss 0.09096587360273678
+
+===============train epoch 53/100 ==========================
+
+
+=>Epoch 52, learning rate = 0.0052,                     previous best = 0.9250
+epoch 53, step 1, loss 0.00019006580114364625
+epoch 53, step 51, loss 0.01371231820434332
+epoch 53, step 101, loss 0.011928941655904055
+epoch 53, step 151, loss 0.012938750691711902
+epoch 53, step 201, loss 0.012063228823244572
+epoch 53, step 251, loss 0.011223412118852139
+epoch 53, step 301, loss 0.009880667865276336
+epoch 53, step 351, loss 0.010662857972085476
+
+===============start testing, training epoch 52
+
+eval mean IOU 0.34656299558553316
+eval mean IOU 0.8493807909290785
+eval mean IOU 0.8594891464156242
+eval mean IOU 0.8591385535306282
+eval mean IOU 0.8532817297778689
+eval mean IOU 0.8573963655854945
+eval mean IOU 0.8614593515819077
+eval mean IOU 0.8668893520466828
+eval mean IOU 0.8641988667597942
+eval mean IOU 0.8662352903988948
+eval mean IOU 0.8666362848131397
+eval mean IOU 0.8655787323654636
+eval mean IOU 0.8651089717451218
+eval mean IOU 0.8672284102923249
+eval mean IOU 0.8650206559229064
+eval mean IOU 0.866033947798024
+eval mean IOU 0.865184123217829
+eval mean IOU 0.8642374510882026
+eval mean IOU 0.8642304233026392
+evaluation pixel acc 0.9662886207681646, mean IOU 0.8645489203274391, loss 0.10218775525156941
+
+===============train epoch 54/100 ==========================
+
+
+=>Epoch 53, learning rate = 0.0051,                     previous best = 0.9250
+epoch 54, step 1, loss 0.00030884575843811036
+epoch 54, step 51, loss 0.010986426092684269
+epoch 54, step 101, loss 0.011337944753468037
+epoch 54, step 151, loss 0.011713130258023738
+epoch 54, step 201, loss 0.011324502862989902
+epoch 54, step 251, loss 0.010402467004954815
+epoch 54, step 301, loss 0.012715571384876967
+epoch 54, step 351, loss 0.011971563428640366
+
+===============start testing, training epoch 53
+
+eval mean IOU 0.3271232209927789
+eval mean IOU 0.8504718406276439
+eval mean IOU 0.8592841184677307
+eval mean IOU 0.8616031596367415
+eval mean IOU 0.8560037056451345
+eval mean IOU 0.8592878844569652
+eval mean IOU 0.8652203246265484
+eval mean IOU 0.8699356523650239
+eval mean IOU 0.8697978583260945
+eval mean IOU 0.8723315504250616
+eval mean IOU 0.8723558882612626
+eval mean IOU 0.8727204994805
+eval mean IOU 0.873364502328404
+eval mean IOU 0.8759319064317003
+eval mean IOU 0.8747177003853207
+eval mean IOU 0.8751972773106724
+eval mean IOU 0.8751477782267578
+eval mean IOU 0.8751029529981121
+eval mean IOU 0.8734621758756658
+evaluation pixel acc 0.9691785216943546, mean IOU 0.873399551856024, loss 0.09635704431355327
+
+===============train epoch 55/100 ==========================
+
+
+=>Epoch 54, learning rate = 0.0050,                     previous best = 0.9250
+epoch 55, step 1, loss 7.133251428604126e-05
+epoch 55, step 51, loss 0.009147553987801075
+epoch 55, step 101, loss 0.011194477535784245
+epoch 55, step 151, loss 0.0097446654625237
+epoch 55, step 201, loss 0.00887792870402336
+epoch 55, step 251, loss 0.01405349989235401
+epoch 55, step 301, loss 0.015136935114860535
+epoch 55, step 351, loss 0.013013187952339649
+
+===============start testing, training epoch 54
+
+eval mean IOU 0.3134071596774536
+eval mean IOU 0.7382827448972241
+eval mean IOU 0.7617706848733266
+eval mean IOU 0.7733139085998945
+eval mean IOU 0.7704877210485205
+eval mean IOU 0.7741922165882691
+eval mean IOU 0.781923765154245
+eval mean IOU 0.783123075931683
+eval mean IOU 0.7859979963149664
+eval mean IOU 0.7871117745746355
+eval mean IOU 0.782116655062395
+eval mean IOU 0.7827554284829383
+eval mean IOU 0.7864325701491549
+eval mean IOU 0.7902668899988311
+eval mean IOU 0.7882611191216782
+eval mean IOU 0.7883748389184859
+eval mean IOU 0.7888776162133995
+eval mean IOU 0.7878410276784099
+eval mean IOU 0.787163764595857
+evaluation pixel acc 0.9510919151894551, mean IOU 0.7874176833583022, loss 0.16763313368454083
+
+===============train epoch 56/100 ==========================
+
+
+=>Epoch 55, learning rate = 0.0049,                     previous best = 0.9250
+epoch 56, step 1, loss 0.00025481104850769046
+epoch 56, step 51, loss 0.013045777522027492
+epoch 56, step 101, loss 0.011653006084263324
+epoch 56, step 151, loss 0.011966117151081562
+epoch 56, step 201, loss 0.010629692569375038
+epoch 56, step 251, loss 0.012257466949522495
+epoch 56, step 301, loss 0.010326029878109693
+epoch 56, step 351, loss 0.010919075805693864
+
+===============start testing, training epoch 55
+
+eval mean IOU 0.3319597544965487
+eval mean IOU 0.8432879063268415
+eval mean IOU 0.8523897452369964
+eval mean IOU 0.85463262159779
+eval mean IOU 0.8524663036304774
+eval mean IOU 0.8559310159946977
+eval mean IOU 0.853892295771413
+eval mean IOU 0.8585447795484736
+eval mean IOU 0.859275465063994
+eval mean IOU 0.8608329400749981
+eval mean IOU 0.8601899286855141
+eval mean IOU 0.8605951881966557
+eval mean IOU 0.860972639500932
+eval mean IOU 0.8626420286856096
+eval mean IOU 0.86177054814294
+eval mean IOU 0.8627947907813426
+eval mean IOU 0.8625585056451841
+eval mean IOU 0.8590538057852878
+eval mean IOU 0.8577925728973991
+evaluation pixel acc 0.9656737820597309, mean IOU 0.8579456855098061, loss 0.10482545012792388
+
+===============train epoch 57/100 ==========================
+
+
+=>Epoch 56, learning rate = 0.0048,                     previous best = 0.9250
+epoch 57, step 1, loss 0.00017566663026809693
+epoch 57, step 51, loss 0.01118010650575161
+epoch 57, step 101, loss 0.01282346896827221
+epoch 57, step 151, loss 0.010929737843573093
+epoch 57, step 201, loss 0.00894298181682825
+epoch 57, step 251, loss 0.010391380906105042
+epoch 57, step 301, loss 0.011233612783253194
+epoch 57, step 351, loss 0.012179274909198285
+
+===============start testing, training epoch 56
+
+eval mean IOU 0.34461293184046693
+eval mean IOU 0.8652338254931151
+eval mean IOU 0.8761330182037786
+eval mean IOU 0.8733805648876388
+eval mean IOU 0.8702129374840356
+eval mean IOU 0.8747840646115482
+eval mean IOU 0.8792821571796763
+eval mean IOU 0.8817735316799341
+eval mean IOU 0.883051743308029
+eval mean IOU 0.8837264557384457
+eval mean IOU 0.8840740242278604
+eval mean IOU 0.8843817631145539
+eval mean IOU 0.8860149467172872
+eval mean IOU 0.8880217997832707
+eval mean IOU 0.8871653236274487
+eval mean IOU 0.8876653627223903
+eval mean IOU 0.8870928018440887
+eval mean IOU 0.8869717466689561
+eval mean IOU 0.8867498492271279
+evaluation pixel acc 0.9728376632305515, mean IOU 0.8869590167752132, loss 0.08237582659553531
+
+===============train epoch 58/100 ==========================
+
+
+=>Epoch 57, learning rate = 0.0047,                     previous best = 0.9299
+epoch 58, step 1, loss 0.00010371572524309158
+epoch 58, step 51, loss 0.009322844784706831
+epoch 58, step 101, loss 0.00902229742705822
+epoch 58, step 151, loss 0.009132498867809773
+epoch 58, step 201, loss 0.012796543791890144
+epoch 58, step 251, loss 0.00948073910549283
+epoch 58, step 301, loss 0.01273261946439743
+epoch 58, step 351, loss 0.011366848513484
+
+===============start testing, training epoch 57
+
+eval mean IOU 0.3511921586182218
+eval mean IOU 0.8551673873579818
+eval mean IOU 0.8589057631307107
+eval mean IOU 0.870604128120161
+eval mean IOU 0.8650673405156594
+eval mean IOU 0.8687530265951925
+eval mean IOU 0.8750802422827846
+eval mean IOU 0.8789947338180776
+eval mean IOU 0.8806909723558031
+eval mean IOU 0.8809825847673431
+eval mean IOU 0.8797097423268102
+eval mean IOU 0.8794627682406665
+eval mean IOU 0.8818730589208637
+eval mean IOU 0.8839777573302798
+eval mean IOU 0.8827668683235785
+eval mean IOU 0.8841683874893631
+eval mean IOU 0.8840171151765551
+eval mean IOU 0.8833733096905336
+eval mean IOU 0.8817629354397037
+evaluation pixel acc 0.9722484424033478, mean IOU 0.8819881695044496, loss 0.08471343997906852
+
+===============train epoch 59/100 ==========================
+
+
+=>Epoch 58, learning rate = 0.0046,                     previous best = 0.9299
+epoch 59, step 1, loss 0.00019676344096660614
+epoch 59, step 51, loss 0.009973684009164572
+epoch 59, step 101, loss 0.014753783851861954
+epoch 59, step 151, loss 0.016868202701210977
+epoch 59, step 201, loss 0.016042072862386705
+epoch 59, step 251, loss 0.011833325311541557
+epoch 59, step 301, loss 0.011124645270407199
+epoch 59, step 351, loss 0.012079206973314285
+
+===============start testing, training epoch 58
+
+eval mean IOU 0.3453477453665943
+eval mean IOU 0.8561535993093718
+eval mean IOU 0.859448595290148
+eval mean IOU 0.8573365061515813
+eval mean IOU 0.8447809319362573
+eval mean IOU 0.8493543647507228
+eval mean IOU 0.8495841790622808
+eval mean IOU 0.8562152618072597
+eval mean IOU 0.8576446900254135
+eval mean IOU 0.8609510974368556
+eval mean IOU 0.8588733465074997
+eval mean IOU 0.8607656248746173
+eval mean IOU 0.8634596474167463
+eval mean IOU 0.8644418601022217
+eval mean IOU 0.8646434528822162
+eval mean IOU 0.8663201928167519
+eval mean IOU 0.8658558163285868
+eval mean IOU 0.8661322055624827
+eval mean IOU 0.8630180875285011
+evaluation pixel acc 0.9648287297273224, mean IOU 0.8630216034598055, loss 0.10992835028158439
+
+===============train epoch 60/100 ==========================
+
+
+=>Epoch 59, learning rate = 0.0045,                     previous best = 0.9299
+epoch 60, step 1, loss 0.0004011363685131073
+epoch 60, step 51, loss 0.011718615978956223
+epoch 60, step 101, loss 0.011122316129505634
+epoch 60, step 151, loss 0.010704509519040584
+epoch 60, step 201, loss 0.009149706043303013
+epoch 60, step 251, loss 0.008625157497823239
+epoch 60, step 301, loss 0.009050163134932518
+epoch 60, step 351, loss 0.010144413348287345
+
+===============start testing, training epoch 59
+
+eval mean IOU 0.3457954859451247
+eval mean IOU 0.8552578441799358
+eval mean IOU 0.8644758276148902
+eval mean IOU 0.8699113299901361
+eval mean IOU 0.8639452363189971
+eval mean IOU 0.8682330306234838
+eval mean IOU 0.8731034328151749
+eval mean IOU 0.8774004451803011
+eval mean IOU 0.8792850704468445
+eval mean IOU 0.8811927374613604
+eval mean IOU 0.8806136874591334
+eval mean IOU 0.8819439410417467
+eval mean IOU 0.8833349043377436
+eval mean IOU 0.8845495673107464
+eval mean IOU 0.8839461742389515
+eval mean IOU 0.8848243613110087
+eval mean IOU 0.8841394081045243
+eval mean IOU 0.8838014933890251
+eval mean IOU 0.8826016758810807
+evaluation pixel acc 0.971558260359147, mean IOU 0.882570149936097, loss 0.08828849907309472
+
+===============train epoch 61/100 ==========================
+
+
+=>Epoch 60, learning rate = 0.0044,                     previous best = 0.9299
+epoch 61, step 1, loss 0.00013756319880485533
+epoch 61, step 51, loss 0.009897260949015618
+epoch 61, step 101, loss 0.009255323454737664
+epoch 61, step 151, loss 0.009067071996629239
+epoch 61, step 201, loss 0.008396154806017875
+epoch 61, step 251, loss 0.009563043974339961
+epoch 61, step 301, loss 0.01060162204876542
+epoch 61, step 351, loss 0.009506084110587835
+
+===============start testing, training epoch 60
+
+eval mean IOU 0.3339514404548739
+eval mean IOU 0.8510885630773908
+eval mean IOU 0.8627079971234418
+eval mean IOU 0.8681679990424969
+eval mean IOU 0.8650243999185588
+eval mean IOU 0.8693187908833258
+eval mean IOU 0.875884481966881
+eval mean IOU 0.878565966812911
+eval mean IOU 0.8807318917272697
+eval mean IOU 0.8836868570977617
+eval mean IOU 0.8832785546364432
+eval mean IOU 0.8850935157931936
+eval mean IOU 0.8864462064460324
+eval mean IOU 0.8889139805633428
+eval mean IOU 0.8879333532281477
+eval mean IOU 0.8885220416317061
+eval mean IOU 0.8880418113906272
+eval mean IOU 0.8879514269953758
+eval mean IOU 0.8870771497867639
+evaluation pixel acc 0.9728477701856836, mean IOU 0.8870771539087128, loss 0.08204302982846787
+
+===============train epoch 62/100 ==========================
+
+
+=>Epoch 61, learning rate = 0.0043,                     previous best = 0.9300
+epoch 62, step 1, loss 9.31800827383995e-05
+epoch 62, step 51, loss 0.009375204049050808
+epoch 62, step 101, loss 0.00775797451287508
+epoch 62, step 151, loss 0.007883053809404373
+epoch 62, step 201, loss 0.009388250298798084
+epoch 62, step 251, loss 0.009266127601265908
+epoch 62, step 301, loss 0.008457210779190063
+epoch 62, step 351, loss 0.011525987960398196
+
+===============start testing, training epoch 61
+
+eval mean IOU 0.3420592782771358
+eval mean IOU 0.8774391083061792
+eval mean IOU 0.880807827236505
+eval mean IOU 0.8851506438870802
+eval mean IOU 0.8791045621085746
+eval mean IOU 0.8824017305200791
+eval mean IOU 0.889767334607076
+eval mean IOU 0.8916677137691094
+eval mean IOU 0.8916768487542955
+eval mean IOU 0.8947762164734678
+eval mean IOU 0.8941080840219404
+eval mean IOU 0.8958057293494116
+eval mean IOU 0.897661764773149
+eval mean IOU 0.8988839579444251
+eval mean IOU 0.8979700154346653
+eval mean IOU 0.897870222125519
+eval mean IOU 0.8960528655933654
+eval mean IOU 0.8964067520050889
+eval mean IOU 0.8959248469591857
+evaluation pixel acc 0.9752536620307171, mean IOU 0.8957508424882145, loss 0.0792998664418829
+
+===============train epoch 63/100 ==========================
+
+
+=>Epoch 62, learning rate = 0.0042,                     previous best = 0.9355
+epoch 63, step 1, loss 0.00027145513892173765
+epoch 63, step 51, loss 0.008985342934727669
+epoch 63, step 101, loss 0.00848294909670949
+epoch 63, step 151, loss 0.00952539412677288
+epoch 63, step 201, loss 0.010352654077112675
+epoch 63, step 251, loss 0.008835996840149164
+epoch 63, step 301, loss 0.010557937063276767
+epoch 63, step 351, loss 0.013363315377384425
+
+===============start testing, training epoch 62
+
+eval mean IOU 0.3397713041749652
+eval mean IOU 0.8464999492233344
+eval mean IOU 0.8558560445110701
+eval mean IOU 0.8548375749998016
+eval mean IOU 0.8563719254170936
+eval mean IOU 0.861136173684459
+eval mean IOU 0.8675704800177533
+eval mean IOU 0.8668710268240625
+eval mean IOU 0.8694445008763264
+eval mean IOU 0.8689009153934217
+eval mean IOU 0.8697035037269671
+eval mean IOU 0.8704107107730695
+eval mean IOU 0.8715472241016836
+eval mean IOU 0.872991017656361
+eval mean IOU 0.8738159104773656
+eval mean IOU 0.8744798656647089
+eval mean IOU 0.8748976423019521
+eval mean IOU 0.8733808423469557
+eval mean IOU 0.8733976449314328
+evaluation pixel acc 0.9693503972850653, mean IOU 0.8732525334137053, loss 0.09678607022614924
+
+===============train epoch 64/100 ==========================
+
+
+=>Epoch 63, learning rate = 0.0041,                     previous best = 0.9355
+epoch 64, step 1, loss 0.00011874961853027344
+epoch 64, step 51, loss 0.00977619545534253
+epoch 64, step 101, loss 0.009411154359579087
+epoch 64, step 151, loss 0.00801347317546606
+epoch 64, step 201, loss 0.009068915352225303
+epoch 64, step 251, loss 0.008131151001900434
+epoch 64, step 301, loss 0.010368764594197274
+epoch 64, step 351, loss 0.008863221339881421
+
+===============start testing, training epoch 63
+
+eval mean IOU 0.3401910538335684
+eval mean IOU 0.8635608605011966
+eval mean IOU 0.8764242654180165
+eval mean IOU 0.8816603035508447
+eval mean IOU 0.8790483594576124
+eval mean IOU 0.8839628169318663
+eval mean IOU 0.8873590833882878
+eval mean IOU 0.8886375723588752
+eval mean IOU 0.8883426271043501
+eval mean IOU 0.8898097391920965
+eval mean IOU 0.889786301629376
+eval mean IOU 0.8888192095720452
+eval mean IOU 0.8904225472677181
+eval mean IOU 0.89318051919906
+eval mean IOU 0.8918658496863915
+eval mean IOU 0.8923059590387055
+eval mean IOU 0.8917676229368439
+eval mean IOU 0.8893967899565154
+eval mean IOU 0.8883016858963864
+evaluation pixel acc 0.9744875917928274, mean IOU 0.8883840521526656, loss 0.07572770269157794
+
+===============train epoch 65/100 ==========================
+
+
+=>Epoch 64, learning rate = 0.0040,                     previous best = 0.9355
+epoch 65, step 1, loss 0.0001580197811126709
+epoch 65, step 51, loss 0.010316545613110066
+epoch 65, step 101, loss 0.009275351226329803
+epoch 65, step 151, loss 0.008763839427381754
+epoch 65, step 201, loss 0.010167580597102642
+epoch 65, step 251, loss 0.009252236284315585
+epoch 65, step 301, loss 0.008953531205654144
+epoch 65, step 351, loss 0.00864143967628479
+
+===============start testing, training epoch 64
+
+eval mean IOU 0.3439155690129602
+eval mean IOU 0.8637127594792372
+eval mean IOU 0.8760438633049331
+eval mean IOU 0.8828507284102808
+eval mean IOU 0.8812948217464164
+eval mean IOU 0.8850293651233967
+eval mean IOU 0.8904621350654137
+eval mean IOU 0.8910964817292601
+eval mean IOU 0.892437940843347
+eval mean IOU 0.8948910556699067
+eval mean IOU 0.8943539566309805
+eval mean IOU 0.8940850973346068
+eval mean IOU 0.8954193223670243
+eval mean IOU 0.8974394499766001
+eval mean IOU 0.8964046748470407
+eval mean IOU 0.896581052663198
+eval mean IOU 0.8953706072196328
+eval mean IOU 0.8955043834533605
+eval mean IOU 0.8944744828587675
+evaluation pixel acc 0.9741028551877412, mean IOU 0.8944221969017967, loss 0.07865872214660867
+
+===============train epoch 66/100 ==========================
+
+
+=>Epoch 65, learning rate = 0.0039,                     previous best = 0.9355
+epoch 66, step 1, loss 0.00011009114980697631
+epoch 66, step 51, loss 0.006443018242716789
+epoch 66, step 101, loss 0.008349775426089764
+epoch 66, step 151, loss 0.0075186360068619255
+epoch 66, step 201, loss 0.00673700999841094
+epoch 66, step 251, loss 0.008034881189465522
+epoch 66, step 301, loss 0.007005581010133028
+epoch 66, step 351, loss 0.0072952468022704125
+
+===============start testing, training epoch 65
+
+eval mean IOU 0.34502413969205115
+eval mean IOU 0.8761348695215762
+eval mean IOU 0.8851037723198751
+eval mean IOU 0.8908398465109635
+eval mean IOU 0.8915545694722465
+eval mean IOU 0.8961407423829462
+eval mean IOU 0.9022653502386216
+eval mean IOU 0.9044979845011816
+eval mean IOU 0.9049545394558236
+eval mean IOU 0.905503082662044
+eval mean IOU 0.9054676765090044
+eval mean IOU 0.9033525746624784
+eval mean IOU 0.9044255913249811
+eval mean IOU 0.9064331294509047
+eval mean IOU 0.9055969366649712
+eval mean IOU 0.9063561770379861
+eval mean IOU 0.9055622365156227
+eval mean IOU 0.9057998528939141
+eval mean IOU 0.9054909254085378
+evaluation pixel acc 0.9776396171739026, mean IOU 0.9054090529015403, loss 0.06907871063123201
+
+===============train epoch 67/100 ==========================
+
+
+=>Epoch 66, learning rate = 0.0038,                     previous best = 0.9415
+epoch 67, step 1, loss 0.00015685440599918365
+epoch 67, step 51, loss 0.007717076595872641
+epoch 67, step 101, loss 0.007919022504240274
+epoch 67, step 151, loss 0.007165296610444784
+epoch 67, step 201, loss 0.007979449402540922
+epoch 67, step 251, loss 0.008897424839437009
+epoch 67, step 301, loss 0.009315634258091449
+epoch 67, step 351, loss 0.007683906678110361
+
+===============start testing, training epoch 66
+
+eval mean IOU 0.3539723668781371
+eval mean IOU 0.8825567852815824
+eval mean IOU 0.8928310812604591
+eval mean IOU 0.9004362210938852
+eval mean IOU 0.899646387364095
+eval mean IOU 0.9030258998698815
+eval mean IOU 0.9082815704527935
+eval mean IOU 0.9103165216162142
+eval mean IOU 0.9101661267247424
+eval mean IOU 0.912240191631224
+eval mean IOU 0.9114949252931251
+eval mean IOU 0.909854906346216
+eval mean IOU 0.9108068682164514
+eval mean IOU 0.9123132416961174
+eval mean IOU 0.9124521978982184
+eval mean IOU 0.9128647207601498
+eval mean IOU 0.912453446898762
+eval mean IOU 0.9123715296771087
+eval mean IOU 0.9113320873798602
+evaluation pixel acc 0.9793148386144378, mean IOU 0.9113316623198926, loss 0.061700039819537936
+
+===============train epoch 68/100 ==========================
+
+
+=>Epoch 67, learning rate = 0.0037,                     previous best = 0.9453
+epoch 68, step 1, loss 0.00019831362366676332
+epoch 68, step 51, loss 0.006966747492551804
+epoch 68, step 101, loss 0.007414646562188864
+epoch 68, step 151, loss 0.006812856532633305
+epoch 68, step 201, loss 0.009077895414084197
+epoch 68, step 251, loss 0.012465052224695683
+epoch 68, step 301, loss 0.008025968968868256
+epoch 68, step 351, loss 0.006865821305662393
+
+===============start testing, training epoch 67
+
+eval mean IOU 0.3516073394896646
+eval mean IOU 0.8826323017668187
+eval mean IOU 0.8891264111892153
+eval mean IOU 0.8918385499881519
+eval mean IOU 0.8838003764634157
+eval mean IOU 0.885073292365864
+eval mean IOU 0.8916309354920313
+eval mean IOU 0.8963584316095091
+eval mean IOU 0.8978756823364152
+eval mean IOU 0.9008610533147302
+eval mean IOU 0.9011304404718892
+eval mean IOU 0.9018769742091017
+eval mean IOU 0.9031621796646256
+eval mean IOU 0.9055436019132268
+eval mean IOU 0.9051786490936532
+eval mean IOU 0.9062906991404264
+eval mean IOU 0.9056276236989944
+eval mean IOU 0.9064196498228207
+eval mean IOU 0.9058298251447684
+evaluation pixel acc 0.9776077190882068, mean IOU 0.9059608105781465, loss 0.06708078106333103
+
+===============train epoch 69/100 ==========================
+
+
+=>Epoch 68, learning rate = 0.0036,                     previous best = 0.9453
+epoch 69, step 1, loss 9.604860842227935e-05
+epoch 69, step 51, loss 0.0065103073604404925
+epoch 69, step 101, loss 0.0069184483885765076
+epoch 69, step 151, loss 0.0077578768916428086
+epoch 69, step 201, loss 0.010219672713428735
+epoch 69, step 251, loss 0.008256657145917416
+epoch 69, step 301, loss 0.007451626561582088
+epoch 69, step 351, loss 0.007876556981354952
+
+===============start testing, training epoch 68
+
+eval mean IOU 0.3505334257789236
+eval mean IOU 0.8875907035932735
+eval mean IOU 0.898588162197352
+eval mean IOU 0.8994535014205283
+eval mean IOU 0.8958757110977341
+eval mean IOU 0.8979081914121876
+eval mean IOU 0.9016837986562904
+eval mean IOU 0.9054943408236139
+eval mean IOU 0.9058532808215322
+eval mean IOU 0.9070192714767554
+eval mean IOU 0.907666610068789
+eval mean IOU 0.9076363380578917
+eval mean IOU 0.9083951167030504
+eval mean IOU 0.9101134629876093
+eval mean IOU 0.9090711029858085
+eval mean IOU 0.9099909758882635
+eval mean IOU 0.9097234959586693
+eval mean IOU 0.91004638811196
+eval mean IOU 0.9096122219077462
+evaluation pixel acc 0.9793034890008878, mean IOU 0.9095406375743602, loss 0.06264774878969886
+
+===============train epoch 70/100 ==========================
+
+
+=>Epoch 69, learning rate = 0.0035,                     previous best = 0.9453
+epoch 70, step 1, loss 6.0362659394741055e-05
+epoch 70, step 51, loss 0.007402517151087523
+epoch 70, step 101, loss 0.009263931024819613
+epoch 70, step 151, loss 0.007639675538986921
+epoch 70, step 201, loss 0.010585771843791008
+epoch 70, step 251, loss 0.007771907556802035
+epoch 70, step 301, loss 0.007949033327400684
+epoch 70, step 351, loss 0.008945442020893098
+
+===============start testing, training epoch 69
+
+eval mean IOU 0.3510194056289433
+eval mean IOU 0.8791390036374368
+eval mean IOU 0.8893316227974437
+eval mean IOU 0.8944659325751377
+eval mean IOU 0.8906250060730037
+eval mean IOU 0.8928235853479862
+eval mean IOU 0.8966561128629109
+eval mean IOU 0.9000478086798771
+eval mean IOU 0.9013824594610179
+eval mean IOU 0.9039851055023149
+eval mean IOU 0.9033357310331118
+eval mean IOU 0.903955788414199
+eval mean IOU 0.90524110035787
+eval mean IOU 0.9074895014701828
+eval mean IOU 0.9082083033256325
+eval mean IOU 0.9091150749377573
+eval mean IOU 0.9087515967607008
+eval mean IOU 0.9087878040903143
+eval mean IOU 0.9079757717235355
+evaluation pixel acc 0.9781125124279781, mean IOU 0.9081529445583996, loss 0.0660284352232958
+
+===============train epoch 71/100 ==========================
+
+
+=>Epoch 70, learning rate = 0.0034,                     previous best = 0.9453
+epoch 71, step 1, loss 8.018446713685989e-05
+epoch 71, step 51, loss 0.009409832764416932
+epoch 71, step 101, loss 0.007925095923244953
+epoch 71, step 151, loss 0.00984158481284976
+epoch 71, step 201, loss 0.007086889334022999
+epoch 71, step 251, loss 0.00793157333880663
+epoch 71, step 301, loss 0.007035526130348444
+epoch 71, step 351, loss 0.0065495060943067075
+
+===============start testing, training epoch 70
+
+eval mean IOU 0.3538986912655648
+eval mean IOU 0.8924286004965871
+eval mean IOU 0.8983320696304927
+eval mean IOU 0.8970968987080125
+eval mean IOU 0.8964292165823248
+eval mean IOU 0.8994187164084819
+eval mean IOU 0.9044529177192085
+eval mean IOU 0.9059523835496366
+eval mean IOU 0.9066402968255364
+eval mean IOU 0.9081022777286359
+eval mean IOU 0.907518500392104
+eval mean IOU 0.9068541162428361
+eval mean IOU 0.908171494453766
+eval mean IOU 0.9099951289771391
+eval mean IOU 0.909917346204405
+eval mean IOU 0.9107342942214194
+eval mean IOU 0.909876579111445
+eval mean IOU 0.9099078551732922
+eval mean IOU 0.9086404504551179
+evaluation pixel acc 0.978824020402412, mean IOU 0.9087765575665446, loss 0.06451307088750732
+
+===============train epoch 72/100 ==========================
+
+
+=>Epoch 71, learning rate = 0.0033,                     previous best = 0.9453
+epoch 72, step 1, loss 0.00013648898899555205
+epoch 72, step 51, loss 0.0077960496135056016
+epoch 72, step 101, loss 0.0075916220061480995
+epoch 72, step 151, loss 0.007135592751204968
+epoch 72, step 201, loss 0.007319107286632061
+epoch 72, step 251, loss 0.006223508924245834
+epoch 72, step 301, loss 0.007053455330431461
+epoch 72, step 351, loss 0.00650870168954134
+
+===============start testing, training epoch 71
+
+eval mean IOU 0.35640221618627654
+eval mean IOU 0.905520692542194
+eval mean IOU 0.9121445681469796
+eval mean IOU 0.915204526580324
+eval mean IOU 0.9119210017866508
+eval mean IOU 0.9148439078712982
+eval mean IOU 0.919689413757901
+eval mean IOU 0.9219241373943421
+eval mean IOU 0.9220417486707602
+eval mean IOU 0.923553720564659
+eval mean IOU 0.9228979927632672
+eval mean IOU 0.9217810590647602
+eval mean IOU 0.9229526684017713
+eval mean IOU 0.924569109621789
+eval mean IOU 0.924337577423372
+eval mean IOU 0.9248264777667817
+eval mean IOU 0.9243938626109666
+eval mean IOU 0.924183534106385
+eval mean IOU 0.922864673317271
+evaluation pixel acc 0.9821771812004836, mean IOU 0.9228831760602936, loss 0.05367566742371399
+
+===============train epoch 73/100 ==========================
+
+
+=>Epoch 72, learning rate = 0.0032,                     previous best = 0.9525
+epoch 73, step 1, loss 0.00015958985686302185
+epoch 73, step 51, loss 0.006153765428811311
+epoch 73, step 101, loss 0.007569350197911263
+epoch 73, step 151, loss 0.007388282768428326
+epoch 73, step 201, loss 0.007982580110430718
+epoch 73, step 251, loss 0.007032344199717045
+epoch 73, step 301, loss 0.007093069933354855
+epoch 73, step 351, loss 0.007044230237603187
+
+===============start testing, training epoch 72
+
+eval mean IOU 0.3570537911321014
+eval mean IOU 0.8895447477548063
+eval mean IOU 0.904517960631761
+eval mean IOU 0.9099174707341037
+eval mean IOU 0.905784540755428
+eval mean IOU 0.908859800251801
+eval mean IOU 0.9135312008469321
+eval mean IOU 0.9159662022217079
+eval mean IOU 0.9167098735518489
+eval mean IOU 0.918562924016504
+eval mean IOU 0.9183144319698593
+eval mean IOU 0.9184836453011355
+eval mean IOU 0.9193887139884807
+eval mean IOU 0.9207669612428149
+eval mean IOU 0.9202898476017051
+eval mean IOU 0.9209769852518027
+eval mean IOU 0.9207427588728889
+eval mean IOU 0.9206172173986291
+eval mean IOU 0.919994723362934
+evaluation pixel acc 0.9812679375950325, mean IOU 0.9201277197303251, loss 0.05623201127317581
+
+===============train epoch 74/100 ==========================
+
+
+=>Epoch 73, learning rate = 0.0031,                     previous best = 0.9525
+epoch 74, step 1, loss 0.00015849852561950685
+epoch 74, step 51, loss 0.007018736228346824
+epoch 74, step 101, loss 0.00659311980754137
+epoch 74, step 151, loss 0.0064050393588840964
+epoch 74, step 201, loss 0.006166737399995327
+epoch 74, step 251, loss 0.005620486760511995
+epoch 74, step 301, loss 0.007956296406686306
+epoch 74, step 351, loss 0.0071925633251667025
+
+===============start testing, training epoch 73
+
+eval mean IOU 0.3559577480540027
+eval mean IOU 0.8937792390283891
+eval mean IOU 0.9079584312179368
+eval mean IOU 0.9147025031052226
+eval mean IOU 0.910901617783219
+eval mean IOU 0.9146609840091673
+eval mean IOU 0.9186732981282126
+eval mean IOU 0.9217152216741998
+eval mean IOU 0.9227845842907146
+eval mean IOU 0.9244247657076841
+eval mean IOU 0.9238400627651037
+eval mean IOU 0.9229553036036255
+eval mean IOU 0.9240134754730029
+eval mean IOU 0.9254012533881447
+eval mean IOU 0.9255769403647497
+eval mean IOU 0.926469182227484
+eval mean IOU 0.9266394558172282
+eval mean IOU 0.9262601100340605
+eval mean IOU 0.9256275265374116
+evaluation pixel acc 0.9826200710332228, mean IOU 0.925766262188019, loss 0.051798789495868344
+
+===============train epoch 75/100 ==========================
+
+
+=>Epoch 74, learning rate = 0.0030,                     previous best = 0.9542
+epoch 75, step 1, loss 7.042905688285827e-05
+epoch 75, step 51, loss 0.006484743848443031
+epoch 75, step 101, loss 0.006270787365734577
+epoch 75, step 151, loss 0.007000413261353969
+epoch 75, step 201, loss 0.006342402365058661
+epoch 75, step 251, loss 0.006162190552800894
+epoch 75, step 301, loss 0.008460687220096588
+epoch 75, step 351, loss 0.00670752039924264
+
+===============start testing, training epoch 74
+
+eval mean IOU 0.358940486373818
+eval mean IOU 0.8989840258298128
+eval mean IOU 0.9080999324213084
+eval mean IOU 0.9115951476904067
+eval mean IOU 0.9077159130488736
+eval mean IOU 0.9117680169936131
+eval mean IOU 0.9158213235939802
+eval mean IOU 0.9181660855400222
+eval mean IOU 0.9190143492625411
+eval mean IOU 0.9212543734903
+eval mean IOU 0.9204866446513409
+eval mean IOU 0.9204879530552245
+eval mean IOU 0.9217523388147726
+eval mean IOU 0.9229241732167213
+eval mean IOU 0.922612557338576
+eval mean IOU 0.9232503568729156
+eval mean IOU 0.923170508262215
+eval mean IOU 0.9228987695889262
+eval mean IOU 0.9221193510526264
+evaluation pixel acc 0.9821324040754926, mean IOU 0.9222639384361857, loss 0.05297613396196739
+
+===============train epoch 76/100 ==========================
+
