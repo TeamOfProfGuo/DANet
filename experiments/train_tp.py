@@ -157,8 +157,7 @@ for i, (image, target) in enumerate(trainloader):
 scheduler(optimizer, i, epoch=1, best_pred=0)
 optimizer.zero_grad()
 outputs = model(image)  # output is a tuple
-
-loss = criterion(*outputs, target)
+loss = criterion(outputs[0], target)
 loss.backward()
 optimizer.step()
 train_loss += loss.item()

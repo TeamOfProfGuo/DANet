@@ -2,6 +2,18 @@
 
 [Jun Fu](https://scholar.google.com/citations?user=h3vzrgkAAAAJ&hl=zh-CN), [Jing Liu](http://www.nlpr.ia.ac.cn/iva/liujing/index.html), [Haijie Tian](https://github.com/tianhaijie), [Yong Li](http://www.foreverlee.net/), Yongjun Bao, Zhiwei Fang,and Hanqing Lu
 
+## Introduction
+
+We propose a Dual Attention Network (DANet) to adaptively integrate local features with their global dependencies based on the self-attention mechanism. And we achieve new state-of-the-art segmentation performance on three challenging scene segmentation datasets, i.e., Cityscapes, PASCAL Context and COCO Stuff-10k dataset.
+
+![image](img/overview.png)
+
+## Cityscapes testing set result
+
+We train our DANet-101 with only fine annotated data and submit our test results to the official evaluation server.
+
+![image](img/tab3.png)
+
 ## Updates
 
 <font color="#dd0000">**2020/9**：</font>**Renew the code**, which supports **Pytorch 1.4.0** or later!
@@ -64,3 +76,33 @@
    - Evaluation Result
 
      The expected scores will show as follows: DRANet101 on cityscapes val set (mIoU/pAcc): **81.63/96.62** (ss) 
+
+## Citation
+
+if you find DANet and DRANet useful in your research, please consider citing:
+
+```
+@article{fu2020scene,
+  title={Scene Segmentation With Dual Relation-Aware Attention Network},
+  author={Fu, Jun and Liu, Jing and Jiang, Jie and Li, Yong and Bao, Yongjun and Lu, Hanqing},
+  journal={IEEE Transactions on Neural Networks and Learning Systems},
+  year={2020},
+  publisher={IEEE}
+}
+```
+
+```
+@inproceedings{fu2019dual,
+  title={Dual attention network for scene segmentation},
+  author={Fu, Jun and Liu, Jing and Tian, Haijie and Li, Yong and Bao, Yongjun and Fang, Zhiwei and Lu, Hanqing},
+  booktitle={Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition},
+  pages={3146--3154},
+  year={2019}
+}
+```
+
+
+
+## Acknowledgement
+
+Thanks [PyTorch-Encoding](https://github.com/zhanghang1989/PyTorch-Encoding), especially the Synchronized BN!

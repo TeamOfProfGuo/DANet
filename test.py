@@ -22,51 +22,13 @@ main(**kw)
 
 
 
-def test(target, *args):
-    t = target
-    print(t)
-    print(args)
-    type(args)
-    a, b = tuple(args)
-    print('first {}'.format(a))
-    print('2nd {}'.format(b))
-
-a = ['hi', 'hi2']
-test('t', *a)
-
-
 def test(*args):
-    print(args)
-    type(args)
-    a, b, c = tuple(args)
-    print('first {}'.format(a))
-    print('2nd {}'.format(b))
-
-a = ['hi', 'hi2']
-test(*a, 't')
-
-
-def test( *args):
-
-    print(args)
-    print(type(args))
     a, b = tuple(args)
     print('first {}'.format(a))
     print('2nd {}'.format(b))
 
 a = ['hi', 'hi2']
-test('t', ['hi', 'hi2'])
-test('t', ['hi', 'hi2'])
-
-
-
-f_path = os.path.abspath(os.path.join(root, 'resnet50-19c8e357.pth'))
-print(f_path)
-print('exist'+str(os.path.exists(f_path))
-if os.path.exists(f_path):
-    model.load_state_dict(torch.load(f_path), strict=False)
-else:
-    model.load_state_dict(torch.load(get_model_file('resnet50', root=root)), strict=False)
+test(['hi', 'hi2'])
 
 
 

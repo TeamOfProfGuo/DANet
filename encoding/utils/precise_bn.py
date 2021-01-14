@@ -42,7 +42,7 @@ def update_bn_stats(
         data_loader (iterator): an iterator. Produce data as inputs to the model.
         num_iters (int): number of iterations to compute the stats.
     """
-    bn_layers = get_bn_modules(model)
+    bn_layers = get_bn_modules(model)  # return all BN layers
 
     if len(bn_layers) == 0:
         return

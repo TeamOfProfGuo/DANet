@@ -60,7 +60,7 @@ class Trainer():
         # model
         model = get_segmentation_model(args.model, dataset=args.dataset,
                                        backbone=args.backbone, aux=args.aux,
-                                       se_loss=args.se_loss, #norm_layer=SyncBatchNorm,
+                                       se_loss=args.se_loss, # norm_layer=SyncBatchNorm,
                                        base_size=args.base_size, crop_size=args.crop_size,
                                        # multi_grid=args.multi_grid, multi_dilation=args.multi_dilation, os=args.os
                                        )
@@ -156,7 +156,7 @@ class Trainer():
         # Fast test during the training
         def eval_batch(model, image, target):
             outputs = model(image)
-            # outputs = gather(outputs, 0, dim=0)  # check this line for parallel computing
+            #outputs = gather(outputs, 0, dim=0)  # check this line for parallel computing
             pred = outputs[0]
             loss = self.criterion(pred, target)
             target = target.cuda()
@@ -195,12 +195,9 @@ if __name__ == "__main__":
     # configuration
     args = Dict(yaml.safe_load(open(config.config_path)))
     args.cuda = (args.use_cuda and torch.cuda.is_available())
-    args.resume = None if args.resume=='None' else args.resume
     torch.manual_seed(args.seed)
 
-
     trainer = Trainer(args)
-    # import pdb; pdb.set_trace()
     print('Starting Epoch:', trainer.args.start_epoch)
     print('Total Epoches:', trainer.args.epochs)
     trainer.train_n_evaluate()

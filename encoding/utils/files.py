@@ -60,7 +60,7 @@ def download(url, path=None, overwrite=False, sha1_hash=None):
         if r.status_code != 200:
             raise RuntimeError("Failed downloading url %s"%url)
         total_length = r.headers.get('content-length')
-        with open(fname, 'wb') as f:   ## write to file
+        with open(fname, 'wb') as f:
             if total_length is None: # no content length header
                 for chunk in r.iter_content(chunk_size=1024):
                     if chunk: # filter out keep-alive new chunks

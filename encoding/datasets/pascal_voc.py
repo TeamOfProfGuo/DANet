@@ -15,7 +15,6 @@ class VOCSegmentation(BaseDataset):
         'tv/monitor', 'ambigious'
     ]
     NUM_CLASS = 21
-    #BASE_DIR = 'VOCdevkit/VOC2012'
     BASE_DIR = '../dataset/VOCdevkit/VOC2012'
     def __init__(self, root=os.path.expanduser('~/.encoding/data'), split='train',
                  mode=None, transform=None, target_transform=None, **kwargs):

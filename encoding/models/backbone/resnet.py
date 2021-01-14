@@ -147,8 +147,7 @@ class ResNet(nn.Module):
                  rectified_conv=False, rectify_avg=False,
                  avd=False, avd_first=False,
                  final_drop=0.0, dropblock_prob=0,
-                 last_gamma=False, norm_layer=nn.BatchNorm2d):  # multi_grid=False, multi_dilation=None, os=32, no_deepstem=False
-
+                 last_gamma=False, norm_layer=nn.BatchNorm2d):
         self.cardinality = groups
         self.bottleneck_width = bottleneck_width
         # ResNet-D params
@@ -294,21 +293,23 @@ class ResNet(nn.Module):
 
         return x
 
-def resnet50(pretrained=False, root='./encoding/models', **kwargs):  ##
+def resnet50(pretrained=False, root='./encoding/models', **kwargs):
     """Constructs a ResNet-50 model.
 
     Args:
         pretrained (bool): If True, returns a model pre-trained on ImageNet
     """
     model = ResNet(Bottleneck, [3, 4, 6, 3], **kwargs)
+
     if pretrained:
         f_path = os.path.abspath(os.path.join(root, 'resnet50-19c8e357.pth'))
+        print(f_path)
+        print('exist' + str(os.path.exists(f_path)))
         if os.path.exists(f_path):
             model.load_state_dict(torch.load(f_path), strict=False)
         else:
             model.load_state_dict(torch.load(get_model_file('resnet50', root=root)), strict=False)
     return model
-
 
 def resnet101(pretrained=False, root='~/.encoding/models', **kwargs):
     """Constructs a ResNet-101 model.
@@ -316,7 +317,7 @@ def resnet101(pretrained=False, root='~/.encoding/models', **kwargs):
     Args:
         pretrained (bool): If True, returns a model pre-trained on ImageNet
     """
-    model = ResNddet(Bottleneck, [3, 4, 23, 3], **kwargs)
+    model = ResNet(Bottleneck, [3, 4, 23, 3], **kwargs)
     if pretrained:
         model.load_state_dict(torch.load(
             get_model_file('resnet101', root=root)), strict=False)
