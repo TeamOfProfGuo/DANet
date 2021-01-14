@@ -15,11 +15,11 @@
 
 module purge
 source ~/.bashrc
+# use your own env name
 source activate python36
-echo "start training">>train.log
 module load cuda/10.0
 module load gcc/7.3 
-#module load cudnn/7.5
+echo "start training">>train.log
 
 python train.py --config './results/deeplab_resnet50/config.yaml' >train.log 2>& 1
 echo "FINISH"
