@@ -15,13 +15,13 @@
 #SBATCH -p aquila
 
 module purge
-source ~/.bashrc
+module load anaconda3
 # use your own env name
-source activate python36
 module load cuda/10.0
-module load gcc/7.3 
-echo "start training">>train.log
-
-python train.py --config './results/deeplab_resnet50/config.yaml' >train.log 2>& 1
+module load gcc/7.3
+cd /gpfsnyu/scratch/zz1763/DeepLearning/DANet 
+echo "start training"
+source activate dl
+python train.py --config './results/deeplab_resnet50/config.yaml'
 echo "FINISH"
 

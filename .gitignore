@@ -11,3 +11,6 @@ runs/pascal_voc/deeplab/resnet50/default/checkpoint.pth.tar
 runs/pascal_voc/deeplab/resnet50/default/model_best.pth.tar
 encoding0/models/resnet50-19c8e357.pth
 *.pyc
+*.err
+*.out
+*.agpu4
