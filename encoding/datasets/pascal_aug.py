@@ -14,13 +14,14 @@ class VOCAugSegmentation(BaseDataset):
         'tv'
     ]
     NUM_CLASS = 21
-    TRAIN_BASE_DIR = 'VOCaug/dataset/'
+    TRAIN_BASE_DIR = '../dataset/voc_aug/dataset'
     def __init__(self, root=os.path.expanduser('~/.encoding/data'), split='train',
                  mode=None, transform=None, target_transform=None, **kwargs):
         super(VOCAugSegmentation, self).__init__(root, split, mode, transform,
                                                  target_transform, **kwargs)
         # train/val/test splits are pre-cut
-        _voc_root = os.path.join(root, self.TRAIN_BASE_DIR)
+        #_voc_root = os.path.join(root, self.TRAIN_BASE_DIR)
+        _voc_root = os.path.abspath(self.TRAIN_BASE_DIR)
         _mask_dir = os.path.join(_voc_root, 'cls')
         _image_dir = os.path.join(_voc_root, 'img')
         if self.mode == 'train':
@@ -28,7 +29,8 @@ class VOCAugSegmentation(BaseDataset):
         elif self.mode == 'val':
             _split_f = os.path.join(_voc_root, 'val.txt')
         else:
-            raise RuntimeError('Unknown dataset split.')
+            #raise RuntimeError('Unknown dataset split.')
+            _split_f = os.path.join(_voc_root, 'val.txt')
         self.images = []
         self.masks = []
         with open(os.path.join(_split_f), "r") as lines:
@@ -36,10 +38,10 @@ class VOCAugSegmentation(BaseDataset):
                 _image = os.path.join(_image_dir, line.rstrip('\n')+".jpg")
                 assert os.path.isfile(_image)
                 self.images.append(_image)
-                if self.mode != 'test':
-                    _mask = os.path.join(_mask_dir, line.rstrip('\n')+".mat")
-                    assert os.path.isfile(_mask)
-                    self.masks.append(_mask)
+                #if self.mode != 'test':
+                _mask = os.path.join(_mask_dir, line.rstrip('\n')+".mat")
+                assert os.path.isfile(_mask)
+                self.masks.append(_mask)
 
         assert (len(self.images) == len(self.masks))
 
@@ -49,15 +51,16 @@ class VOCAugSegmentation(BaseDataset):
             if self.transform is not None:
                 _img = self.transform(_img)
             return _img, os.path.basename(self.images[index])
-        _target = self._load_mat(self.masks[index])
+
+        _target = self._load_mat(self.masks[index])    #[h, w]
         # synchrosized transform
         if self.mode == 'train':
-            _img, _target = self._sync_transform( _img, _target)
+            _img, _target = self._sync_transform( _img, _target)   # return an image, a tensor(2D)
         elif self.mode == 'val':
             _img, _target = self._val_sync_transform( _img, _target)
         # general resize, normalize and toTensor
         if self.transform is not None:
-            _img = self.transform(_img)
+            _img = self.transform(_img)  # _img to tensor, normalize
         if self.target_transform is not None:
             _target = self.target_transform(_target)
         return _img, _target
@@ -70,3 +73,9 @@ class VOCAugSegmentation(BaseDataset):
 
     def __len__(self):
         return len(self.images)
+
+    def make_pred(self, x):
+        return x
+
+
+
