@@ -14,3 +14,4 @@ encoding0/models/resnet50-19c8e357.pth
 *.err
 *.out
 *.agpu4
+train.log

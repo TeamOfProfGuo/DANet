@@ -9,18 +9,19 @@
 #SBATCH --time=50:00:00
 #SBATCH --mail-type=END
 #SBATCH --output=deeplab_test_%j.out
-#SBATCH --error=test_error_%j.out
+#SBATCH --error=test_error_%j.err
 #SBATCH --gres=gpu:1 # How much gpu need, n is the number
 #SBATCH -p aquila
 
 module purge
-source ~/.bashrc
-source activate python36
-echo "start testing">>test.log
+module activate anaconda3
 module load cuda/10.0
 module load gcc/7.3
-#module load cudnn/7.5
+cd /gpfsnyu/scratch/zz1763/DeepLearning/DANet
+source activate dl
+echo "start testing"
+module load cuda/10.0
+module load gcc/7.3
 
-python test.py >test.log 2>& 1
+python test.py
 echo "FINISH"
-
