@@ -9,8 +9,8 @@
 #SBATCH --time=50:00:00
 #SBATCH --mail-type=END
 #SBATCH --mail-user=email@address # put your email here if you want emails
-#SBATCH --output=deeplab_%j.out
-#SBATCH --error=deeplab_%j.err
+#SBATCH --output=fcn_%j.out
+#SBATCH --error=fcn_%j.err
 #SBATCH --gres=gpu:1 # How much gpu need, n is the number
 #SBATCH -p aquila
 
