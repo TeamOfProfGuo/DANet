@@ -1,7 +1,7 @@
 
 model: deeplab
 backbone: resnet50
-dataset:  pascal_voc
+dataset:  pascal_aug
 
 workers: 4         #'dataloader threads'
 base_size: 520     # 'base image size'
