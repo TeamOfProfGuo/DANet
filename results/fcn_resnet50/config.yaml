@@ -1,4 +1,3 @@
-
 model: fcn
 backbone: resnet50
 dataset:  pascal_aug
