@@ -293,17 +293,16 @@ class ResNet(nn.Module):
 
         return x
 
-def resnet50(pretrained=False, root='./encoding/models', **kwargs):
-    """Constructs a ResNet-50 model.
 
+def resnet50(pretrained=False, root='./encoding/models/pretrain', **kwargs):
+    """Constructs a ResNet-50 model.
     Args:
         pretrained (bool): If True, returns a model pre-trained on ImageNet
     """
     model = ResNet(Bottleneck, [3, 4, 6, 3], **kwargs)
     if pretrained:
         f_path = os.path.abspath(os.path.join(root, 'resnet50-19c8e357.pth'))
-        print(f_path)
-        print('exist'+str(os.path.exists(f_path)))
+        print('pretrained model {} exist {}'.format(f_path, str(os.path.exists(f_path)) ))
         if os.path.exists(f_path):
             model.load_state_dict(torch.load(f_path), strict=False)
         else:
