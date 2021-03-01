@@ -13,3 +13,4 @@ encoding.egg-info/
 *.out
 *.agpu4
 train.log
+.vscode/settings.json
