@@ -33,8 +33,8 @@ def get_arguments():
     '''
 
     parser = argparse.ArgumentParser(description='semantic segmentation using PASCAL VOC')
-    parser.add_argument('--config_path', type=str, help='path of a config file')
-    return parser.parse_args(['--config_path', CONFIG_PATH])
+    parser.add_argument('--config_path', type=str, help='path of a config file', default=CONFIG_PATH)
+    return parser.parse_args()
     #return parser.parse_args()
 
 
