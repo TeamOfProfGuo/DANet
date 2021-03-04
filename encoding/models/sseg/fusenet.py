@@ -14,13 +14,12 @@ DROPOUT = 0.4
 
 __all__ = ['FuseNet', 'FuseNetHead']
 class FuseNet(nn.Module):
-    def __init__(self, nclass, isTrain, init_weights):
+    def __init__(self, nclass):
         super(FuseNet, self).__init__()
 
         self.maxpool = nn.MaxPool2d(kernel_size=2, stride=2)
         self.dropout = nn.Dropout(DROPOUT)
         self.unpooling = nn.MaxUnpool2d(kernel_size=2, stride=2)
-        self.isTrain = isTrain
 
         self.cbr1_1 = self.CBR(3, 64)
         self.cbr1_2 = self.CBR(64, 64)
@@ -62,6 +61,9 @@ class FuseNet(nn.Module):
         self.decoder_cbr4_2 = self.CBR(64,64)
         self.decoder_cbr5_1 = self.CBR(64,nclass)
 
+    def load_pretrain(self):
+        pass
+    
     def forward(self, x):
         x_rgb = x[:,-1:,:,:]
         x_depth = torch.unsqueeze(x[:,-1,:,:],1)
@@ -86,9 +88,8 @@ class FuseNet(nn.Module):
         x_rgb = x_depth + x_rgb
         x_rgb = self.maxpool(x_rgb)
         x_depth = self.maxpool(x_depth)
-        if self.isTrain:
-            x_rgb = self.dropout(x_rgb)
-            x_depth = self.dropout(x_depth)
+        x_rgb = self.dropout(x_rgb)
+        x_depth = self.dropout(x_depth)
 
         # cbr4
         x_rgb = self.cbr4_3(self.cbr4_2(self.cbr4_1(x_rgb)))
@@ -96,35 +97,30 @@ class FuseNet(nn.Module):
         x_rgb = x_depth + x_rgb
         x_rgb = self.maxpool(x_rgb)
         x_depth = self.maxpool(x_depth)
-        if self.isTrain:
-            x_rgb = self.dropout(x_rgb)
-            x_depth = self.dropout(x_depth)
+        x_rgb = self.dropout(x_rgb)
+        x_depth = self.dropout(x_depth)
 
         # cbr5
         x_rgb = self.cbr5_3(self.cbr5_2(self.cbr5_1(x_rgb)))
         x_depth = self.depth_cbr5_3(self.depth_cbr5_2(self.depth_cbr5_1(x_rgb)))
         x_rgb = x_depth + x_rgb
         x_rgb = self.maxpool(x_rgb)
-        if self.isTrain:
-            x_rgb = self.dropout(x_rgb)
+        x_rgb = self.dropout(x_rgb)
 
         # decoder_cbr1
         x = self.unpooling(x_rgb)
         x = self.decoder_cbr1_3(self.decoder_cbr1_2(self.decoder_cbr1_1(x)))
-        if self.isTrain:
-            x = self.dropout(x)
+        x = self.dropout(x)
         
         # decoder_cbr2
         x = self.unpooling(x)
         x = self.decoder_cbr2_3(self.decoder_cbr2_2(self.decoder_cbr2_1(x)))
-        if self.isTrain:
-            x = self.dropout(x)
+        x = self.dropout(x)
 
         # decoder_cbr3
         x = self.unpooling(x)
         x = self.decoder_cbr3_2(self.decoder_cbr3_1(x))
-        if self.isTrain:
-            x = self.dropout(x)
+        x = self.dropout(x)
 
         # decoder_cbr4
         x = self.unpooling(x)
@@ -144,6 +140,14 @@ class FuseNet(nn.Module):
         ]
         return nn.Sequential(*layers)
 
+def get_fusenet(dataset="nyu2d", backbone=None, pretrained=False, **kwargs):
+    from ...datasets import datasets, acronyms
+    model = FuseNet(datasets[dataset.lower()].NUM_CLASS)
+    # if pretrained:
+    #     from ..model_store import get_model_file
+    #     model.load_state_dict(torch.load(
+    #         get_model_file('fcn_%s_%s'%(backbone, acronyms[dataset]), root=root)))
+    return model
 
 
 
