@@ -143,7 +143,7 @@ class ResNet(nn.Module):
     # pylint: disable=unused-variable
     def __init__(self, block, layers, radix=1, groups=1, bottleneck_width=64,
                  num_classes=1000, dilated=False, dilation=1,
-                 deep_stem=False, stem_width=64, avg_down=False,
+                 deep_stem=False, stem_width=64, avg_down=False, dep_dim = False,
                  rectified_conv=False, rectify_avg=False,
                  avd=False, avd_first=False,
                  final_drop=0.0, dropblock_prob=0,
@@ -167,6 +167,9 @@ class ResNet(nn.Module):
         else:
             conv_layer = nn.Conv2d
         conv_kwargs = {'average_mode': rectify_avg} if rectified_conv else {}
+
+        print('\n[dep_dim] is set to be %s.\n' % dep_dim)
+
         if deep_stem:
             self.conv1 = nn.Sequential(
                 conv_layer(3, stem_width, kernel_size=3, stride=2, padding=1, bias=False, **conv_kwargs),
@@ -177,9 +180,16 @@ class ResNet(nn.Module):
                 nn.ReLU(inplace=True),
                 conv_layer(stem_width, stem_width*2, kernel_size=3, stride=1, padding=1, bias=False, **conv_kwargs),
             )
+        elif dep_dim:
+            # Late Fusion (dep_dim -> is_depth_branch)
+            self.conv1 = conv_layer(1, 64, kernel_size=7, stride=2, padding=3, bias=False, **conv_kwargs)
+
+            # # Early Fusion
+            # self.conv1 = conv_layer(4, 64, kernel_size=7, stride=2, padding=3, bias=False, **conv_kwargs)
+
         else:
-            self.conv1 = conv_layer(3, 64, kernel_size=7, stride=2, padding=3,
-                                   bias=False, **conv_kwargs)
+            self.conv1 = conv_layer(3, 64, kernel_size=7, stride=2, padding=3, bias=False, **conv_kwargs)
+        
         self.bn1 = norm_layer(self.inplanes)
         self.relu = nn.ReLU(inplace=True)
         self.maxpool = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
@@ -293,19 +303,39 @@ class ResNet(nn.Module):
 
         return x
 
-def resnet50(pretrained=False, root='./encoding/models', **kwargs):
-    """Constructs a ResNet-50 model.
 
+def resnet50(pretrained=False, root='./encoding/models/pretrain', dep_dim=False, **kwargs): # dep_dim=False, 
+    """Constructs a ResNet-50 model.
     Args:
         pretrained (bool): If True, returns a model pre-trained on ImageNet
     """
-    model = ResNet(Bottleneck, [3, 4, 6, 3], **kwargs)
+    model = ResNet(Bottleneck, [3, 4, 6, 3], dep_dim=dep_dim, **kwargs)
     if pretrained:
         f_path = os.path.abspath(os.path.join(root, 'resnet50-19c8e357.pth'))
-        print(f_path)
-        print('exist'+str(os.path.exists(f_path)))
+        print('pretrained model {} exist {}'.format(f_path, str(os.path.exists(f_path)) ))
         if os.path.exists(f_path):
-            model.load_state_dict(torch.load(f_path), strict=False)
+            weights = torch.load(f_path)
+            if dep_dim:
+
+                # # Late Fusion
+                # # Uncomment here to make the depth branch pretrained
+                # for k, v in weights.items():
+                #     weights[k] = v.data
+                # weights['conv1.weight'] = weights['conv1.weight'][:, 1:2, :, :]
+                # model.load_state_dict(weights, strict=False)
+
+                # Early Fusion
+                for k, v in weights.items():
+                    weights[k] = v.data
+                conv1_3c = weights['conv1.weight']
+                conv1_4c = torch.zeros((64, 4, 7, 7), dtype=torch.float32)
+                conv1_4c[:, :3, :, :] = conv1_3c
+                conv1_4c[:,  3, :, :] = conv1_3c[:,  1, :, :] # torch.mean(conv1_3c, 1)
+                weights['conv1.weight'] = conv1_4c
+                model.load_state_dict(weights, strict=False)
+            else:
+                weights = torch.load(f_path)
+                model.load_state_dict(weights, strict=False)
         else:
             model.load_state_dict(torch.load(get_model_file('resnet50', root=root)), strict=False)
     return model

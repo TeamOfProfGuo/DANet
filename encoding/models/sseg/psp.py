@@ -50,15 +50,21 @@ class PSPHead(nn.Module):
     def forward(self, x):
         return self.conv5(x)
 
+
 def get_psp(dataset='pascal_voc', backbone='resnet50s', pretrained=False,
-            root='~/.encoding/models', **kwargs):
+            root='./encoding/models/pretrain', **kwargs):
+    """pretrained: controls the layers other than the backbone"""
     # infer number of classes
     from ...datasets import datasets, acronyms
+    # backbone is already pretrained
     model = PSP(datasets[dataset.lower()].NUM_CLASS, backbone=backbone, root=root, **kwargs)
+
+    print('layers after backbone pretrained {}'.format(pretrained))
     if pretrained:
         from ..model_store import get_model_file
         model.load_state_dict(torch.load(
             get_model_file('psp_%s_%s'%(backbone, acronyms[dataset]), root=root)))
+
     return model
 
 def get_psp_resnet50_ade(pretrained=False, root='~/.encoding/models', **kwargs):
