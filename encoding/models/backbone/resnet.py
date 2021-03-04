@@ -181,11 +181,11 @@ class ResNet(nn.Module):
                 conv_layer(stem_width, stem_width*2, kernel_size=3, stride=1, padding=1, bias=False, **conv_kwargs),
             )
         elif dep_dim:
-            # Late Fusion (dep_dim -> is_depth_branch)
-            self.conv1 = conv_layer(1, 64, kernel_size=7, stride=2, padding=3, bias=False, **conv_kwargs)
+            # # Late Fusion (dep_dim -> is_depth_branch)
+            # self.conv1 = conv_layer(1, 64, kernel_size=7, stride=2, padding=3, bias=False, **conv_kwargs)
 
-            # # Early Fusion
-            # self.conv1 = conv_layer(4, 64, kernel_size=7, stride=2, padding=3, bias=False, **conv_kwargs)
+            # Early Fusion
+            self.conv1 = conv_layer(4, 64, kernel_size=7, stride=2, padding=3, bias=False, **conv_kwargs)
 
         else:
             self.conv1 = conv_layer(3, 64, kernel_size=7, stride=2, padding=3, bias=False, **conv_kwargs)
