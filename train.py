@@ -24,7 +24,7 @@ from encoding.nn import SegmentationLosses, SyncBatchNorm
 from encoding.parallel import DataParallelModel, DataParallelCriterion
 from encoding.datasets import get_dataset
 from encoding.models import get_segmentation_model
-CONFIG_PATH = 'results/deeplab_resnet50/config.yaml'
+# CONFIG_PATH = 'results/deeplab_resnet50/config.yaml'
 
 def get_arguments():
     '''
@@ -34,8 +34,8 @@ def get_arguments():
 
     parser = argparse.ArgumentParser(description='semantic segmentation using PASCAL VOC')
     parser.add_argument('--config_path', type=str, help='path of a config file')
-    return parser.parse_args(['--config_path', CONFIG_PATH])
-    #return parser.parse_args()
+    # return parser.parse_args(['--config_path', CONFIG_PATH])
+    return parser.parse_args()
 
 
 class Trainer():

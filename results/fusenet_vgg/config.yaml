@@ -1,5 +1,5 @@
 model: fusenet
-# backbone: resnet50
+backbone: None
 dataset:  nyud
 
 workers: 4         #'dataloader threads'
