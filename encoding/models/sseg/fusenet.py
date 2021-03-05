@@ -4,15 +4,13 @@ import numpy as np
 import torch
 import torch.nn as nn
 from torch.nn.functional import interpolate
-from ...nn import ConcurrentModule, SyncBatchNorm
+from ...utils import batch_pix_accuracy, batch_intersection_union
 from typing import Union, List, Dict, Any, cast
-
-from .base import BaseNet
 
 
 DROPOUT = 0.4
 
-__all__ = ['FuseNet', 'FuseNetHead']
+__all__ = ['FuseNet', 'get_fusenet']
 class FuseNet(nn.Module):
     def __init__(self, nclass):
         super(FuseNet, self).__init__()
@@ -139,6 +137,17 @@ class FuseNet(nn.Module):
             nn.ReLU(True),
         ]
         return nn.Sequential(*layers)
+    def evaluate(self, x, target = None):
+        pred = self.forward(x)
+        if isinstance(pred, (tuple, list)):
+            pred = pred[0]
+        if target is None:
+            return pred
+        correct, labeled = batch_pix_accuracy(pred.data, target.data)
+        inter, union = batch_intersection_union(pred.data, target.data, self.nclass)
+        return correct, labeled, inter, union
+
+
 
 def get_fusenet(dataset="nyu2d", backbone=None, pretrained=False, **kwargs):
     from ...datasets import datasets, acronyms
