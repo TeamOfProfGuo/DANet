@@ -66,7 +66,7 @@ class Trainer():
                                        )
         print(model)
         # optimizer using different LR
-        params_list = [{'params': model.pretrained.parameters(), 'lr': args.lr}, ]
+        params_list = [{'params': model.parameters(), 'lr': args.lr}, ]
         if hasattr(model, 'head'):
             params_list.append({'params': model.head.parameters(), 'lr': args.lr * 10})
         if hasattr(model, 'auxlayer'):

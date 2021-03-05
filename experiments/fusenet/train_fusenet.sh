@@ -19,9 +19,9 @@ module load anaconda3
 # use your own env name
 module load cuda/10.0
 module load gcc/7.3
-cd /gpfsnyu/scratch/zz1763/DeepLearning/DANet 
+cd /gpfsnyu/scratch/zz1763/DeepLearning/DANet
 echo "start training"
 source activate dl
-python train.py --config './results/fusenet_vgg/config.yaml'
+python experiments/fusenet/train_fusenet.py --config './results/fusenet_vgg/config.yaml'
 echo "FINISH"
 
