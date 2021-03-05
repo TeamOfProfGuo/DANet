@@ -137,6 +137,7 @@ class FuseNet(nn.Module):
             nn.ReLU(True),
         ]
         return nn.Sequential(*layers)
+        
     def evaluate(self, x, target = None):
         pred = self.forward(x)
         if isinstance(pred, (tuple, list)):
