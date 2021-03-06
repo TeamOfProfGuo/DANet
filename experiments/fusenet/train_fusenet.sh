@@ -14,7 +14,7 @@
 #SBATCH -p aquila
 
 echo "Your NetID is: $1"
-echo "Your environment is $2"
+echo "Your environment is: $2"
 
 # update the encoding lib
 
