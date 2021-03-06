@@ -21,6 +21,6 @@ module load cuda/10.0
 module load gcc/7.3 
 #module load cudnn/7.5
 
-python train.py --config './results/deeplab_resnet50/config.yaml' >train.log 2>& 1
+python train.py --config './results/deeplab_resnet50/config.yaml'
 echo "FINISH"
 

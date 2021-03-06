@@ -1,5 +1,6 @@
 from __future__ import division
 import os
+# from .base import BaseNet
 import numpy as np
 import torch
 import torch.nn as nn
@@ -15,7 +16,7 @@ class FuseNet(nn.Module):
     def __init__(self, nclass):
         super(FuseNet, self).__init__()
 
-        self.maxpool = nn.MaxPool2d(kernel_size=2, stride=2)
+        self.maxpool = nn.MaxPool2d(kernel_size=2, stride=2, return_indices=True)
         self.dropout = nn.Dropout(DROPOUT)
         self.unpooling = nn.MaxUnpool2d(kernel_size=2, stride=2)
 
@@ -63,81 +64,81 @@ class FuseNet(nn.Module):
         pass
     
     def forward(self, x):
-        x_rgb = x[:,-1:,:,:]
+        x_rgb = x[:,:-1,:,:]
         x_depth = torch.unsqueeze(x[:,-1,:,:],1)
 
         # cbr1
         x_rgb = self.cbr1_2(self.cbr1_1(x_rgb))
         x_depth = self.depth_cbr1_2(self.depth_cbr1_1(x_depth))
         x_rgb = x_depth + x_rgb                                       # element-wise sum
-        x_rgb = self.maxpool(x_rgb)
-        x_depth = self.maxpool(x_depth)
+        x_rgb, indices1 = self.maxpool(x_rgb)
+        x_depth, _ = self.maxpool(x_depth)
 
         # cbr2
         x_rgb = self.cbr2_2(self.cbr2_1(x_rgb))
         x_depth = self.depth_cbr2_2(self.depth_cbr2_1(x_depth))
         x_rgb = x_depth + x_rgb                                       # element-wise sum
-        x_rgb = self.maxpool(x_rgb)
-        x_depth = self.maxpool(x_depth)
+        x_rgb, indices2  = self.maxpool(x_rgb)
+        x_depth, _  = self.maxpool(x_depth)
 
         # cbr3
         x_rgb = self.cbr3_3(self.cbr3_2(self.cbr3_1(x_rgb)))
-        x_depth = self.depth_cbr3_3(self.depth_cbr3_2(self.depth_cbr3_1(x_rgb)))
+        x_depth = self.depth_cbr3_3(self.depth_cbr3_2(self.depth_cbr3_1(x_depth)))
         x_rgb = x_depth + x_rgb
-        x_rgb = self.maxpool(x_rgb)
-        x_depth = self.maxpool(x_depth)
+        x_rgb, indices3 = self.maxpool(x_rgb)
+        x_depth, _  = self.maxpool(x_depth)
         x_rgb = self.dropout(x_rgb)
         x_depth = self.dropout(x_depth)
 
         # cbr4
         x_rgb = self.cbr4_3(self.cbr4_2(self.cbr4_1(x_rgb)))
-        x_depth = self.depth_cbr4_3(self.depth_cbr4_2(self.depth_cbr4_1(x_rgb)))
+        x_depth = self.depth_cbr4_3(self.depth_cbr4_2(self.depth_cbr4_1(x_depth)))
         x_rgb = x_depth + x_rgb
-        x_rgb = self.maxpool(x_rgb)
-        x_depth = self.maxpool(x_depth)
+        x_rgb, indices4  = self.maxpool(x_rgb)
+        x_depth, _  = self.maxpool(x_depth)
         x_rgb = self.dropout(x_rgb)
         x_depth = self.dropout(x_depth)
 
         # cbr5
         x_rgb = self.cbr5_3(self.cbr5_2(self.cbr5_1(x_rgb)))
-        x_depth = self.depth_cbr5_3(self.depth_cbr5_2(self.depth_cbr5_1(x_rgb)))
+        x_depth = self.depth_cbr5_3(self.depth_cbr5_2(self.depth_cbr5_1(x_depth)))
         x_rgb = x_depth + x_rgb
-        x_rgb = self.maxpool(x_rgb)
+        x_rgb, indices5 = self.maxpool(x_rgb)
         x_rgb = self.dropout(x_rgb)
 
         # decoder_cbr1
-        x = self.unpooling(x_rgb)
+        x = self.unpooling(x_rgb, indices5)
         x = self.decoder_cbr1_3(self.decoder_cbr1_2(self.decoder_cbr1_1(x)))
         x = self.dropout(x)
         
         # decoder_cbr2
-        x = self.unpooling(x)
+        x = self.unpooling(x, indices4)
         x = self.decoder_cbr2_3(self.decoder_cbr2_2(self.decoder_cbr2_1(x)))
         x = self.dropout(x)
 
         # decoder_cbr3
-        x = self.unpooling(x)
+        x = self.unpooling(x, indices3)
         x = self.decoder_cbr3_2(self.decoder_cbr3_1(x))
         x = self.dropout(x)
 
         # decoder_cbr4
-        x = self.unpooling(x)
+        x = self.unpooling(x, indices2)
         x = self.decoder_cbr4_2(self.decoder_cbr4_1(x))
 
         # decoder_cbr5
-        x = self.unpooling(x)
+        x = self.unpooling(x, indices1)
         x = self.decoder_cbr5_1(x)
 
-        return x
+        return tuple([x])
     
     def CBR(self, in_channels, out_channels):
         layers: List[nn.Module] = [
             nn.Conv2d(in_channels, out_channels, kernel_size=3, padding=1),
-            nn.BatchNorm2d(in_channels),
+            nn.BatchNorm2d(out_channels),
             nn.ReLU(True),
         ]
         return nn.Sequential(*layers)
-        
+
     def evaluate(self, x, target = None):
         pred = self.forward(x)
         if isinstance(pred, (tuple, list)):

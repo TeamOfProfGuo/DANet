@@ -1,7 +1,47 @@
-# [Dual Attention Network for Scene Segmentation(CVPR2019)](https://arxiv.org/pdf/1809.02983.pdf)
+# (Linux-Codebase)
 
-[Jun Fu](https://scholar.google.com/citations?user=h3vzrgkAAAAJ&hl=zh-CN), [Jing Liu](http://www.nlpr.ia.ac.cn/iva/liujing/index.html), [Haijie Tian](https://github.com/tianhaijie), [Yong Li](http://www.foreverlee.net/), Yongjun Bao, Zhiwei Fang,and Hanqing Lu
+## Setup
+load the hpc modules
+```
+module load anaconda3
+module load cuda/10.0
+module load gcc/7.3 
+```
+create a new environment named `dl` and install `pytorch`
+```
+conda create -n dl python=3.6
+conda install pytorch==1.4.0 torchvision==0.5.0 cudatoolkit=10.1 -c pytorch
+```
+clone this branch and redirect into the folder
+```
+git clone -b linux-codebase https://github.com/TeamOfProfGuo/DANet.git
+cd DANet
+```
+There are a few unfixed errors when installing pytorch-encoding, so we directly copy the folder into the python directory. Note that if you make any change in the encoding folder, please recopy it to the python library. Replace the `[YOUR_NETID]` with your netID.
+```
+cp encoding -r /gpfsnyu/home/[YOUR_NETID]/.conda/envs/dl/lib/python3.6/site-packages/encoding/
+```
+Test with the below code and there should not be any error:
+```
+python
+>>> import encoding
+```
+Install other packages from `requirements.txt`
+```
+pip install -r requirements.txt
+```
+Download PASCAL VOC data
+- Download and extract 
+[PASCAL VOC training/validation data](http://host.robots.ox.ac.uk/pascal/VOC/voc2012/VOCtrainval_11-May-2012.tar) 
+(2GB tar file), specifying the location with the `./datasets/VOCdevkit`.  
+- Download and extract 
+[augmented segmentation data](https://www.dropbox.com/s/oeu149j8qtbs1x0/SegmentationClassAug.zip?dl=0) 
+(Thanks to DrSleep), specifying the location with `./datasets/VOCdevkit/VOC2012/ImageSets/SegmentationAug/`).  
 
+## Run on HPC
+```
+sbatch train_xxx.sh [YOUR_NETID] [ENV_NAME]
+```
 ## Introduction
 
 We propose a Dual Attention Network (DANet) to adaptively integrate local features with their global dependencies based on the self-attention mechanism. And we achieve new state-of-the-art segmentation performance on three challenging scene segmentation datasets, i.e., Cityscapes, PASCAL Context and COCO Stuff-10k dataset.
