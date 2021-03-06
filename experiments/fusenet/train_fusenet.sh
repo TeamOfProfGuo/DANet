@@ -16,17 +16,15 @@
 echo "Your NetID is: $1"
 echo "Your environment is: $2"
 
+module purge
+module load anaconda3
+module load cuda/10.0
+module load gcc/7.3
+cd /gpfsnyu/scratch/$1/DeepLearning/DANet
 # update the encoding lib
-
 rm -r /gpfsnyu/home/$1/.conda/envs/dl/lib/python3.6/site-packages/encoding/
 cp encoding -r /gpfsnyu/home/$1/.conda/envs/dl/lib/python3.6/site-packages/encoding/
 
-module purge
-module load anaconda3
-# use your own env name
-module load cuda/10.0
-module load gcc/7.3
-cd /gpfsnyu/scratch/zz1763/DeepLearning/DANet
 echo "start training"
 source activate $2
 python experiments/fusenet/train_fusenet.py --config './results/fusenet_vgg/config.yaml'
