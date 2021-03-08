@@ -2,15 +2,15 @@
 #SBATCH --job-name=FuseNet
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=4
-#SBATCH --mem=22GB
+#SBATCH --cpus-per-task=6
+#SBATCH --mem=88GB
 #SBATCH --gres=gpu:aquila
 #SBATCH --time=50:00:00
 #SBATCH --mail-type=END
 #SBATCH --mail-user=email@address # put your email here if you want emails
 #SBATCH --output=fusenet_%j.out
 #SBATCH --error=fusenet_%j.err
-#SBATCH --gres=gpu:1 # How much gpu need, n is the number
+#SBATCH --gres=gpu:4 # How much gpu need, n is the number
 #SBATCH -p aquila
 
 echo "Your NetID is: $1"
