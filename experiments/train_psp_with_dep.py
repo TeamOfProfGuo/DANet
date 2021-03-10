@@ -168,6 +168,7 @@ class Trainer():
                                    'state_dict': self.model.module.state_dict() if args.cuda else self.model.state_dict(),
                                    'optimizer': self.optimizer.state_dict(),
                                    'best_pred': self.best_pred}, self.args, is_best)
+        torch.save(self.model.module.state_dict() if args.cuda else self.model.state_dict(), './psp_ef.pth')
 
     def validation(self, epoch):
         # Fast test during the training
