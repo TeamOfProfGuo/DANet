@@ -9,6 +9,7 @@ from .pcontext import ContextSegmentation
 from .cityscapes import CitySegmentation
 from .imagenet import ImageNetDataset
 from .minc import MINCDataset
+from .nyud_v2 import NYUD
 
 from ..utils import EncodingDeprecationWarning
 
@@ -22,8 +23,10 @@ datasets = {
     'imagenet': ImageNetDataset,
     'minc': MINCDataset,
     'cifar10': CIFAR10,
+    'nyud': NYUD
 }
 
+# this specified the pretrained model, layers after backbone model pretrained on the data
 acronyms = {
     'coco': 'coco',
     'pascal_voc': 'voc',

@@ -54,7 +54,7 @@ class VOCSegmentation(BaseDataset):
         if self.mode == 'test':
             if self.transform is not None:
                 img = self.transform(img)
-            return img, os.path.basename(self.images[index])
+            return img, os.path.basename(self.images[index])  # img and file_name
         target = Image.open(self.masks[index])
         # synchrosized transform
         if self.mode == 'train':

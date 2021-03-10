@@ -185,14 +185,14 @@ class ResNet(nn.Module):
         self.maxpool = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
         self.layer1 = self._make_layer(block, 64, layers[0], norm_layer=norm_layer, is_first=False)
         self.layer2 = self._make_layer(block, 128, layers[1], stride=2, norm_layer=norm_layer)
-        if dilated or dilation == 4:
+        if dilated or dilation == 4: # output_stride = 8
             self.layer3 = self._make_layer(block, 256, layers[2], stride=1,
                                            dilation=2, norm_layer=norm_layer,
                                            dropblock_prob=dropblock_prob)
             self.layer4 = self._make_layer(block, 512, layers[3], stride=1,
                                            dilation=4, norm_layer=norm_layer,
                                            dropblock_prob=dropblock_prob)
-        elif dilation==2:
+        elif dilation==2:  # output_stride = 16
             self.layer3 = self._make_layer(block, 256, layers[2], stride=2,
                                            dilation=1, norm_layer=norm_layer,
                                            dropblock_prob=dropblock_prob)
@@ -293,7 +293,7 @@ class ResNet(nn.Module):
 
         return x
 
-def resnet50(pretrained=False, root='./encoding/models', **kwargs):
+def resnet50(pretrained=False, root='./encoding/models/pretrain', **kwargs):
     """Constructs a ResNet-50 model.
 
     Args:
@@ -303,8 +303,7 @@ def resnet50(pretrained=False, root='./encoding/models', **kwargs):
 
     if pretrained:
         f_path = os.path.abspath(os.path.join(root, 'resnet50-19c8e357.pth'))
-        print(f_path)
-        print('exist' + str(os.path.exists(f_path)))
+        print('pretrained model {} exist {}'.format(f_path, str(os.path.exists(f_path)) ))
         if os.path.exists(f_path):
             model.load_state_dict(torch.load(f_path), strict=False)
         else:
