@@ -46,8 +46,8 @@ class DANet(BaseNet):
         x[2] = upsample(x[2], imsize, **self._up_kwargs)
 
         outputs = [x[0]]
-        outputs.append(x[1])
-        outputs.append(x[2])
+        # outputs.append(x[1])
+        # outputs.append(x[2])
         return tuple(outputs)
         
 class DANetHead(nn.Module):
@@ -98,7 +98,7 @@ class DANetHead(nn.Module):
 
 
 def get_danet(dataset='pascal_voc', backbone='resnet50', pretrained=False,
-           root='~/.encoding/models', **kwargs):
+           root='./encoding/models/pretrain', **kwargs):
     r"""DANet model from the paper `"Dual Attention Network for Scene Segmentation"
     <https://arxiv.org/abs/1809.02983.pdf>`
     """
@@ -108,6 +108,7 @@ def get_danet(dataset='pascal_voc', backbone='resnet50', pretrained=False,
         'pcontext': 'pcontext',
         'ade20k': 'ade',
         'cityscapes': 'cityscapes',
+        'nyud': 'ade',
     }
     # infer number of classes
     from ...datasets import datasets, VOCSegmentation, VOCAugSegmentation, ADE20KSegmentation
@@ -115,6 +116,6 @@ def get_danet(dataset='pascal_voc', backbone='resnet50', pretrained=False,
     if pretrained:
         from .model_store import get_model_file
         model.load_state_dict(torch.load(
-            get_model_file('fcn_%s_%s'%(backbone, acronyms[dataset]), root=root)),
+            get_model_file('fcn_%ss_%s'%(backbone, acronyms[dataset]), root=root)),
             strict=False)
     return model

@@ -14,6 +14,7 @@ from tqdm import tqdm
 from addict import Dict
 
 import torch
+import torch.nn as nn
 from torch.utils import data
 from tensorboardX import SummaryWriter
 import torchvision.transforms as transform
@@ -127,8 +128,6 @@ class Trainer():
         train_loss = 0.0
         self.model.train()
         for i, (image, dep, target) in enumerate(self.trainloader):
-            print("image:", type(image))
-            print("target", type(target))
             image, target = image.to(self.device), target.to(self.device)
             self.scheduler(self.optimizer, i, epoch, self.best_pred)
             self.optimizer.zero_grad()
