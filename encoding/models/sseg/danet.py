@@ -9,8 +9,8 @@ import numpy as np
 import torch
 import torch.nn as nn
 from torch.nn.functional import upsample,normalize
-from ...nn import PAM_Module
-from ...nn import CAM_Module
+from ...nn.da_att import PAM_Module
+from ...nn.da_att import CAM_Module
 from .base import BaseNet
 
 

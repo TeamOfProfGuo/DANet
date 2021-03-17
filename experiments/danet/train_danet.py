@@ -24,7 +24,7 @@ from encoding.nn import SegmentationLosses, SyncBatchNorm
 from encoding.parallel import DataParallelModel, DataParallelCriterion
 from encoding.datasets import get_dataset
 from encoding.models import get_segmentation_model
-# CONFIG_PATH = 'results/deeplab_resnet50/config.yaml'
+
 GPUS = [0, 1, 2, 3]
 
 def get_arguments():
@@ -46,9 +46,14 @@ class Trainer():
         input_transform = transform.Compose([
             transform.ToTensor(),
             transform.Normalize([.485, .456, .406], [.229, .224, .225])])
+        dep_transform = transform.Compose([
+            transform.ToTensor(),
+            transform.Normalize(mean=[0.2798], std=[0.1387])  # mean and std for depth
+        ])
+        
         # dataset
-        data_kwargs = {'transform': input_transform, 'base_size': args.base_size,
-                       'crop_size': args.crop_size}
+        data_kwargs = {'transform': input_transform, 'dep_transform': dep_transform,
+                       'base_size': args.base_size, 'crop_size': args.crop_size}
         trainset = get_dataset(args.dataset, split=args.train_split, mode='train', **data_kwargs)
         testset = get_dataset(args.dataset, split='val', mode='val', **data_kwargs)
         # dataloader
@@ -97,13 +102,8 @@ class Trainer():
         self.model = model.to(self.device)
         
         # for writing summary
-        self.writer = SummaryWriter('./results/deeplab_resnet50')
-        
-        # # using cuda
-        # if args.cuda:
-        #     self.model = DataParallelModel(self.model).cuda()
-        #     self.criterion = DataParallelCriterion(self.criterion).cuda()
-        
+        self.writer = SummaryWriter('./results/danet_resnet50')
+                
         # resuming checkpoint
         if args.resume is not None and args.resume != 'None':
             if not os.path.isfile(args.resume):
@@ -127,6 +127,8 @@ class Trainer():
         train_loss = 0.0
         self.model.train()
         for i, (image, dep, target) in enumerate(self.trainloader):
+            print("image:", type(image))
+            print("target", type(target))
             image, target = image.to(self.device), target.to(self.device)
             self.scheduler(self.optimizer, i, epoch, self.best_pred)
             self.optimizer.zero_grad()
