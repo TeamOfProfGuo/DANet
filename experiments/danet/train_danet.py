@@ -182,7 +182,7 @@ class Trainer():
 
         self.model.eval()
         total_inter, total_union, total_correct, total_label, total_loss = 0, 0, 0, 0, 0
-        for i, (image, target) in enumerate(self.valloader):
+        for i, (image, dep, target) in enumerate(self.valloader):
             with torch.no_grad():
                 correct, labeled, inter, union, loss = eval_batch(self.model, image, target)
 
