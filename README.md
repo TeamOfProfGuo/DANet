@@ -1,20 +1,5 @@
 # (Linux-Codebase)
 
-## Apply early fusion
-Early fusion allows you to feed 4-channel images as input, whereas you'll feed rgb images as input when dep_dim is set to be **False**. To apply early fusion, please modify ./results/danet_resnet50/config.yaml and set:
-```
-dep_dim = True
-```
-
-## Switching config files
-train_danet.py switches its config file on different platforms.
-
-If you test your code on Mac (i.e. Darwin platform), then please modify this line of code: 
-```
-CONFIG_PATH_MAC = './results/danet_resnet50/config_mac.yaml'
-```
-Otherwise, you can directly pass the config path as a cmd argument while running on the HPC (i.e. Linux platform).
-
 ## Setup
 load the hpc modules
 ```
@@ -57,6 +42,22 @@ Download PASCAL VOC data
 ```
 sbatch train_xxx.sh [YOUR_NETID] [ENV_NAME]
 ```
+
+## Apply early fusion
+Early fusion allows you to feed 4-channel images as input, whereas you'll feed rgb images as input when dep_dim is set to be **False**. To apply early fusion, please modify ./results/danet_resnet50/config.yaml and set:
+```
+dep_dim = True
+```
+
+## Switching config files
+train_danet.py switches its config file on different platforms.
+
+If you test your code on Mac (i.e. Darwin platform), then please modify this line of code: 
+```
+CONFIG_PATH_MAC = './results/danet_resnet50/config_mac.yaml'
+```
+Otherwise, you can directly pass the config path as a cmd argument while running on the HPC (i.e. Linux platform).
+
 ## Possible Problems
 1. Did not deactivate the env before `sbatch`. Possible error:
 ```
