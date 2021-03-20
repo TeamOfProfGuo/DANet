@@ -178,15 +178,9 @@ class ResNet(nn.Module):
                 nn.ReLU(inplace=True),
                 conv_layer(stem_width, stem_width*2, kernel_size=3, stride=1, padding=1, bias=False, **conv_kwargs),
             )
-        elif dim==4:
-            self.conv1 = conv_layer(4, 64, kernel_size=7, stride=2, padding=3,
-                                   bias=False, **conv_kwargs)
-        elif dim==1:
-            self.conv1 = conv_layer(1, 64, kernel_size=7, stride=2, padding=3,
-                                   bias=False, **conv_kwargs)
         else:
-            self.conv1 = conv_layer(3, 64, kernel_size=7, stride=2, padding=3,
-                                   bias=False, **conv_kwargs)
+            assert dim in (1, 3, 4)
+            self.conv1 = conv_layer(dim, 64, kernel_size=7, stride=2, padding=3, bias=False, **conv_kwargs)
         self.bn1 = norm_layer(self.inplanes)
         self.relu = nn.ReLU(inplace=True)
         self.maxpool = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
