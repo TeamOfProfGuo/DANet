@@ -148,7 +148,7 @@ class ResNet(nn.Module):
                  avd=False, avd_first=False,
                  final_drop=0.0, dropblock_prob=0,
                  last_gamma=False, norm_layer=nn.BatchNorm2d,
-                 dep_dim=False):
+                 dim=3):
         self.cardinality = groups
         self.bottleneck_width = bottleneck_width
         # ResNet-D params
@@ -178,8 +178,11 @@ class ResNet(nn.Module):
                 nn.ReLU(inplace=True),
                 conv_layer(stem_width, stem_width*2, kernel_size=3, stride=1, padding=1, bias=False, **conv_kwargs),
             )
-        elif dep_dim:
+        elif dim==4:
             self.conv1 = conv_layer(4, 64, kernel_size=7, stride=2, padding=3,
+                                   bias=False, **conv_kwargs)
+        elif dim==1:
+            self.conv1 = conv_layer(1, 64, kernel_size=7, stride=2, padding=3,
                                    bias=False, **conv_kwargs)
         else:
             self.conv1 = conv_layer(3, 64, kernel_size=7, stride=2, padding=3,
@@ -298,17 +301,17 @@ class ResNet(nn.Module):
         return x
 
 
-def resnet50(pretrained=False, root='./encoding/models/pretrain', dep_dim=False, **kwargs):
+def resnet50(pretrained=False, root='./encoding/models/pretrain', dim=3, **kwargs):
     """Constructs a ResNet-50 model.
     Args:
         pretrained (bool): If True, returns a model pre-trained on ImageNet
     """
-    model = ResNet(Bottleneck, [3, 4, 6, 3], dep_dim=dep_dim, **kwargs)
+    model = ResNet(Bottleneck, [3, 4, 6, 3], dim=dim, **kwargs)
     if pretrained:
         f_path = os.path.abspath(os.path.join(root, 'resnet50-19c8e357.pth'))
         print('pretrained model {} exist {}'.format(f_path, str(os.path.exists(f_path)) ))
         if os.path.exists(f_path):
-            if dep_dim:
+            if dim==4:
                 weights = torch.load(f_path)
                 for k, v in weights.items():
                     weights[k] = v.data
@@ -317,6 +320,15 @@ def resnet50(pretrained=False, root='./encoding/models/pretrain', dep_dim=False,
                 conv1_4c[:, :3, :, :] = conv1_3c
                 conv1_4c[:,  3, :, :] = conv1_3c[:,  1, :, :]
                 weights['conv1.weight'] = conv1_4c
+                model.load_state_dict(weights, strict=False)
+            elif dim==1:
+                weights = torch.load(f_path)
+                for k, v in weights.items():
+                    weights[k] = v.data
+                conv1_3c = weights['conv1.weight']
+                conv1_1c = torch.zeros((64, 1, 7, 7), dtype=torch.float32)
+                conv1_1c = conv1_3c[:,  1, :, :]
+                weights['conv1.weight'] = conv1_1c
                 model.load_state_dict(weights, strict=False)
             else:
                 model.load_state_dict(torch.load(f_path), strict=False)
