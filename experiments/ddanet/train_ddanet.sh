@@ -1,16 +1,16 @@
 #!/bin/bash
-#SBATCH --job-name=DANet
+#SBATCH --job-name=DDANet
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=6
-#SBATCH --mem=88GB
+#SBATCH --mem=44GB
 #SBATCH --gres=gpu:aquila
 #SBATCH --time=50:00:00
 #SBATCH --mail-type=END
 #SBATCH --mail-user=email@address # put your email here if you want emails
-#SBATCH --output=danet_%j.out
-#SBATCH --error=danet_%j.err
-#SBATCH --gres=gpu:4 # How much gpu need, n is the number
+#SBATCH --output=ddanet_%j.out
+#SBATCH --error=ddanet_%j.err
+#SBATCH --gres=gpu:2 # How much gpu need, n is the number
 #SBATCH -p aquila
 
 echo "Your NetID is: $1"
@@ -27,6 +27,6 @@ cp encoding -r /gpfsnyu/home/$1/.conda/envs/dl/lib/python3.6/site-packages/encod
 
 echo "start training"
 source activate $2
-python experiments/danet/train_danet.py --config './results/ddanet_resnet50/config.yaml'
+python experiments/ddanet/train_ddanet.py --config './results/ddanet_resnet50/config.yaml'
 echo "FINISH"
 
