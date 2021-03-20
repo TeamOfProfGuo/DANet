@@ -1,4 +1,4 @@
-from encoding.models.sseg.danet import get_danet
+from .danet import *
 from .base import *
 from .fcn import *
 from .psp import *
@@ -8,6 +8,7 @@ from .encnet import *
 from .deeplab import *
 from .upernet import *
 from .fusenet import *
+from .ddanet_frank import *
 
 def get_segmentation_model(name, **kwargs):
     models = {
@@ -20,5 +21,6 @@ def get_segmentation_model(name, **kwargs):
         'deeplab': get_deeplab,
         'fusenet': get_fusenet,
         'danet': get_danet,
+        'ddanet': get_ddanet,
     }
     return models[name.lower()](**kwargs)
