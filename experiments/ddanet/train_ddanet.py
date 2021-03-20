@@ -27,7 +27,7 @@ from encoding.parallel import DataParallelModel, DataParallelCriterion
 from encoding.datasets import get_dataset
 from encoding.models import get_segmentation_model
 
-GPUS = [0, 1, 2, 3]
+GPUS = [0, 1]
 CONFIG_PATH_MAC = './results/danet_resnet50/config_mac.yaml'
 
 def get_arguments():
@@ -69,7 +69,6 @@ class Trainer():
                                        backbone=args.backbone, aux=args.aux,
                                        se_loss=args.se_loss,  # norm_layer=SyncBatchNorm,
                                        base_size=args.base_size, crop_size=args.crop_size,
-                                       dep_dim=args.dep_dim,
                                        # multi_grid=args.multi_grid, multi_dilation=args.multi_dilation, os=args.os
                                        )
         # print(model)
@@ -126,16 +125,14 @@ class Trainer():
         self.model.train()
         for i, (image, dep, target) in enumerate(self.trainloader):
 
-            if self.args.dep_dim:
-                image_with_dep = torch.cat((image, dep), 1)
-                image_with_dep, target = image_with_dep.to(self.device), target.to(self.device)
-            else:
-                image, target = image.to(self.device), target.to(self.device)
+            image_with_dep = torch.cat((image, dep), 1)
+            image_with_dep, target = image_with_dep.to(self.device), target.to(self.device)
+
 
             self.scheduler(self.optimizer, i, epoch, self.best_pred)
             self.optimizer.zero_grad()
 
-            outputs = self.model(image_with_dep if self.args.dep_dim else image)
+            outputs = self.model(image_with_dep)
 
             loss = self.criterion(*outputs, target)
             loss.backward()
@@ -187,14 +184,11 @@ class Trainer():
         self.model.eval()
         total_inter, total_union, total_correct, total_label, total_loss = 0, 0, 0, 0, 0
         for i, (image, dep, target) in enumerate(self.valloader):
-            if self.args.dep_dim:
-                image_with_dep = torch.cat((image, dep), 1)
-                image_with_dep, target = image_with_dep.to(self.device), target.to(self.device)
-            else:
-                image, target = image.to(self.device), target.to(self.device)
+            image_with_dep = torch.cat((image, dep), 1)
+            image_with_dep, target = image_with_dep.to(self.device), target.to(self.device)
             
             with torch.no_grad():
-                correct, labeled, inter, union, loss = eval_batch(self.model, image_with_dep if self.args.dep_dim else image, target)
+                correct, labeled, inter, union, loss = eval_batch(self.model, image_with_dep)
 
             total_correct += correct
             total_label += labeled

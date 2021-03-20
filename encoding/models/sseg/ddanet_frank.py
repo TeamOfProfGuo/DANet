@@ -11,7 +11,7 @@ import torch.nn as nn
 from torch.nn.functional import upsample,normalize
 from ...nn.da_att import RGBD_PAM_Module
 from ...nn.da_att import RGBD_CAM_Module
-from .base import BaseNet
+from .base_double_branch import BaseNet
 
 
 __all__ = ['DDANet', 'get_ddanet']
@@ -23,9 +23,13 @@ class DDANet(BaseNet):
 
     def forward(self, x):
         imsize = x.size()[2:]
-        _, _, c3, c4 = self.base_forward(x)
+        x_rgb = x[:,:-1,:,:]
+        x_dep = torch.unsqueeze(x[:,-1,:,:],1)
+        _, _, c3, x_rgb = self.base_forward(x_rgb, branch="rgb")
+        _, _, c3, x_dep = self.base_forward(x_dep, branch="dep")
 
-        x = self.head(c4)
+
+        x = self.head(x_rgb, x_dep)
         x = list(x)
         x[0] = upsample(x[0], imsize, **self._up_kwargs)
         # x[1] = upsample(x[1], imsize, **self._up_kwargs)
@@ -43,8 +47,14 @@ class DDANetHead(nn.Module):
         self.conv5a = nn.Sequential(nn.Conv2d(in_channels, inter_channels, 3, padding=1, bias=False),
                                    norm_layer(inter_channels),
                                    nn.ReLU())
+        self.conv5b = nn.Sequential(nn.Conv2d(in_channels, inter_channels, 3, padding=1, bias=False),
+                                   norm_layer(inter_channels),
+                                   nn.ReLU())
         
         self.conv5c = nn.Sequential(nn.Conv2d(in_channels, inter_channels, 3, padding=1, bias=False),
+                                   norm_layer(inter_channels),
+                                   nn.ReLU())
+        self.conv5d = nn.Sequential(nn.Conv2d(in_channels, inter_channels, 3, padding=1, bias=False),
                                    norm_layer(inter_channels),
                                    nn.ReLU())
 
@@ -62,14 +72,16 @@ class DDANetHead(nn.Module):
 
         self.conv8 = nn.Sequential(nn.Dropout2d(0.1, False), nn.Conv2d(inter_channels, out_channels, 1))
 
-    def forward(self, x):
-        feat1 = self.conv5a(x)
-        sa_feat = self.sa(feat1)
+    def forward(self, x_rgb, x_dep):
+        feat1_rgb = self.conv5a(x_rgb)
+        feat1_dep = self.conv5b(x_dep)
+        sa_feat = self.sa(feat1_rgb, feat1_dep)
         sa_conv = self.conv51(sa_feat)
         sa_output = self.conv6(sa_conv)
 
-        feat2 = self.conv5c(x)
-        sc_feat = self.sc(feat2)
+        feat2_rgb = self.conv5c(x_rgb)
+        feat2_dep = self.conv5d(x_dep)
+        sc_feat = self.sc(feat2_rgb, feat2_dep)
         sc_conv = self.conv52(sc_feat)
         sc_output = self.conv7(sc_conv)
 
@@ -78,8 +90,8 @@ class DDANetHead(nn.Module):
         sasc_output = self.conv8(feat_sum)
 
         output = [sasc_output]
-        output.append(sa_output)
-        output.append(sc_output)
+        # output.append(sa_output)
+        # output.append(sc_output)
         return tuple(output)
 
 

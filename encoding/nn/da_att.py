@@ -99,7 +99,7 @@ class RGBD_PAM_Module(Module):
         self.gamma = Parameter(torch.zeros(1))
 
         self.softmax = Softmax(dim=-1)
-    def forward(self, x):
+    def forward(self, x_rgb, x_dep):
         """
             inputs :
                 x : input feature maps( B X (C+D) X H X W)
@@ -107,17 +107,14 @@ class RGBD_PAM_Module(Module):
                 out : attention value + input feature
                 attention: B X (HxW) X (HxW)
         """
-        x_rgb = x[:,:-1,:,:]
-        x_depth = torch.unsqueeze(x[:,-1,:,:],1)
-
         m_batchsize, C, height, width = x_rgb.size()
         proj_query = self.query_conv(x_rgb).view(m_batchsize, -1, width*height).permute(0, 2, 1)
         proj_key = self.key_conv(x_rgb).view(m_batchsize, -1, width*height)
         energy = torch.bmm(proj_query, proj_key)
 
-        m_batchsize, C_d, height, width = x_depth.size()
-        proj_query_d = self.d_query_conv(x_depth).view(m_batchsize, -1, width*height).permute(0, 2, 1)
-        proj_key_d = self.d_key_conv(x_depth).view(m_batchsize, -1, width*height)
+        m_batchsize, C_d, height, width = x_dep.size()
+        proj_query_d = self.d_query_conv(x_dep).view(m_batchsize, -1, width*height).permute(0, 2, 1)
+        proj_key_d = self.d_key_conv(x_dep).view(m_batchsize, -1, width*height)
         energy_d = torch.bmm(proj_query_d, proj_key_d)
 
         attention = self.softmax(energy+energy_d)
@@ -138,7 +135,7 @@ class RGBD_CAM_Module(Module):
 
         self.gamma = Parameter(torch.zeros(1))
         self.softmax  = Softmax(dim=-1)
-    def forward(self,x):
+    def forward(self,x_rgb, x_dep):
         """
             inputs :
                 x : input feature maps( B X (C+D) X H X W)
@@ -146,18 +143,15 @@ class RGBD_CAM_Module(Module):
                 out : attention value + input feature
                 attention: B X C X C
         """
-        x_rgb = x[:,:-1,:,:]
-        x_depth = torch.unsqueeze(x[:,-1,:,:],1)
-
         m_batchsize, C, height, width = x_rgb.size()
         proj_query = x_rgb.view(m_batchsize, C, -1)
         proj_key = x_rgb.view(m_batchsize, C, -1).permute(0, 2, 1)
         energy = torch.bmm(proj_query, proj_key)
         energy_new = torch.max(energy, -1, keepdim=True)[0].expand_as(energy)-energy
 
-        m_batchsize, C_d, height, width = x_depth.size()
-        proj_query_d = x_depth.view(m_batchsize, C, -1)
-        proj_key_d = x_depth.view(m_batchsize, C, -1).permute(0, 2, 1)
+        m_batchsize, C_d, height, width = x_dep.size()
+        proj_query_d = x_dep.view(m_batchsize, C, -1)
+        proj_key_d = x_dep.view(m_batchsize, C, -1).permute(0, 2, 1)
         energy_d = torch.bmm(proj_query_d, proj_key_d)
         energy__d_new = torch.max(energy_d, -1, keepdim=True)[0].expand_as(energy_d)-energy_d
 
