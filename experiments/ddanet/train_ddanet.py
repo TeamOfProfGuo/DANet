@@ -73,13 +73,12 @@ class Trainer():
                                        )
         # print(model)
         # optimizer using different LR
-        params_list = [{'params': model.pretrained.parameters(), 'lr': args.lr}, ]
+        params_list = [{'params': [i for i in model.pretrained_rgb.parameters()]+[i for i in model.pretrained_dep.parameters()], 'lr': args.lr}, ]
         if hasattr(model, 'head'):
             params_list.append({'params': model.head.parameters(), 'lr': args.lr * 10})
         if hasattr(model, 'auxlayer'):
             params_list.append({'params': model.auxlayer.parameters(), 'lr': args.lr * 10})
-        self.optimizer = torch.optim.SGD(params_list, lr=args.lr,
-                                         momentum=args.momentum, weight_decay=args.weight_decay)
+        self.optimizer = torch.optim.SGD(params_list, lr=args.lr, momentum=args.momentum, weight_decay=args.weight_decay)
         # criterions
         self.criterion = SegmentationLosses(se_loss=args.se_loss,
                                             aux=args.aux,
@@ -188,7 +187,7 @@ class Trainer():
             image_with_dep, target = image_with_dep.to(self.device), target.to(self.device)
             
             with torch.no_grad():
-                correct, labeled, inter, union, loss = eval_batch(self.model, image_with_dep)
+                correct, labeled, inter, union, loss = eval_batch(self.model, image_with_dep, target)
 
             total_correct += correct
             total_label += labeled

@@ -321,7 +321,7 @@ def resnet50(pretrained=False, root='./encoding/models/pretrain', dim=3, **kwarg
                     weights[k] = v.data
                 conv1_3c = weights['conv1.weight']
                 conv1_1c = torch.zeros((64, 1, 7, 7), dtype=torch.float32)
-                conv1_1c = conv1_3c[:,  1, :, :]
+                conv1_1c = torch.unsqueeze(conv1_3c[:,  1, :, :], dim=1)
                 weights['conv1.weight'] = conv1_1c
                 model.load_state_dict(weights, strict=False)
             else:

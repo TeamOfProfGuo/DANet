@@ -21,6 +21,7 @@ module load anaconda3
 module load cuda/10.0
 module load gcc/7.3
 cd /gpfsnyu/scratch/$1/DeepLearning/DANet
+rm experiments/ddanet/*.err experiments/ddanet/*.out
 # update the encoding lib
 rm -r /gpfsnyu/home/$1/.conda/envs/dl/lib/python3.6/site-packages/encoding/
 cp encoding -r /gpfsnyu/home/$1/.conda/envs/dl/lib/python3.6/site-packages/encoding/
