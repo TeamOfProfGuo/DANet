@@ -1,9 +1,8 @@
 # (Linux-Codebase)
 
 ## Apply early fusion
-Early fusion allows you to feed 4-channel images as input, whereas you'll feed rgb images as input when dep_dim is set to be **False**.
+Early fusion allows you to feed 4-channel images as input, whereas you'll feed rgb images as input when dep_dim is set to be **False**. To apply early fusion, please modify ./results/danet_resnet50/config.yaml and set:
 ```
-# Modify the config file at ./results/danet_resnet50/config.yaml
 dep_dim = True
 ```
 
@@ -14,7 +13,7 @@ If you test your code on Mac (i.e. Darwin platform), then please modify this lin
 ```
 CONFIG_PATH_MAC = './results/danet_resnet50/config_mac.yaml'
 ```
-Otherwise, if you run your code on the HPC, you can directly pass the config file path as a cmd argument.
+Otherwise, you can directly pass the config path as a cmd argument while running on the HPC (i.e. Linux platform).
 
 ## Setup
 load the hpc modules
