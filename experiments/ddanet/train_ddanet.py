@@ -5,6 +5,7 @@
 ###########################################################################
 
 import os
+import sys
 import copy
 import yaml
 import logging
@@ -27,6 +28,7 @@ from encoding.datasets import get_dataset
 from encoding.models import get_segmentation_model
 
 GPUS = [0, 1, 2, 3]
+CONFIG_PATH_MAC = './results/danet_resnet50/config_mac.yaml'
 
 def get_arguments():
     '''
@@ -67,7 +69,7 @@ class Trainer():
                                        backbone=args.backbone, aux=args.aux,
                                        se_loss=args.se_loss,  # norm_layer=SyncBatchNorm,
                                        base_size=args.base_size, crop_size=args.crop_size,
-                                       # dep_dim=args.dep_dim,
+                                       dep_dim=args.dep_dim,
                                        # multi_grid=args.multi_grid, multi_dilation=args.multi_dilation, os=args.os
                                        )
         # print(model)
@@ -123,10 +125,18 @@ class Trainer():
         train_loss = 0.0
         self.model.train()
         for i, (image, dep, target) in enumerate(self.trainloader):
-            image, target = image.to(self.device), target.to(self.device)
+
+            if self.args.dep_dim:
+                image_with_dep = torch.cat((image, dep), 1)
+                image_with_dep, target = image_with_dep.to(self.device), target.to(self.device)
+            else:
+                image, target = image.to(self.device), target.to(self.device)
+
             self.scheduler(self.optimizer, i, epoch, self.best_pred)
             self.optimizer.zero_grad()
-            outputs = self.model(image)
+
+            outputs = self.model(image_with_dep if self.args.dep_dim else image)
+
             loss = self.criterion(*outputs, target)
             loss.backward()
             self.optimizer.step()
@@ -177,9 +187,14 @@ class Trainer():
         self.model.eval()
         total_inter, total_union, total_correct, total_label, total_loss = 0, 0, 0, 0, 0
         for i, (image, dep, target) in enumerate(self.valloader):
-            image, target = image.to(self.device), target.to(self.device)
+            if self.args.dep_dim:
+                image_with_dep = torch.cat((image, dep), 1)
+                image_with_dep, target = image_with_dep.to(self.device), target.to(self.device)
+            else:
+                image, target = image.to(self.device), target.to(self.device)
+            
             with torch.no_grad():
-                correct, labeled, inter, union, loss = eval_batch(self.model, image, target)
+                correct, labeled, inter, union, loss = eval_batch(self.model, image_with_dep if self.args.dep_dim else image, target)
 
             total_correct += correct
             total_label += labeled
@@ -202,9 +217,11 @@ class Trainer():
 
 if __name__ == "__main__":
     print("-------mark program start----------")
-    config = get_arguments()
-    # configuration
-    args = Dict(yaml.safe_load(open(config.config_path)))
+    if sys.platform == 'darwin':
+        args = Dict(yaml.safe_load(open(CONFIG_PATH_MAC)))
+    else:
+        config = get_arguments()
+        args = Dict(yaml.safe_load(open(config.config_path)))
     args.cuda = (args.use_cuda and torch.cuda.is_available())
     args.resume = None if args.resume=='None' else args.resume
     torch.manual_seed(args.seed)
