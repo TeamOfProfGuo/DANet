@@ -1,5 +1,21 @@
 # (Linux-Codebase)
 
+## Apply early fusion (i.e. feed 4-channel images as input)
+Modify the config file at ./results/danet_resnet50/config.yaml
+```
+dep_dim = True
+```
+You'll feed rgb images as input when dep_dim is set to be **False**.
+
+## Switching config files
+train_danet.py switches its config file on different platforms.
+
+If you test your code on Mac (i.e. Darwin platform), then please modify this line of code: 
+```
+CONFIG_PATH_MAC = './results/danet_resnet50/config_mac.yaml'
+```
+Otherwise, if you run your code on the HPC, you can directly pass the config file path as an cmd argument.
+
 ## Setup
 load the hpc modules
 ```
