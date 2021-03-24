@@ -14,7 +14,11 @@ class NYUD(BaseDataset):
             'night stand','toilet','sink','lamp','bathtub','bag','otherstructure','otherfurniture','otherprop']
 
     NUM_CLASS = 40
-    TRAIN_BASE_DIR = '../dataset/NYUD_v2/'
+    CWD = os.getcwd()
+    if os.path.dirname(CWD).endswith('experiments'):
+        TRAIN_BASE_DIR = '../../../dataset/NYUD_v2'
+    else:
+        TRAIN_BASE_DIR = '../dataset/NYUD_v2/'
 
     def __init__(self, root=os.path.expanduser('~/.encoding/data'), split='train',
                  mode=None, transform=None, dep_transform=None, target_transform=None, **kwargs):
@@ -36,7 +40,7 @@ class NYUD(BaseDataset):
         self.masks = []   # list of file names
         with open(os.path.join(_split_f), "r") as lines:
             for line in lines:
-                line = int(line.rstrip('\n')) -1
+                line = int(line.rstrip('\n')) - 1
                 _image = os.path.join(_image_dir, str(line) + ".jpg")
                 assert os.path.isfile(_image)
                 self.images.append(_image)
@@ -52,13 +56,12 @@ class NYUD(BaseDataset):
     def __getitem__(self, index):
         _img = Image.open(self.images[index]).convert('RGB')
         _dep = Image.open(self.depths[index])  # depth image with shape [h ,w]
-        if self.mode == 'test':   # return image(tensor) and (fileName)
+        if self.mode == 'test':   # return image(tensor), depth(tensor) and (fileName)
             if self.transform is not None:
                 _img = self.transform(_img)
             if self.dep_transform is not None:
                 _dep = self.dep_transform(_dep)
-            return _img, _dep,  os.path.basename(self.images[index])
-
+            return _img, _dep, os.path.basename(self.images[index])
 
         _target = Image.open(self.masks[index])  # image with shape [h, w]
         # synchrosized transform
@@ -66,7 +69,7 @@ class NYUD(BaseDataset):
             # return _img (Image), _dep (Image), _target (2D tensor)
             _img, _dep, _target = self._sync_transform(_img, _target, depth=_dep, IGNORE_LABEL=0)
         elif self.mode == 'val':
-            _img, _target = self._val_sync_transform(_img, _target, depth = _dep)
+            _img, _dep, _target = self._val_sync_transform(_img, _target, depth = _dep)
 
         _target -= 1  # since 0 represent the boundary
         # general resize, normalize and toTensor
