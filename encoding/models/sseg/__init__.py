@@ -9,6 +9,8 @@ from .deeplab import *
 from .upernet import *
 from .fusenet import *
 from .ddanet_frank import *
+# from .danet_hmd import *
+from .danet_connnect import *
 
 def get_segmentation_model(name, **kwargs):
     models = {
@@ -22,5 +24,7 @@ def get_segmentation_model(name, **kwargs):
         'fusenet': get_fusenet,
         'danet': get_danet,
         'ddanet': get_ddanet,
+        # 'danet_hmd': get_danet_hmd,
+        'danet_connect': get_danet_connect
     }
     return models[name.lower()](**kwargs)
