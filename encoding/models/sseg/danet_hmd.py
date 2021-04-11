@@ -14,6 +14,7 @@ from ...nn.da_att import PAM_Module
 from ...nn.da_att import CAM_Module
 from .base import BaseNet
 
+GPUS = [0, 1, 2, 3]
 
 __all__ = ['DANet_HMD', 'get_danet_hmd']
 
@@ -111,14 +112,24 @@ class PAM_Module_HMD(nn.Module):
         super(PAM_Module_HMD, self).__init__()
         self.channel_in = in_dim
 
+        self.load_geo_siml()
+
         self.query_conv = Conv2d(in_channels=in_dim, out_channels=in_dim//8, kernel_size=1)
         self.key_conv = Conv2d(in_channels=in_dim, out_channels=in_dim//8, kernel_size=1)
         self.value_conv = Conv2d(in_channels=in_dim, out_channels=in_dim, kernel_size=1)
 
         self.gamma = Parameter(torch.zeros(1))
-        self.lamb = Parameter(torch.zeros(1))
+
+        self.lamb1 = Parameter(torch.ones(1))
+        self.lamb2 = Parameter(torch.ones(1))
 
         self.softmax = Softmax(dim=-1)
+    
+    def load_geo_siml(self):
+        self.geo_siml = {}
+        gs = torch.load('/gpfsnyu/scratch/hl3797/DANet/encoding/models/sseg/gs.pth')['geo_siml']
+        for i in GPUS:
+            self.geo_siml[i] = gs.to("cuda:" + str(i))
 
     def forward(self, x, dep):
         """
@@ -137,27 +148,31 @@ class PAM_Module_HMD(nn.Module):
         proj_key = key.view(m_batchsize, -1, width*height)                            # [B, 64, hw]
 
         energy = torch.bmm(proj_query, proj_key)                                      # [B, hw, hw]
-        rgb_res = self.softmax(energy)
+        rgb_siml = self.softmax(energy)
 
         # Depth similarity
-        d1 = dep.view(m_batchsize, -1, width*height)                         # [B, 1, hw]
-        d2 = d1.permute(0, 2, 1)                                             # [B, hw, 1]
-        dq = torch.repeat_interleave(d2, width*height, dim = 2)              # [B, hw, hw]
-        dk = torch.repeat_interleave(d1, width*height, dim = 1)              # [B, hw, hw]
-    
-        df = dq - dk                                                         # [B, hw, hw]
-        d = torch.mul(df, df)                                                # [B, hw, hw]
-        dep_res = self.softmax(d)
+        d1 = dep.view(m_batchsize, -1, width*height)                                  # [B, 1, hw]
+        d2 = d1.permute(0, 2, 1)                                                      # [B, hw, 1]
+        dq = torch.repeat_interleave(d2, width*height, dim = 2)                       # [B, hw, hw]
+        dk = torch.repeat_interleave(d1, width*height, dim = 1)                       # [B, hw, hw]
+        dep_diff = torch.abs(dq - dk) + 1
+        dep_siml = self.softmax(1 / dep_diff)
+
+        # Geo similarity
+        # if self.geo_siml is None:
+        #     self.compute_geo_siml(m_batchsize, width*height)
+        geo_siml = self.geo_siml[torch.cuda.current_device()].expand(m_batchsize, width*height, width*height)
+        # dag_siml = self.softmax(dep_siml + self.lamb * geo_siml)
 
         # Finalized simlarity
-        simlarity = rgb_res - self.lamb * dep_res
+        simlarity = rgb_siml + self.lamb1 * dep_siml + self.lamb2 * geo_siml
         attention = self.softmax(simlarity)                                                   # [B, hw, hw]
 
         proj_value = self.value_conv(x).view(m_batchsize, -1, width*height)                   # [B, 512, hw]
         out = torch.bmm(proj_value, attention.permute(0, 2, 1))                               # [B, 512, hw]
         out = out.view(m_batchsize, channels, height, width)                                         # [B, 512, h, w]
 
-        out = self.gamma*out + x
+        out = self.gamma * out + x
         return out
 
 

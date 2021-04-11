@@ -176,7 +176,7 @@ class Trainer():
         
         final_state_dict = self.model.module.state_dict() if self.args.cuda else self.model.state_dict()
         if self.args.export:
-            torch.save(final_state_dict, self.args.export + '.pth')
+            torch.save(final_state_dict, 'final_weights.pth')
 
 
     def validation(self, epoch):
