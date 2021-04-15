@@ -1,9 +1,20 @@
+import torchvision.models as models
+vgg16 = models.vgg16()
+resnet18 = models.resnet18()
 
-def dl(data='l', **kwargs):
+
+def dl(data='l1', **kwargs):
     print(kwargs)
     print(data)
 
-    print(kwargs)
+    def dl1(k1='0', **kwargs):
+        print(k1)
+        print(kwargs)
+    dl1(**kwargs)
+
+
+kw = {'data': 'voc', 'k1' :'k_1', 'k2':'check'}
+dl(**kw)
 
 def tp():
     pass

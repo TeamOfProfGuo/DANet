@@ -10,6 +10,8 @@ from .fuse import *
 from .danet import *
 from .danet_dep import *
 from .danet_d import *
+from .ppanet import *
+from .lanet import *
 
 def get_segmentation_model(name, **kwargs):
     models = {
@@ -25,5 +27,7 @@ def get_segmentation_model(name, **kwargs):
         'danet': get_danet,
         'danet_dep': get_danet_dep,
         'danet_d': get_danet_d,
+        'ppa': get_ppanet,
+        'lanet': get_lanet,
     }
     return models[name.lower()](**kwargs)

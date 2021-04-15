@@ -39,9 +39,10 @@ class DANet_D(BaseNet):
 
     """
 
-    def __init__(self, nclass, backbone, dep_encode = 'cnn', aux=False, se_loss=False, norm_layer=nn.BatchNorm2d, **kwargs):
-        super(DANet_D, self).__init__(nclass, backbone, aux, se_loss, norm_layer=norm_layer, **kwargs)
-        self.head = DANetHead(2048, nclass, norm_layer)
+    def __init__(self, nclass, backbone, dep_main=False, dep_encode='dep', fuse_type='m', depth_order=1, train_a=False, post_conv=True,
+                 aux=False, se_loss=False, norm_layer=nn.BatchNorm2d, **kwargs):
+        super(DANet_D, self).__init__(nclass, backbone, aux, se_loss, norm_layer=norm_layer, dep_main=dep_main, **kwargs)
+        self.head = DANetHead(2048, nclass, norm_layer, fuse_type, depth_order, train_a, post_conv)
         self.dep_encode = dep_encode
 
         # depth encoder
@@ -56,7 +57,11 @@ class DANet_D(BaseNet):
 
     def forward(self, x, dep):
         imsize = x.size()[2:]
-        _, _, c3, c4 = self.base_forward(x)
+        if self.dep_main:
+            x = torch.cat((x, dep), 1)
+            _, _, c3, c4 = self.base_forward(x)
+        else:
+            _, _, c3, c4 = self.base_forward(x)
 
         if self.dep_encode == 'cnn':
             d0 = self.dep_layer0(dep)
@@ -80,15 +85,16 @@ class DANet_D(BaseNet):
 
 
 class DANetHead(nn.Module):
-    def __init__(self, in_channels, out_channels, norm_layer):
+    def __init__(self, in_channels, out_channels, norm_layer, fuse_type, depth_order, train_a, post_conv):
         super(DANetHead, self).__init__()
         inter_channels = in_channels // 4
+        self.post_conv = post_conv
 
         # spatial attention
         self.conv_s0 = nn.Sequential(nn.Conv2d(in_channels, inter_channels, 3, padding=1, bias=False),
                                     norm_layer(inter_channels),
                                     nn.ReLU())
-        self.sa = PAM_Module_Dep(inter_channels)
+        self.sa = PAM_Module_Dep(inter_channels, fuse_type, depth_order, train_a)
 
         self.conv_s1 = nn.Sequential(nn.Conv2d(inter_channels, inter_channels, 3, padding=1, bias=False),
                                     norm_layer(inter_channels),
@@ -117,8 +123,11 @@ class DANetHead(nn.Module):
     def forward(self, x, d):
         # spatial attention
         feat1 = self.conv_s0(x)
-        sa_feat = self.sa(feat1, d)
-        sa_conv = self.conv_s1(sa_feat)
+        sa_conv = self.sa(feat1, d)
+        if self.post_conv:
+            sa_conv = self.conv_s1(sa_conv)
+        #else:
+        #    print('== there is no conv after PAM module==')
         sa_output = self.conv6(sa_conv)
 
         # channel attention
@@ -134,10 +143,19 @@ class DANetHead(nn.Module):
         return tuple(output)
 
 
-def get_danet_d(dataset='pascal_voc', backbone='resnet50', pretrained=False, dep_encode='dep',
-                  root='../../encoding/models/pretrain', **kwargs):
-    r"""DANet model from the paper `"Dual Attention Network for Scene Segmentation"
-    <https://arxiv.org/abs/1809.02983.pdf>`
+def get_danet_d(dataset='pascal_voc', backbone='resnet50', dep_main=False, pretrained=False, dep_encode='dep',
+                fuse_type ='m', depth_order=1, train_a=False, post_conv=True,
+                root='../../encoding/models/pretrain', **kwargs):
+    """
+    fuse_type: 'a' add rgb_similarity and depth_similarity
+          'm' multiply rgb_weight and depth_weight
+    depth_order: 1 -- calculate absolute value of relative depth
+                 2 -- calculate squared relative depth
+    depth_encode: dep -- resize depth feature directly
+                  cnn -- use a deep cnn to process depth feature
+    train_a:  False -- relative depth * constant
+              True  -- relative depth * trainable weight
+
     """
     acronyms = {
         'pascal_voc': 'voc',
@@ -148,7 +166,8 @@ def get_danet_d(dataset='pascal_voc', backbone='resnet50', pretrained=False, dep
     }
     # infer number of classes
     from ...datasets import datasets, VOCSegmentation, VOCAugSegmentation, ADE20KSegmentation
-    model = DANet_D(datasets[dataset.lower()].NUM_CLASS, backbone=backbone, dep_encode=dep_encode, root=root, **kwargs)
+    model = DANet_D(datasets[dataset.lower()].NUM_CLASS, backbone=backbone, dep_main=dep_main, dep_encode=dep_encode,
+                    fuse_type=fuse_type, depth_order=depth_order, train_a=train_a, post_conv=post_conv, root=root, **kwargs)
     if pretrained:
         from ..model_store import get_model_file
         model.load_state_dict(torch.load(
@@ -160,18 +179,32 @@ def get_danet_d(dataset='pascal_voc', backbone='resnet50', pretrained=False, dep
 class PAM_Module_Dep(Module):
     """ Position attention module"""
     # Ref from SAGAN
-    def __init__(self, in_dim):
+    def __init__(self, in_dim, fuse_type, depth_order, train_a):
         super(PAM_Module_Dep, self).__init__()
-        self.chanel_in = in_dim
+        self.channel_in = in_dim
+        self.depth_order = depth_order
+        self.fuse_type = fuse_type
 
         self.query_conv = Conv2d(in_channels=in_dim, out_channels=in_dim//8, kernel_size=1)
         self.key_conv = Conv2d(in_channels=in_dim, out_channels=in_dim//8, kernel_size=1)
         self.value_conv = Conv2d(in_channels=in_dim, out_channels=in_dim, kernel_size=1)
 
         self.gamma = Parameter(torch.zeros(1))
-        self.lamb = Parameter(torch.zeros(1))
+        if self.fuse_type == 'a':
+            if train_a:
+                self.lamb = Parameter(torch.zeros(1))
+            else:
+                self.lamb = 5
+        elif self.fuse_type == 'm':
+            if train_a:
+                self.alpha = Parameter(torch.zeros(1))
+                print('alpha is a trainable param')
+            else:
+                self.alpha = -8
+                print('alpha is a constant')
 
         self.softmax = Softmax(dim=-1)
+        self.d_softmax = Softmax(dim=-1)
 
     def forward(self, x, d):
         """
@@ -188,20 +221,25 @@ class PAM_Module_Dep(Module):
         proj_query = query.view(m_batchsize, -1, width*height).permute(0, 2, 1)       # [B, hw, 64]
         key = self.key_conv(x)                                                        # [B, 64, h, w]
         proj_key = key.view(m_batchsize, -1, width*height)                            # [B, 64, hw]
-
-        energy = torch.bmm(proj_query, proj_key)                                              # [B, hw, hw]
+        energy = torch.bmm(proj_query, proj_key)                                      # [B, hw, hw]
 
         # Depth similarity
         d1 = d.view(m_batchsize, -1, width*height)     # [B, 1, hw]
         d_query = d1.permute(0, 2, 1)                  # [B, hw, 1]
-        dd = d_query - d1
-        dd = torch.square(dd)
-        # d_query = torch.repeat_interleave(d_query, width*height, dim = 2)    # [B, hw, hw]
-        # d_key = torch.repeat_interleave(dep, width*height, dim=1)            # [B, hw, hw]
-        # d = torch.square(d_query - d_key)                                    # [B, hw, hw]
+        dd = d_query - d1                              # [B, hw, hw]
+        if self.depth_order == 1:
+            dd = torch.abs(dd)
+        elif self.depth_order == 2:
+            dd = torch.pow(dd, 2)
 
-        simlarity = energy + self.lamb * dd
-        attention = self.softmax(simlarity)                                                   # [B, hw, hw]
+        # combine rgb similarity and depth similarity
+        if self.fuse_type == 'a':
+            similarity = energy + self.lamb * dd
+            attention = self.softmax(similarity)                                              # [B, hw, hw]
+        elif self.fuse_type == 'm':
+            rgb_attention = self.softmax(energy)                                              # [B, hw, hw]
+            dep_attention = self.d_softmax(self.alpha*dd) * width*height
+            attention = rgb_attention * dep_attention
 
         proj_value = self.value_conv(x).view(m_batchsize, -1, width*height)                   # [B, 512, hw]
         out = torch.bmm(proj_value, attention.permute(0, 2, 1))                               # [B, 512, hw]

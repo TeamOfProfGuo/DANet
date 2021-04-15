@@ -5,7 +5,7 @@
 ###########################################################################
 
 import os, sys
-BASE_DIR = os.path.dirname(os.path.dirname(os.getcwd()))
+BASE_DIR = os.path.dirname(os.path.dirname(os.getcwd()))   # Roost directory for DANet
 sys.path.append(BASE_DIR)
 import copy
 import yaml
@@ -27,9 +27,10 @@ from encoding.nn import SegmentationLosses, SyncBatchNorm
 from encoding.parallel import DataParallelModel, DataParallelCriterion
 from encoding.datasets import get_dataset
 from encoding.models import get_segmentation_model
-CONFIG_PATH = os.path.join(BASE_DIR, 'results/danet_d1_resnet50/config.yaml')
+CONFIG_PATH = './results/config.yaml'
 SMY_PATH = os.path.dirname(CONFIG_PATH)
 GPUS = [0,1]
+
 
 class Trainer():
     def __init__(self, args):
@@ -58,7 +59,11 @@ class Trainer():
                                        backbone=args.backbone, aux=args.aux,
                                        se_loss=args.se_loss,  # norm_layer=SyncBatchNorm,
                                        base_size=args.base_size, crop_size=args.crop_size,
-                                       root = '../../encoding/models/pretrain',
+                                       root='../../encoding/models/pretrain',
+                                       dep_encode='dep',
+                                       fuse_type='m',  # multiple rgb_similarity and depth_similarity
+                                       depth_order=1,  # take absolute value of depth diff
+                                       train_a=True, # alpha is a trainable param
                                        # multi_grid=args.multi_grid, multi_dilation=args.multi_dilation, os=args.os
                                        )
         print(model)
@@ -109,7 +114,6 @@ class Trainer():
         if args.ft:
             args.start_epoch = 0
 
-
     def training(self, epoch):
         train_loss = 0.0
         self.model.train()
@@ -152,7 +156,8 @@ class Trainer():
             utils.save_checkpoint({'epoch': epoch + 1,
                                    'state_dict': self.model.module.state_dict(),
                                    'optimizer': self.optimizer.state_dict(),
-                                   'best_pred': self.best_pred}, self.args, is_best)
+                                   'best_pred': self.best_pred},
+                                  self.args, is_best)
 
     def validation(self, epoch):
         # Fast test during the training
@@ -198,7 +203,6 @@ if __name__ == "__main__":
     args.cuda = (args.use_cuda and torch.cuda.is_available())
     args.resume = None if args.resume=='None' else args.resume
     torch.manual_seed(args.seed)
-
 
     trainer = Trainer(args)
     # import pdb; pdb.set_trace()
