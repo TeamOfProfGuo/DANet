@@ -7,7 +7,7 @@ base_size: 520     # 'base image size'
 crop_size: 480     #'crop image size'
 train_split: train #'dataset train split (default: train)'
 
-dep_dim: True      # Apply early fusion
+early_fusion: True # Apply early fusion
 
 # training hyper params
 aux: False         #'Auxilary Loss'

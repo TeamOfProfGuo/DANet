@@ -33,12 +33,13 @@ class DANet_bpam(BaseNet):
         Long, Jonathan, Evan Shelhamer, and Trevor Darrell. "Fully convolutional networks
         for semantic segmentation." *CVPR*, 2015
     """
-    def __init__(self, nclass, backbone, aux=False, se_loss=False, norm_layer=nn.BatchNorm2d, dep_rezise=0, **kwargs):
+    def __init__(self, nclass, backbone, aux=False, se_loss=False, norm_layer=nn.BatchNorm2d, 
+                    dep_resize_method='itpl', dep_order=2, geo_siml=False, **kwargs):
         super(DANet_bpam, self).__init__(nclass, backbone, aux, se_loss, norm_layer=norm_layer, **kwargs)
-        self.head = DANetHead(2048, nclass, norm_layer)
+        self.head = DANetHead(2048, nclass, norm_layer, dep_order, geo_siml)
 
-        assert dep_rezise in (0, 1, 2)
-        self.resize_method = dep_rezise
+        assert dep_resize_method in ('itpl', 'ap')
+        self.resize_method = dep_resize_method
 
     def forward(self, image, dep, image_with_dep = None):
         x = image_with_dep if image_with_dep is not None else image
@@ -46,10 +47,8 @@ class DANet_bpam(BaseNet):
         _, _, c3, c4 = self.base_forward(x)
 
         ftsize = c4.size()[2:]
-        if self.resize_method == 0:
+        if self.resize_method == 'itpl':
             resized_dep = nn.functional.interpolate(dep, ftsize, mode='bilinear', align_corners=False)
-        elif self.resize_method == 1:
-            pass
         else:
             ave_pool = nn.AdaptiveAvgPool2d(ftsize)
             resized_dep = ave_pool(dep)
@@ -66,7 +65,7 @@ class DANet_bpam(BaseNet):
         return tuple(outputs)
         
 class DANetHead(nn.Module):
-    def __init__(self, in_channels, out_channels, norm_layer):
+    def __init__(self, in_channels, out_channels, norm_layer, dep_order, geo_siml):
         super(DANetHead, self).__init__()
         inter_channels = in_channels // 4
         self.conv5a = nn.Sequential(nn.Conv2d(in_channels, inter_channels, 3, padding=1, bias=False),
@@ -77,7 +76,7 @@ class DANetHead(nn.Module):
         #                            norm_layer(inter_channels),
         #                            nn.ReLU())
 
-        self.sa = BPAM_Module(inter_channels)
+        self.sa = BPAM_Module(inter_channels, dep_order, use_geo_siml=geo_siml)
         # self.sc = CAM_Module(inter_channels)
         self.conv51 = nn.Sequential(nn.Conv2d(inter_channels, inter_channels, 3, padding=1, bias=False),
                                    norm_layer(inter_channels),
@@ -116,11 +115,14 @@ class DANetHead(nn.Module):
 class BPAM_Module(nn.Module):
     """ Position attention module"""
     # Ref from SAGAN
-    def __init__(self, in_dim):
+    def __init__(self, in_dim, dep_order = 2, use_geo_siml = False, **kwargs):
         super(BPAM_Module, self).__init__()
         self.channel_in = in_dim
+        self.use_geo_siml = use_geo_siml
+        self.dep_order = dep_order
 
-        # self.load_geo_siml()
+        if use_geo_siml:
+            self.load_geo_siml()
 
         self.query_conv = Conv2d(in_channels=in_dim, out_channels=in_dim//8, kernel_size=1)
         self.key_conv = Conv2d(in_channels=in_dim, out_channels=in_dim//8, kernel_size=1)
@@ -129,7 +131,7 @@ class BPAM_Module(nn.Module):
         self.gamma = Parameter(torch.zeros(1))
 
         self.lamb1 = Parameter(torch.zeros(1))
-        # self.lamb2 = Parameter(torch.ones(1))
+        self.lamb2 = Parameter(torch.zeros(1))
 
         self.softmax = Softmax(dim=-1)
     
@@ -154,32 +156,28 @@ class BPAM_Module(nn.Module):
         proj_query = query.view(m_batchsize, -1, width*height).permute(0, 2, 1)       # [B, hw, 64]
         key = self.key_conv(x)                                                        # [B, 64, h, w]
         proj_key = key.view(m_batchsize, -1, width*height)                            # [B, 64, hw]
-
         energy = torch.bmm(proj_query, proj_key)                                      # [B, hw, hw]
-        rgb_siml = self.softmax(energy)
+        # rgb_siml = self.softmax(energy)
 
         # Depth similarity
         d1 = dep.view(m_batchsize, -1, width*height)                                  # [B, 1, hw]
         d2 = d1.permute(0, 2, 1)                                                      # [B, hw, 1]
-        dq = torch.repeat_interleave(d2, width*height, dim = 2)                       # [B, hw, hw]
-        dk = torch.repeat_interleave(d1, width*height, dim = 1)                       # [B, hw, hw]
-        
-        # dep_diff = torch.abs(dq - dk) + 1
-        # dep_siml = self.softmax(1 / dep_diff)
-        df = dq - dk
-        dep_siml = torch.mul(df, df)
+        d = d2 - d1                                                                   # [B, hw, hw]
+        if self.dep_order == 1:
+            dep_diss = torch.abs(d)
+        elif self.dep_order == 2:
+            dep_diss = torch.pow(d, 2)
+        else:
+            print('[Dep Siml]: Invalid depth order.')
+            exit(0)
 
         # Geo similarity
-        # if self.geo_siml is None:
-        #     self.compute_geo_siml(m_batchsize, width*height)
-
-        # geo_siml = self.geo_siml[torch.cuda.current_device()].expand(m_batchsize, width*height, width*height)
-        
-        # dag_siml = self.softmax(dep_siml + self.lamb * geo_siml)
+        if self.use_geo_siml:
+            geo_siml = self.geo_siml[torch.cuda.current_device()].expand(m_batchsize, width*height, width*height)
 
         # Finalized simlarity
         # simlarity = rgb_siml + self.lamb1 * dep_siml + self.lamb2 * geo_siml
-        simlarity = rgb_siml - self.lamb1 * dep_siml
+        simlarity = energy - (self.lamb1 * dep_diss) + (self.lamb2 * geo_siml if self.use_geo_siml else 0)
         attention = self.softmax(simlarity)                                                   # [B, hw, hw]
 
         proj_value = self.value_conv(x).view(m_batchsize, -1, width*height)                   # [B, 512, hw]

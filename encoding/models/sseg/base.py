@@ -54,7 +54,7 @@ def get_backbone(name, **kwargs):
 class BaseNet(nn.Module):
     def __init__(self, nclass, backbone, aux, se_loss, dilated=True, norm_layer=None,
                  base_size=520, crop_size=480, mean=[.485, .456, .406],
-                 std=[.229, .224, .225], root='./encoding/models/pretrain', dep_dim = False, *args, **kwargs):
+                 std=[.229, .224, .225], root='./encoding/models/pretrain', early_fusion = False, *args, **kwargs):
         super(BaseNet, self).__init__()
         self.nclass = nclass
         self.aux = aux
@@ -65,7 +65,7 @@ class BaseNet(nn.Module):
         self.crop_size = crop_size
         # copying modules from pretrained models
         self.backbone = backbone
-        if dep_dim:
+        if early_fusion:
             self.pretrained = get_backbone(backbone, pretrained=True, dilated=dilated,
                                         norm_layer=norm_layer, root=root, dim = 4,
                                         *args, **kwargs)

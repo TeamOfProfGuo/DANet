@@ -69,10 +69,11 @@ class Trainer():
                                        backbone=args.backbone, aux=args.aux,
                                        se_loss=args.se_loss,  # norm_layer=SyncBatchNorm,
                                        base_size=args.base_size, crop_size=args.crop_size,
-                                       dep_dim=args.dep_dim,
+                                       early_fusion=args.early_fusion,
                                        # multi_grid=args.multi_grid, multi_dilation=args.multi_dilation, os=args.os
                                        )
-        # print(model)
+        print(model)
+
         # optimizer using different LR
         params_list = [{'params': model.pretrained.parameters(), 'lr': args.lr}, ]
         if hasattr(model, 'head'):
@@ -126,7 +127,7 @@ class Trainer():
         self.model.train()
         for i, (image, dep, target) in enumerate(self.trainloader):
 
-            if self.args.dep_dim:
+            if self.args.early_fusion:
                 image_with_dep = torch.cat((image, dep), 1)
                 image_with_dep, target = image_with_dep.to(self.device), target.to(self.device)
             else:
@@ -135,7 +136,7 @@ class Trainer():
             self.scheduler(self.optimizer, i, epoch, self.best_pred)
             self.optimizer.zero_grad()
 
-            outputs = self.model(image_with_dep if self.args.dep_dim else image)
+            outputs = self.model(image_with_dep if self.args.early_fusion else image)
 
             loss = self.criterion(*outputs, target)
             loss.backward()
@@ -167,11 +168,15 @@ class Trainer():
             if new_pred > self.best_pred:
                 is_best = True
                 self.best_pred = new_pred
+                best_info = {'mIOU': round(mIOU, 3), 'pixAcc': round(pixAcc, 4)}
+                best_state_dict = self.model.module.state_dict() if self.args.cuda else self.model.state_dict()
             utils.save_checkpoint({'epoch': epoch + 1,
                                    # 'state_dict': self.model.module.state_dict(),
                                    'state_dict': self.model.module.state_dict() if args.cuda else self.model.state_dict(),
                                    'optimizer': self.optimizer.state_dict(),
                                    'best_pred': self.best_pred}, self.args, is_best)
+        print('[Best Pred]:', best_info)
+        torch.save(best_state_dict, 'danet_pam_ef.pth')
 
     def validation(self, epoch):
         # Fast test during the training
@@ -187,14 +192,14 @@ class Trainer():
         self.model.eval()
         total_inter, total_union, total_correct, total_label, total_loss = 0, 0, 0, 0, 0
         for i, (image, dep, target) in enumerate(self.valloader):
-            if self.args.dep_dim:
+            if self.args.early_fusion:
                 image_with_dep = torch.cat((image, dep), 1)
                 image_with_dep, target = image_with_dep.to(self.device), target.to(self.device)
             else:
                 image, target = image.to(self.device), target.to(self.device)
             
             with torch.no_grad():
-                correct, labeled, inter, union, loss = eval_batch(self.model, image_with_dep if self.args.dep_dim else image, target)
+                correct, labeled, inter, union, loss = eval_batch(self.model, image_with_dep if self.args.early_fusion else image, target)
 
             total_correct += correct
             total_label += labeled

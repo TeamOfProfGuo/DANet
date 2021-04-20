@@ -7,9 +7,11 @@ base_size: 520     # 'base image size'
 crop_size: 480     #'crop image size'
 train_split: train #'dataset train split (default: train)'
 
-dep_dim: True      # Apply early fusion
-dep_rezise: 0      # 0: Interpolate; 1: CNN, 2: AvePool
-export: True
+early_fusion: True           # Apply early fusion for the backbone
+dep_resize_method: itpl      # Dep resize method: itpl(Interpolate), ap(AvePool)
+dep_order: 2                 # (L1/L2) norm
+geo_siml: False              # Apply geo similarity
+export: bpam.pth             # Exported file name
 
 # training hyper params
 aux: False         #'Auxilary Loss'

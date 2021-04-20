@@ -305,6 +305,7 @@ def resnet50(pretrained=False, root='./encoding/models/pretrain', dim=3, **kwarg
         f_path = os.path.abspath(os.path.join(root, 'resnet50-19c8e357.pth'))
         print('pretrained model {} exist {}'.format(f_path, str(os.path.exists(f_path)) ))
         if os.path.exists(f_path):
+            print('\n[Backbone]: Input dim = %d.\n' % dim)
             if dim==4:
                 weights = torch.load(f_path)
                 for k, v in weights.items():

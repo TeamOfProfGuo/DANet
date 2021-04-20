@@ -69,11 +69,12 @@ class Trainer():
                                        backbone=args.backbone, aux=args.aux,
                                        se_loss=args.se_loss,  # norm_layer=SyncBatchNorm,
                                        base_size=args.base_size, crop_size=args.crop_size,
-                                       dep_dim=args.dep_dim,
-                                       dep_rezise=args.dep_rezise,
+                                       early_fusion=args.early_fusion,
+                                       dep_resize_method=args.dep_resize_method, dep_order=args.dep_order, geo_siml=args.geo_siml
                                        # multi_grid=args.multi_grid, multi_dilation=args.multi_dilation, os=args.os
                                        )
-        # print(model)
+        print(model)
+
         # optimizer using different LR
         params_list = [{'params': model.pretrained.parameters(), 'lr': args.lr}, ]
         if hasattr(model, 'head'):
@@ -127,7 +128,7 @@ class Trainer():
         self.model.train()
         for i, (image, dep, target) in enumerate(self.trainloader):
 
-            if self.args.dep_dim:
+            if self.args.early_fusion:
                 image_with_dep = torch.cat((image, dep), 1)
                 image_with_dep = image_with_dep.to(self.device)
             image, dep, target = image.to(self.device), dep.to(self.device), target.to(self.device)
@@ -135,9 +136,9 @@ class Trainer():
             self.scheduler(self.optimizer, i, epoch+1, self.best_pred)
             self.optimizer.zero_grad()
 
-            input_dict = {'image': image, 'dep': dep, 'image_with_dep': image_with_dep} if self.args.dep_dim else {'image': image, 'dep': dep}
+            input_dict = {'image': image, 'dep': dep, 'image_with_dep': image_with_dep} if self.args.early_fusion else {'image': image, 'dep': dep}
             outputs = self.model(**input_dict)
-            # outputs = self.model(image_with_dep if self.args.dep_dim else image)
+            # outputs = self.model(image_with_dep if self.args.early_fusion else image)
 
             loss = self.criterion(*outputs, target)
             loss.backward()
@@ -169,15 +170,14 @@ class Trainer():
             if new_pred > self.best_pred:
                 is_best = True
                 self.best_pred = new_pred
+                best_state_dict = self.model.module.state_dict() if self.args.cuda else self.model.state_dict()
             utils.save_checkpoint({'epoch': epoch + 1,
                                    # 'state_dict': self.model.module.state_dict(),
                                    'state_dict': self.model.module.state_dict() if self.args.cuda else self.model.state_dict(),
                                    'optimizer': self.optimizer.state_dict(),
                                    'best_pred': self.best_pred}, self.args, is_best)
-        
-        final_state_dict = self.model.module.state_dict() if self.args.cuda else self.model.state_dict()
-        if self.args.export:
-            torch.save(final_state_dict, 'final_weights.pth')
+        if self.args.export is not None:
+            torch.save(best_state_dict, self.args.export)
 
 
     def validation(self, epoch):
@@ -195,12 +195,12 @@ class Trainer():
         total_inter, total_union, total_correct, total_label, total_loss = 0, 0, 0, 0, 0
         for i, (image, dep, target) in enumerate(self.valloader):
 
-            if self.args.dep_dim:
+            if self.args.early_fusion:
                 image_with_dep = torch.cat((image, dep), 1)
                 image_with_dep = image_with_dep.to(self.device)
             image, dep, target = image.to(self.device), dep.to(self.device), target.to(self.device)
             
-            input_dict = {'image': image, 'dep': dep, 'image_with_dep': image_with_dep} if self.args.dep_dim else {'image': image, 'dep': dep}
+            input_dict = {'image': image, 'dep': dep, 'image_with_dep': image_with_dep} if self.args.early_fusion else {'image': image, 'dep': dep}
 
             with torch.no_grad():
                 correct, labeled, inter, union, loss = eval_batch(self.model, input_dict, target)

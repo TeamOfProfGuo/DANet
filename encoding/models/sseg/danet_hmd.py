@@ -43,8 +43,9 @@ class DANet_HMD(BaseNet):
         _, _, c3, c4 = self.base_forward(x)
 
         ftsize = c4.size()[2:]
-        ave_pool = nn.AdaptiveAvgPool2d(ftsize)
-        resized_dep = ave_pool(dep)
+        # ave_pool = nn.AdaptiveAvgPool2d(ftsize)
+        # resized_dep = ave_pool(dep)
+        resized_dep = nn.functional.interpolate(dep, ftsize, mode='bilinear', align_corners=False)
 
         x = self.head(c4, resized_dep)
         x = list(x)
@@ -120,8 +121,8 @@ class PAM_Module_HMD(nn.Module):
 
         self.gamma = Parameter(torch.zeros(1))
 
-        self.lamb1 = Parameter(torch.ones(1))
-        self.lamb2 = Parameter(torch.ones(1))
+        self.lamb1 = Parameter(torch.zeros(1))
+        self.lamb2 = Parameter(torch.zeros(1))
 
         self.softmax = Softmax(dim=-1)
     
