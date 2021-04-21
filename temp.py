@@ -75,3 +75,9 @@ import numpy as np
 a = np.random.randint(6,size=(4,5,3))
 idx = np.nonzero(a)
 
+
+
+import torch
+
+Q = torch.randint(0, 5, (1, 1, 12)).float()
+K = torch.randint(0, 5, (1, 12, 1)).float()

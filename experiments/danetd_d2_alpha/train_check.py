@@ -29,7 +29,7 @@ from encoding.datasets import get_dataset
 from encoding.models import get_segmentation_model
 
 BASE_DIR = '.'
-CONFIG_PATH = os.path.join(BASE_DIR, 'results/danet_d_resnet50/config.yaml')
+CONFIG_PATH = os.path.join(BASE_DIR, 'experiments/danetd_d2_alpha/results/config.yaml')
 SMY_PATH = os.path.dirname(CONFIG_PATH)
 GPUS = [0,1]
 

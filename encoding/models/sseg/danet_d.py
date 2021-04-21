@@ -41,9 +41,11 @@ class DANet_D(BaseNet):
 
     def __init__(self, nclass, backbone, dep_main=False, dep_encode='dep', fuse_type='m', depth_order=1, train_a=False, post_conv=True,
                  aux=False, se_loss=False, norm_layer=nn.BatchNorm2d, **kwargs):
-        super(DANet_D, self).__init__(nclass, backbone, aux, se_loss, norm_layer=norm_layer, dep_main=dep_main, **kwargs)
+        dim = 4 if dep_main else 3
+        super(DANet_D, self).__init__(nclass, backbone, aux, se_loss, norm_layer=norm_layer, dim=dim, **kwargs)
         self.head = DANetHead(2048, nclass, norm_layer, fuse_type, depth_order, train_a, post_conv)
         self.dep_encode = dep_encode
+        self.dep_main = dep_main
 
         # depth encoder
         if self.dep_encode == 'cnn':
@@ -78,9 +80,7 @@ class DANet_D(BaseNet):
         x[1] = upsample(x[1], imsize, **self._up_kwargs)
         x[2] = upsample(x[2], imsize, **self._up_kwargs)
 
-        outputs = [x[0]]
-        outputs.append(x[1])
-        outputs.append(x[2])
+        outputs = [x[0], x[1], x[2]]
         return tuple(outputs)
 
 

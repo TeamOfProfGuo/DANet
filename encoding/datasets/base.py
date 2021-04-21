@@ -13,8 +13,7 @@ import torch.utils.data as data
 __all__ = ['BaseDataset', 'test_batchify_fn']
 
 class BaseDataset(data.Dataset):
-    def __init__(self, root, split, mode=None, transform=None, 
-                 target_transform=None, base_size=520, crop_size=480):
+    def __init__(self, root, split, mode=None, transform=None, target_transform=None, base_size=520, crop_size=480):
         self.root = root
         self.transform = transform
         self.target_transform = target_transform
@@ -101,7 +100,7 @@ class BaseDataset(data.Dataset):
         if depth:
             depth = depth.resize((ow, oh), Image.BILINEAR)
 
-        # pad crop ? image pad using 0, mask should pad using -1
+        # pad crop == image pad using white(255, 255, 255), mask should pad using -1
         if short_size < crop_size:
             padh = crop_size - oh if oh < crop_size else 0
             padw = crop_size - ow if ow < crop_size else 0
