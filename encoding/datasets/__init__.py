@@ -10,6 +10,7 @@ from .cityscapes import CitySegmentation
 from .imagenet import ImageNetDataset
 from .minc import MINCDataset
 from .nyud_v2 import NYUD
+from .nyud_v2_in import NYUD_in
 
 from ..utils import EncodingDeprecationWarning
 
@@ -23,7 +24,8 @@ datasets = {
     'imagenet': ImageNetDataset,
     'minc': MINCDataset,
     'cifar10': CIFAR10,
-    'nyud': NYUD
+    'nyud': NYUD,
+    'nyud_in': NYUD_in
 }
 
 # this specified the pretrained model, layers after backbone model pretrained on the data
