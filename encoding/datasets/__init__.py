@@ -10,6 +10,7 @@ from .cityscapes import CitySegmentation
 from .imagenet import ImageNetDataset
 from .minc import MINCDataset
 from .nyud_v2 import NYUD
+from .sun_rgbd import SUNRGBD
 
 from ..utils import EncodingDeprecationWarning
 
@@ -23,7 +24,8 @@ datasets = {
     'imagenet': ImageNetDataset,
     'minc': MINCDataset,
     'cifar10': CIFAR10,
-    'nyud': NYUD
+    'nyud': NYUD,
+    'sunrgbd': SUNRGBD
 }
 
 # this specified the pretrained model, layers after backbone model pretrained on the data
@@ -38,8 +40,10 @@ acronyms = {
     'cifar10': 'cifar10',
 }
 
+
 def get_dataset(name, **kwargs):
     return datasets[name.lower()](**kwargs)
+
 
 def _make_deprecate(meth, old_name):
     new_name = meth.__name__
@@ -57,5 +61,6 @@ def _make_deprecate(meth, old_name):
         old_name=old_name, new_name=new_name)
     deprecated_init.__name__ = old_name
     return deprecated_init
+
 
 get_segmentation_dataset = _make_deprecate(get_dataset, 'get_segmentation_dataset')

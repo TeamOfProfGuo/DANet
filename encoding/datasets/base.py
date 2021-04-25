@@ -107,7 +107,7 @@ class BaseDataset(data.Dataset):
             img = ImageOps.expand(img, border=(0, 0, padw, padh), fill=(255, 255, 255))
             mask = ImageOps.expand(mask, border=(0, 0, padw, padh), fill=IGNORE_LABEL)
             if depth:
-                depth = ImageOps.expand(mask, border=(0, 0, padw, padh), fill=255)
+                depth = ImageOps.expand(mask, border=(0, 0, padw, padh), fill=0)
 
         # random crop crop_size
         w, h = img.size

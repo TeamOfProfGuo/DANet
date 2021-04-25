@@ -37,13 +37,19 @@ class DANet(BaseNet):
 
     """
 
-    def __init__(self, nclass, backbone, aux=False, se_loss=False, norm_layer=nn.BatchNorm2d, **kwargs):
-        super(DANet, self).__init__(nclass, backbone, aux, se_loss, norm_layer=norm_layer, **kwargs)
+    def __init__(self, nclass, backbone, aux=False, se_loss=False, norm_layer=nn.BatchNorm2d, dep_main=False, **kwargs):
+        dim = 4 if dep_main else 3
+        super(DANet, self).__init__(nclass, backbone, aux, se_loss, norm_layer=norm_layer, dim=dim, **kwargs)
         self.head = DANetHead(2048, nclass, norm_layer)
+        self.dep_main = dep_main
 
-    def forward(self, x):
+    def forward(self, x, dep):
         imsize = x.size()[2:]
-        _, _, c3, c4 = self.base_forward(x)
+        if self.dep_main:
+            x = torch.cat((x, dep), 1)
+            _, _, c3, c4 = self.base_forward(x)
+        else:
+            _, _, c3, c4 = self.base_forward(x)
 
         x = self.head(c4)
         x = list(x)
@@ -51,9 +57,7 @@ class DANet(BaseNet):
         x[1] = upsample(x[1], imsize, **self._up_kwargs)
         x[2] = upsample(x[2], imsize, **self._up_kwargs)
 
-        outputs = [x[0]]
-        outputs.append(x[1])
-        outputs.append(x[2])
+        outputs = [x[0], x[1], x[2]]
         return tuple(outputs)
 
 
@@ -98,14 +102,12 @@ class DANetHead(nn.Module):
 
         sasc_output = self.conv8(feat_sum)
 
-        output = [sasc_output]
-        output.append(sa_output)
-        output.append(sc_output)
+        output = [sasc_output, sa_output, sc_output]
         return tuple(output)
 
 
-def get_danet(dataset='pascal_voc', backbone='resnet50', pretrained=False,
-              root='../../encoding/models/pretrain', **kwargs):
+def get_danet(dataset='pascal_voc', backbone='resnet50', pretrained=False, dep_main=False,
+              root='../../encoding/models/pretrain',  **kwargs):
     r"""DANet model from the paper `"Dual Attention Network for Scene Segmentation"
     <https://arxiv.org/abs/1809.02983.pdf>`
     """
@@ -118,9 +120,9 @@ def get_danet(dataset='pascal_voc', backbone='resnet50', pretrained=False,
     }
     # infer number of classes
     from ...datasets import datasets, VOCSegmentation, VOCAugSegmentation, ADE20KSegmentation
-    model = DANet(datasets[dataset.lower()].NUM_CLASS, backbone=backbone, root=root, **kwargs)
+    model = DANet(datasets[dataset.lower()].NUM_CLASS, backbone=backbone, dep_main=dep_main, root=root, **kwargs)
     if pretrained:
-        from .model_store import get_model_file
+        from ..model_store import get_model_file
         model.load_state_dict(torch.load(
             get_model_file('fcn_%s_%s' % (backbone, acronyms[dataset]), root=root)),
             strict=False)

@@ -13,7 +13,7 @@ class SUNRBDBase:
     SPLITS = ['train', 'val']
 
     # number of classes without void
-    N_CLASS = 37
+    NUM_CLASS = 37
 
     CLASS_NAMES_ENGLISH = ['void', 'wall', 'floor', 'cabinet', 'bed', 'chair',
                            'sofa', 'table', 'door', 'window', 'bookshelf',
@@ -52,7 +52,6 @@ class SUNRGBD(SUNRBDBase, BaseDataset):
         self.dep_transform = dep_transform
         print('==check dep_transform {}'.format(dep_transform))
 
-        self._n_classes = self.N_CLASS
         self._cameras = ['realsense', 'kv2', 'kv1', 'xtion']
         assert split in self.SPLITS, f'parameter split must be one of {self.SPLITS}, got {split}'
         self._split = split
