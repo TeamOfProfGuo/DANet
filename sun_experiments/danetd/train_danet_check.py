@@ -27,28 +27,18 @@ from encoding.nn import SegmentationLosses, SyncBatchNorm
 from encoding.parallel import DataParallelModel, DataParallelCriterion
 from encoding.datasets import get_dataset
 from encoding.models import get_segmentation_model
-CONFIG_PATH = 'results/danet_resnet50/config.yaml'
+CONFIG_PATH = 'sun_experiments/danetd/results/config.yaml'
 GPUS = [0, 1]
-
-def get_arguments():
-    '''
-    parse all the arguments from command line inteface
-    return a list of parsed arguments
-    '''
-
-    parser = argparse.ArgumentParser(description='semantic segmentation using PASCAL VOC')
-    parser.add_argument('--config_path', type=str, help='path of a config file')
-    return parser.parse_args(['--config_path', CONFIG_PATH])
-    #return parser.parse_args()
 
 
 # =====================  setup  ======================
-config = get_arguments()
+
 # configuration
-args = Dict(yaml.safe_load(open(config.config_path)))
+args = Dict(yaml.safe_load(open(CONFIG_PATH)))
 args.cuda = (args.use_cuda and torch.cuda.is_available())
 torch.manual_seed(args.seed)
 args.batch_size = 2
+
 
 # ================= trainer init  ======================
 # data transforms
@@ -57,7 +47,8 @@ input_transform = transform.Compose([
     transform.Normalize([.485, .456, .406], [.229, .224, .225])])   # mean and std based on imageNet
 dep_transform = transform.Compose([
     transform.ToTensor(),
-    transform.Normalize(mean=[0.2798], std=[0.1387])  # mean and std for depth
+    transform.Lambda(lambda x: x.to(torch.float)),
+    transform.Normalize(mean=[19025.15], std=[9880.92])  # mean and std for depth
 ])
 # dataset
 data_kwargs = {'transform': input_transform, 'dep_transform':dep_transform,
@@ -72,13 +63,15 @@ valloader = data.DataLoader(testset, batch_size=args.batch_size, drop_last=False
 nclass = trainset.num_class
 
 # model
+
 model = get_segmentation_model(args.model, dataset=args.dataset,
-                               backbone=args.backbone, aux=args.aux,
-                               se_loss=args.se_loss, # norm_layer=SyncBatchNorm,
-                               base_size=args.base_size, crop_size=args.crop_size,
-                               # multi_grid=args.multi_grid, multi_dilation=args.multi_dilation, os=args.os
-                               # for resNet
-                               )
+                                       backbone=args.backbone, aux=args.aux,
+                                       se_loss=args.se_loss,  # norm_layer=SyncBatchNorm,
+                                       base_size=args.base_size, crop_size=args.crop_size,
+                                       root='./encoding/models/pretrain',
+                                       dep_main=True,
+                                       # multi_grid=args.multi_grid, multi_dilation=args.multi_dilation, os=args.os
+                                       )
 
 print(model)
 # optimizer using different LR
@@ -121,7 +114,7 @@ for i, (image, dep, target) in enumerate(trainloader):
 scheduler(optimizer, i, epoch, best_pred)
 
 optimizer.zero_grad()
-outputs = model(image)
+outputs = model(image, dep)
 outputs = [outputs[0]]
 
 loss = criterion(*outputs, target)

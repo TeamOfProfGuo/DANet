@@ -39,6 +39,7 @@ class Trainer():
             transform.Normalize([.485, .456, .406], [.229, .224, .225])])  # mean and std based on imageNet
         dep_transform = transform.Compose([
             transform.ToTensor(),
+            transform.Lambda(lambda x: x.to(torch.float)),
             transform.Normalize(mean=[19025.15], std=[9880.92])  # mean and std for depth
         ])
         # dataset
@@ -139,9 +140,10 @@ class Trainer():
             self.training(epoch)
 
             # evaluate for one epoch on the validation set
-            print('\n===============start testing, training epoch {}\n'.format(epoch))
-            pixAcc, mIOU, loss = self.validation(epoch)
-            print('evaluation pixel acc {}, mean IOU {}, loss {}'.format(pixAcc, mIOU, loss))
+            if (epoch+1)%2 ==0:
+                print('\n===============start testing, training epoch {}\n'.format(epoch))
+                pixAcc, mIOU, loss = self.validation(epoch)
+                print('evaluation pixel acc {}, mean IOU {}, loss {}'.format(pixAcc, mIOU, loss))
 
             # save the best model
             is_best = False

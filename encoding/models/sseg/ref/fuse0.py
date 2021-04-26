@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-from ..model_store import get_model_file
+from encoding.models.model_store import get_model_file
 import torchvision
 
 layers = [[64, 64], [ 128, 128], [ 256, 256, 256], [ 512, 512, 512], [ 512, 512, 512]]

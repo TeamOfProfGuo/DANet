@@ -143,14 +143,14 @@ class LANetHead(nn.Module):
         geo_prior = indices*geo_prior                       # [1, hw, 1, 7*7]  mask padded zeros
 
         # combine RGBD similarity and geometry prior to get attention
-        attention = self.softmax(rgb_similarity+geo_prior).permute(0, 1, 3, 2)  # [B, hw, 1, 7*7] -> [B, hw, 7*7, 1]
+        attention = self.softmax(rgb_similarity+geo_prior).permute(0, 1, 3, 2).contiguous()  # [B, hw, 1, 7*7] -> [B, hw, 7*7, 1]
 
         value = self.value_conv(feat1)                      # [B, C, h, w] with C=512
-        value = self.value_unfold(value).permute(0, 2, 1)   # [B, C*7*7, hw] -> [B, hw, C*7*7]
+        value = self.value_unfold(value).permute(0, 2, 1).contiguous()   # [B, C*7*7, hw] -> [B, hw, C*7*7]
         value = value.view(m_batchsize, ht*wt, -1, 7*7)     # [B, hw, C, 7*7]
 
         sa_feat = torch.matmul(value, attention).squeeze(dim=3)           # [B, hw, C, 1] -> [B, hw, C]
-        sa_feat = sa_feat.permute(0, 2, 1).view(m_batchsize, -1, ht, wt)  # [B, C, hw] -> [B, C, h, w]
+        sa_feat = sa_feat.permute(0, 2, 1).contiguous().view(m_batchsize, -1, ht, wt)  # [B, C, hw] -> [B, C, h, w]
 
         sa_out = self.gamma * sa_feat + feat1            # [B, 512, h, w]
         sa_out = self.conv_s1(sa_out)                    # [B, 512, h, w]
@@ -190,10 +190,10 @@ class RGBDSimilarity(Module):
 
         # RGB energy
         query = self.query_conv(x)                                                    # [B, 64, h, w]
-        proj_query = query.view(m_batchsize, -1, width*height).permute(0, 2, 1)       # [B, hw, 64]
+        proj_query = query.view(m_batchsize, -1, width*height).permute(0, 2, 1).contiguous()       # [B, hw, 64]
         proj_query = proj_query.view(m_batchsize, width*height, 1, -1)                # [B, hw, 1, 64]
         key = self.key_conv(x)                                                        # [B, 64, h, w]
-        key = self.key_unfold(key).permute(0, 2, 1)                                   # [B, hw, 64*7*7]
+        key = self.key_unfold(key).permute(0, 2, 1).contiguous()                                  # [B, hw, 64*7*7]
         key = key.view(m_batchsize, width*height, -1, 7*7)                            # [B, hw, 64, 7*7]
 
         rgb_energy = torch.matmul(proj_query, key)                                    # [B, hw, 1, 7*7]
@@ -201,8 +201,8 @@ class RGBDSimilarity(Module):
         # Depth energy
         dep_energy = None
         if self.dep_att:
-            d_query = d.view(m_batchsize, 1, width*height).permute(0, 2, 1)               # [B, hw, 1]
-            d_key = self.d_unfold(d).permute(0, 2, 1)                                     # [B, 7*7, hw] -> [B, hw, 7*7]
+            d_query = d.view(m_batchsize, 1, width*height).permute(0, 2, 1).contiguous()              # [B, hw, 1]
+            d_key = self.d_unfold(d).permute(0, 2, 1).contiguous()                                     # [B, 7*7, hw] -> [B, hw, 7*7]
             dep_energy = torch.abs(d_query-d_key).view(m_batchsize, width*height, 1, -1)  # [B, hw, 7*7] -> [B, hw, 1, 7*7]
 
         return rgb_energy, dep_energy                                                     # [B, hw, 1, 7*7]

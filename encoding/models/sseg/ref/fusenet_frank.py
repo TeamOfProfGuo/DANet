@@ -5,7 +5,7 @@ import numpy as np
 import torch
 import torch.nn as nn
 from torch.nn.functional import interpolate
-from ...utils import batch_pix_accuracy, batch_intersection_union
+from encoding.utils import batch_pix_accuracy, batch_intersection_union
 from typing import Union, List, Dict, Any, cast
 
 DROPOUT = 0.4

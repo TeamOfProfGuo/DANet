@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name=DANet
+#SBATCH --job-name=DANetd
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
@@ -20,6 +20,6 @@ echo "start training">>train.log
 module load cuda/10.0
 #module load cudnn/7.5
 
-python train_danet.py >train.log 2>& 1
+python train.py >train.log 2>& 1
 echo "FINISH"
 

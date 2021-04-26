@@ -2,7 +2,6 @@
 
 import os
 import numpy as np
-import cv2
 import pickle
 from PIL import Image, ImageOps, ImageFilter
 from .base import BaseDataset

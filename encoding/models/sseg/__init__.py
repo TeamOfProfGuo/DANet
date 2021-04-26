@@ -6,7 +6,7 @@ from .atten import *
 from .encnet import *
 from .deeplab import *
 from .upernet import *
-from .fuse import *
+from encoding.models.sseg.ref.fuse import *
 from .danet import *
 from .danet_dep import *
 from .danet_d import *
