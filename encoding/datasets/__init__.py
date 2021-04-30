@@ -26,7 +26,7 @@ datasets = {
     'minc': MINCDataset,
     'cifar10': CIFAR10,
     'nyud': NYUD,
-    'nyud_in': NYUD_in
+    'nyud_in': NYUD_in,
     'sunrgbd': SUNRGBD
 }
 

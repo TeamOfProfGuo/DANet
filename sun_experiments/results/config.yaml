@@ -7,6 +7,8 @@ base_size: 520     # 'base image size'
 crop_size: 480     #'crop image size'
 train_split: train #'dataset train split (default: train)'
 
+early_fusion: False
+
 # training hyper params
 aux: False         #'Auxilary Loss'
 aux_weight: 0.2    #'Auxilary loss weight (default: 0.2)
@@ -47,4 +49,3 @@ multi_grid: False    #"use multi grid dilation policy"
 multi_dilation: None #"multi grid dilation list"
 os: 8                #'output stride default:8'
 
-early_fusion: False
