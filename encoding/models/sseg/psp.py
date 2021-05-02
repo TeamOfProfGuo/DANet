@@ -21,7 +21,9 @@ class PSP(BaseNet):
         if aux:
             self.auxlayer = FCNHead(1024, nclass, norm_layer)
 
-    def forward(self, x):
+    def forward(self, image, dep, image_with_dep = None):
+        x = image_with_dep if image_with_dep is not None else image
+        
         _, _, h, w = x.size()
         _, _, c3, c4 = self.base_forward(x)
 
