@@ -72,44 +72,45 @@ class DANetHead(nn.Module):
                                    norm_layer(inter_channels),
                                    nn.ReLU())
         
-        # self.conv5c = nn.Sequential(nn.Conv2d(in_channels, inter_channels, 3, padding=1, bias=False),
-        #                            norm_layer(inter_channels),
-        #                            nn.ReLU())
+        self.conv5c = nn.Sequential(nn.Conv2d(in_channels, inter_channels, 3, padding=1, bias=False),
+                                   norm_layer(inter_channels),
+                                   nn.ReLU())
 
         self.sa = BPAM_Module(inter_channels, dep_order, use_geo_siml=geo_siml)
-        # self.sc = CAM_Module(inter_channels)
+        self.sc = CAM_Module(inter_channels)
         self.conv51 = nn.Sequential(nn.Conv2d(inter_channels, inter_channels, 3, padding=1, bias=False),
                                    norm_layer(inter_channels),
                                    nn.ReLU())
-        # self.conv52 = nn.Sequential(nn.Conv2d(inter_channels, inter_channels, 3, padding=1, bias=False),
-        #                            norm_layer(inter_channels),
-        #                            nn.ReLU())
+        self.conv52 = nn.Sequential(nn.Conv2d(inter_channels, inter_channels, 3, padding=1, bias=False),
+                                   norm_layer(inter_channels),
+                                   nn.ReLU())
 
         self.conv6 = nn.Sequential(nn.Dropout2d(0.1, False), nn.Conv2d(inter_channels, out_channels, 1))
-        # self.conv7 = nn.Sequential(nn.Dropout2d(0.1, False), nn.Conv2d(inter_channels, out_channels, 1))
+        self.conv7 = nn.Sequential(nn.Dropout2d(0.1, False), nn.Conv2d(inter_channels, out_channels, 1))
 
-        # self.conv8 = nn.Sequential(nn.Dropout2d(0.1, False), nn.Conv2d(inter_channels, out_channels, 1))
+        self.conv8 = nn.Sequential(nn.Dropout2d(0.1, False), nn.Conv2d(inter_channels, out_channels, 1))
 
     def forward(self, x, dep):
         feat1 = self.conv5a(x)
         sa_feat = self.sa(feat1, dep)
         sa_conv = self.conv51(sa_feat)
-        sa_output = self.conv6(sa_conv)
+        # sa_output = self.conv6(sa_conv)
 
-        output = [sa_output]
+        # output = [sa_output]
 
-        # feat2 = self.conv5c(x)
-        # sc_feat = self.sc(feat2)
-        # sc_conv = self.conv52(sc_feat)
+        feat2 = self.conv5c(x)
+        sc_feat = self.sc(feat2)
+        sc_conv = self.conv52(sc_feat)
         # sc_output = self.conv7(sc_conv)
 
-        # feat_sum = sa_conv+sc_conv
+        feat_sum = sa_conv+sc_conv
         
-        # sasc_output = self.conv8(feat_sum)
+        sasc_output = self.conv8(feat_sum)
 
-        # output = [sasc_output]
+        output = [sasc_output]
         # output.append(sa_output)
         # output.append(sc_output)
+
         return tuple(output)
 
 class BPAM_Module(nn.Module):

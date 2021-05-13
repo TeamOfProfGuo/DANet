@@ -28,7 +28,7 @@ from encoding.datasets import get_dataset
 from encoding.models import get_segmentation_model
 
 GPUS = [0, 1, 2, 3]
-# CONFIG_PATH_MAC = './results/danet_resnet50/config_mac.yaml'
+CONFIG_PATH_MAC = './results/danet_resnet50/config_mac.yaml'
 
 def get_arguments():
     '''
@@ -51,6 +51,7 @@ class Trainer():
             transform.Normalize([.485, .456, .406], [.229, .224, .225])])  # mean and std based on imageNet
         dep_transform = transform.Compose([
             transform.ToTensor(),
+            transform.Lambda(lambda x: x.to(torch.float)),
             transform.Normalize(mean=[19025.15], std=[9880.92])  # mean and std for depth
         ])
         # dataset
@@ -69,7 +70,7 @@ class Trainer():
                                        backbone=args.backbone, aux=args.aux,
                                        se_loss=args.se_loss,  # norm_layer=SyncBatchNorm,
                                        base_size=args.base_size, crop_size=args.crop_size,
-                                       #early_fusion=args.early_fusion,
+                                       early_fusion=args.early_fusion,
                                        # multi_grid=args.multi_grid, multi_dilation=args.multi_dilation, os=args.os
                                        )
         print(model)
@@ -143,7 +144,7 @@ class Trainer():
             self.optimizer.step()
 
             train_loss += loss.item()
-            if (i+1) % 20 == 0:
+            if (i+1) % 100 == 0:
                 print('epoch {}, step {}, loss {}'.format(epoch + 1, i + 1, train_loss / 50))
                 self.writer.add_scalar('train_loss', train_loss / 50, epoch * len(self.trainloader) + i)
                 train_loss = 0.0
@@ -176,7 +177,7 @@ class Trainer():
                                    'optimizer': self.optimizer.state_dict(),
                                    'best_pred': self.best_pred}, self.args, is_best)
         print('[Best Pred]:', best_info)
-        torch.save(best_state_dict, 'danet_pam_ef.pth')
+        torch.save(best_state_dict, 'danet_sun_ef.pth')
 
     def validation(self, epoch):
         # Fast test during the training
@@ -210,7 +211,7 @@ class Trainer():
             IOU = 1.0 * total_inter / (np.spacing(1) + total_union)
             mIOU = IOU.mean()
 
-            if i % 10 == 0:
+            if i % 50 == 0:
                 print('eval mean IOU {}'.format(mIOU))
             loss = total_loss / len(self.valloader)
 
