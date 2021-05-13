@@ -5,11 +5,11 @@
 #SBATCH --cpus-per-task=6
 #SBATCH --mem=88GB
 #SBATCH --gres=gpu:aquila
-#SBATCH --time=90:00:00
-#SBATCH --mail-type=ALL
-#SBATCH --mail-user=hl3797@nyu.edu # put your email here if you want emails
-#SBATCH --output=danet_pam_ef.out
-#SBATCH --error=danet_pam_ef.err
+#SBATCH --time=100:00:00
+#SBATCH --mail-type=END
+#SBATCH --mail-user=email@address # put your email here if you want emails
+#SBATCH --output=danet_sunrgb_origin_%j.out
+#SBATCH --error=danet_sunrgb_origin_%j.err
 #SBATCH --gres=gpu:4 # How much gpu need, n is the number
 #SBATCH -p gpu
 #SBATCH --constraint=2080Ti

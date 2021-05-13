@@ -73,7 +73,7 @@ class Trainer():
                                        early_fusion=args.early_fusion,
                                        # multi_grid=args.multi_grid, multi_dilation=args.multi_dilation, os=args.os
                                        )
-        print(model)
+        # print(model)
 
         # optimizer using different LR
         params_list = [{'params': model.pretrained.parameters(), 'lr': args.lr}, ]
