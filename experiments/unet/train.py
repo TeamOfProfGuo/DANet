@@ -4,11 +4,11 @@
 # Copyright (c) 2017
 ###########################################################################
 
-import os
-import copy
+import os, sys
+BASE_DIR = os.path.dirname(os.path.dirname(os.getcwd()))
+sys.path.append(BASE_DIR)
 import yaml
 import logging
-import argparse
 import numpy as np
 from tqdm import tqdm
 from addict import Dict
@@ -25,21 +25,9 @@ from encoding.nn import SegmentationLosses, SyncBatchNorm
 from encoding.parallel import DataParallelModel, DataParallelCriterion
 from encoding.datasets import get_dataset
 from encoding.models import get_segmentation_model
-BASE_DIR = './results/fusenet'
-CONFIG_PATH = os.path.join(BASE_DIR, 'config.yaml')
-GPUS = [0,1]
-
-def get_arguments():
-    '''
-    parse all the arguments from command line inteface
-    return a list of parsed arguments
-    '''
-
-    parser = argparse.ArgumentParser(description='semantic segmentation using PASCAL VOC')
-    parser.add_argument('--config_path', type=str, help='path of a config file')
-    return parser.parse_args(['--config_path', CONFIG_PATH])
-    #return parser.parse_args()
-
+CONFIG_PATH = './results/config.yaml'
+SMY_PATH = os.path.dirname(CONFIG_PATH)
+GPUS = [0, 1]
 
 class Trainer():
     def __init__(self, args):
@@ -64,13 +52,12 @@ class Trainer():
         self.nclass = trainset.num_class
 
         # model and params
-        model = get_segmentation_model(args.model, dataset=args.dataset,)
+        model = get_segmentation_model(args.model, dataset=args.dataset,
+                                       root = '../../encoding/models/pretrain',
+                                       )
         print(model)
         # optimizer using different LR
-        params_list = [{'params': model.parameters(), 'lr': args.lr}, ]
-        if hasattr(model, 'auxlayer'):
-            params_list.append({'params': model.auxlayer.parameters(), 'lr': args.lr * 10})
-        self.optimizer = torch.optim.SGD(params_list, lr=args.lr,
+        self.optimizer = torch.optim.SGD(model.parameters(),lr=args.lr,
                                          momentum=args.momentum, weight_decay=args.weight_decay)
         # criterions
         self.criterion = SegmentationLosses(se_loss=args.se_loss,
@@ -86,13 +73,12 @@ class Trainer():
         self.device = torch.device("cuda:0" if args.cuda else "cpu")
         if args.cuda:
             if torch.cuda.device_count() > 1:
-                print("Let's use", torch.cuda.device_count(),
-                      "GPUs!")  # dim = 0 [30, xxx] -> [10, ...], [10, ...], [10, ...] on 3 GPUs
+                print("Let's use", torch.cuda.device_count(), "GPUs!")  # [30,xxx]->[10,...],[10,...],[10,...] on 3 GPUs
                 model = nn.DataParallel(model, device_ids=GPUS)
         self.model = model.to(self.device)
 
         # for writing summary
-        self.writer = SummaryWriter(BASE_DIR)
+        self.writer = SummaryWriter(SMY_PATH)
         # resuming checkpoint
         if args.resume is not None and args.resume != 'None':
             if not os.path.isfile(args.resume):
@@ -111,7 +97,6 @@ class Trainer():
         if args.ft:
             args.start_epoch = 0
 
-
     def training(self, epoch):
         train_loss = 0.0
         self.model.train()
@@ -119,8 +104,8 @@ class Trainer():
             image, dep, target = image.to(self.device), dep.to(self.device), target.to(self.device)
             self.scheduler(self.optimizer, i, epoch, self.best_pred)
             self.optimizer.zero_grad()
-            outputs = self.model(image, dep)
-            loss = self.criterion(*outputs, target)
+            outputs = self.model(image)
+            loss = self.criterion(outputs, target)
             loss.backward()
             self.optimizer.step()
 
@@ -134,7 +119,7 @@ class Trainer():
 
         for epoch in range(self.args.epochs):
             # run on one epoch
-            print("\n===============train epoch {}/{} ==========================\n".format(epoch + 1, self.args.epochs))
+            print("\n===============train epoch {}/{} ==========================\n".format(epoch, self.args.epochs))
 
             # one full pass over the train set
             self.training(epoch)
@@ -159,8 +144,7 @@ class Trainer():
         # Fast test during the training
         def eval_batch(model, image, dep, target):
             # model, image, target already moved to gpus
-            outputs = model(image, dep)
-            pred = outputs[0]
+            pred = model(image)
             loss = self.criterion(pred, target)
             correct, labeled = utils.batch_pix_accuracy(pred.data, target)
             inter, union = utils.batch_intersection_union(pred.data, target, self.nclass)
@@ -194,9 +178,8 @@ class Trainer():
 
 if __name__ == "__main__":
     print("-------mark program start----------")
-    config = get_arguments()
     # configuration
-    args = Dict(yaml.safe_load(open(config.config_path)))
+    args = Dict(yaml.safe_load(open(CONFIG_PATH)))
     args.cuda = (args.use_cuda and torch.cuda.is_available())
     args.resume = None if args.resume=='None' else args.resume
     torch.manual_seed(args.seed)
@@ -207,6 +190,5 @@ if __name__ == "__main__":
     print('Starting Epoch:', trainer.args.start_epoch)
     print('Total Epoches:', trainer.args.epochs)
     trainer.train_n_evaluate()
-
 
 

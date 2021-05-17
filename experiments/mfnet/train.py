@@ -9,7 +9,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.getcwd()))
 sys.path.append(BASE_DIR)
 import yaml
 import logging
-import argparse
 import numpy as np
 from tqdm import tqdm
 from addict import Dict
@@ -28,7 +27,7 @@ from encoding.datasets import get_dataset
 from encoding.models import get_segmentation_model
 CONFIG_PATH = './results/config.yaml'
 SMY_PATH = os.path.dirname(CONFIG_PATH)
-GPUS = [0,1]
+GPUS = [0, 1]
 
 class Trainer():
     def __init__(self, args):
@@ -39,8 +38,7 @@ class Trainer():
             transform.Normalize([.485, .456, .406], [.229, .224, .225])])  # mean and std based on imageNet
         dep_transform = transform.Compose([
             transform.ToTensor(),
-            transform.Lambda(lambda x: x.float()),
-            transform.Normalize(mean=[19025.15], std=[9880.92])  # mean and std for depth
+            transform.Normalize(mean=[0.2798], std=[0.1387])  # mean and std for depth
         ])
         # dataset
         data_kwargs = {'transform': input_transform, 'dep_transform': dep_transform,
@@ -55,22 +53,11 @@ class Trainer():
 
         # model and params
         model = get_segmentation_model(args.model, dataset=args.dataset,
-                                       backbone=args.backbone, aux=args.aux,
-                                       se_loss=args.se_loss,  # norm_layer=SyncBatchNorm,
-                                       base_size=args.base_size, crop_size=args.crop_size,
-                                       root='../../encoding/models/pretrain',
-                                       dep_main=True,
-                                       # multi_grid=args.multi_grid, multi_dilation=args.multi_dilation, os=args.os
+                                       root = '../../encoding/models/pretrain',
                                        )
-
         print(model)
         # optimizer using different LR
-        params_list = [{'params': model.pretrained.parameters(), 'lr': args.lr}, ]
-        if hasattr(model, 'head'):
-            params_list.append({'params': model.head.parameters(), 'lr': args.lr * 10})
-        if hasattr(model, 'auxlayer'):
-            params_list.append({'params': model.auxlayer.parameters(), 'lr': args.lr * 10})
-        self.optimizer = torch.optim.SGD(params_list, lr=args.lr,
+        self.optimizer = torch.optim.SGD(model.parameters(),lr=args.lr,
                                          momentum=args.momentum, weight_decay=args.weight_decay)
         # criterions
         self.criterion = SegmentationLosses(se_loss=args.se_loss,
@@ -86,8 +73,7 @@ class Trainer():
         self.device = torch.device("cuda:0" if args.cuda else "cpu")
         if args.cuda:
             if torch.cuda.device_count() > 1:
-                print("Let's use", torch.cuda.device_count(),
-                      "GPUs!")  # dim = 0 [30, xxx] -> [10, ...], [10, ...], [10, ...] on 3 GPUs
+                print("Let's use", torch.cuda.device_count(), "GPUs!")  # [30,xxx]->[10,...],[10,...],[10,...] on 3 GPUs
                 model = nn.DataParallel(model, device_ids=GPUS)
         self.model = model.to(self.device)
 
@@ -114,21 +100,36 @@ class Trainer():
     def training(self, epoch):
         train_loss = 0.0
         self.model.train()
+
+        total_inter, total_union, total_correct, total_label, total_loss = 0, 0, 0, 0, 0
         for i, (image, dep, target) in enumerate(self.trainloader):
             image, dep, target = image.to(self.device), dep.to(self.device), target.to(self.device)
             self.scheduler(self.optimizer, i, epoch, self.best_pred)
             self.optimizer.zero_grad()
             outputs = self.model(image, dep)
-            outputs = [outputs[1]]                                                           # only use the pam
-            loss = self.criterion(*outputs, target)
+            loss = self.criterion(outputs, target)
             loss.backward()
             self.optimizer.step()
 
+            correct, labeled = utils.batch_pix_accuracy(outputs.data, target)
+            inter, union = utils.batch_intersection_union(outputs.data, target, self.nclass)
+            total_correct += correct
+            total_label += labeled
+            total_inter += inter
+            total_union += union
             train_loss += loss.item()
-            if (i+1) % 100 == 0:
-                print('epoch {}, step {}, loss {}'.format(epoch + 1, i + 1, train_loss / 100))
-                self.writer.add_scalar('train_loss', train_loss / 100, epoch * len(self.trainloader) + i)
+
+            if (i+1) % 50 == 0:
+                print('epoch {}, step {}, loss {}'.format(epoch + 1, i + 1, train_loss / 50))
+                self.writer.add_scalar('train_loss', train_loss / 50, epoch * len(self.trainloader) + i)
                 train_loss = 0.0
+
+        pixAcc = 1.0 * total_correct / (np.spacing(1) + total_label)
+        IOU = 1.0 * total_inter / (np.spacing(1) + total_union)
+        mIOU = IOU.mean()
+        print('epoch {}, pixel Acc {}, mean IOU {}'.format(epoch + 1, pixAcc, mIOU))
+        self.writer.add_scalar("mean_iou/train", mIOU, epoch)
+        self.writer.add_scalar("pixel accuracy/train", pixAcc, epoch)
 
     def train_n_evaluate(self):
 
@@ -140,28 +141,26 @@ class Trainer():
             self.training(epoch)
 
             # evaluate for one epoch on the validation set
-            if (epoch+1)%2 ==0:
-                print('\n===============start testing, training epoch {}\n'.format(epoch))
-                pixAcc, mIOU, loss = self.validation(epoch)
-                print('evaluation pixel acc {}, mean IOU {}, loss {}'.format(pixAcc, mIOU, loss))
+            print('\n===============start testing, training epoch {}\n'.format(epoch))
+            pixAcc, mIOU, loss = self.validation(epoch)
+            print('evaluation pixel acc {}, mean IOU {}, loss {}'.format(pixAcc, mIOU, loss))
 
-                # save the best model
-                is_best = False
-                new_pred = (pixAcc + mIOU) / 2
-                if new_pred > self.best_pred:
-                    is_best = True
-                    self.best_pred = new_pred
-                utils.save_checkpoint({'epoch': epoch + 1,
-                                       'state_dict': self.model.module.state_dict(),
-                                       'optimizer': self.optimizer.state_dict(),
-                                       'best_pred': self.best_pred}, self.args, is_best)
+            # save the best model
+            is_best = False
+            new_pred = (pixAcc + mIOU) / 2
+            if new_pred > self.best_pred:
+                is_best = True
+                self.best_pred = new_pred
+            utils.save_checkpoint({'epoch': epoch + 1,
+                                   'state_dict': self.model.module.state_dict(),
+                                   'optimizer': self.optimizer.state_dict(),
+                                   'best_pred': self.best_pred}, self.args, is_best)
 
     def validation(self, epoch):
         # Fast test during the training
         def eval_batch(model, image, dep, target):
             # model, image, target already moved to gpus
-            outputs = model(image, dep)
-            pred = outputs[1]
+            pred = model(image, dep)
             loss = self.criterion(pred, target)
             correct, labeled = utils.batch_pix_accuracy(pred.data, target)
             inter, union = utils.batch_intersection_union(pred.data, target, self.nclass)
@@ -183,7 +182,7 @@ class Trainer():
             IOU = 1.0 * total_inter / (np.spacing(1) + total_union)
             mIOU = IOU.mean()
 
-            if i % 100 == 0:
+            if i % 10 == 0:
                 print('eval mean IOU {}'.format(mIOU))
             loss = total_loss / len(self.valloader)
 
@@ -200,6 +199,7 @@ if __name__ == "__main__":
     args.cuda = (args.use_cuda and torch.cuda.is_available())
     args.resume = None if args.resume=='None' else args.resume
     torch.manual_seed(args.seed)
+
 
     trainer = Trainer(args)
     # import pdb; pdb.set_trace()

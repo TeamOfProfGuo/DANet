@@ -81,3 +81,22 @@ import torch
 
 Q = torch.randint(0, 5, (1, 1, 12)).float()
 K = torch.randint(0, 5, (1, 12, 1)).float()
+
+torch.nn.Dropout
+
+import torchvision.models.detection.faster_rcnn
+
+
+import torch
+net = torch.hub.load('milesial/Pytorch-UNet', 'unet_carvana')
+
+
+
+
+import torch.nn as nn
+
+modules = [nn.Linear(10, 10), nn.Linear(10, 10)]
+modules.append(nn.Linear(10, 10))
+modules.append(nn.Linear(10, 10))
+
+sequential = nn.Sequential(*modules)

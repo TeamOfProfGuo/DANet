@@ -18,3 +18,4 @@ from .rectify import *
 from .splat import SplAtConv2d
 from .dropblock import *
 from .da_att import *
+from .unet_att import *

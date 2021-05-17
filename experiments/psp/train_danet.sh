@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name=deepLabv2
+#SBATCH --job-name=DANet
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
@@ -8,18 +8,18 @@
 #SBATCH --gres=gpu:aquila
 #SBATCH --time=50:00:00
 #SBATCH --mail-type=END
-#SBATCH --output=deeplab_test_%j.out
-#SBATCH --error=test_error_%j.out
-#SBATCH --gres=gpu:1 # How much gpu need, n is the number
+#SBATCH --output=danet_%j.out
+#SBATCH --error=danet_error_%j.out
+#SBATCH --gres=gpu:2 # How much gpu need, n is the number
 #SBATCH -p aquila
 
 module purge
 source ~/.bashrc
 source activate python36
-echo "start testing">>test.log
+echo "start training">>train.log
 module load cuda/10.0
-module load gcc/7.3
 #module load cudnn/7.5
 
-python test.py >test.log 2>& 1
+python train_danet.py >train.log 2>& 1
 echo "FINISH"
+

@@ -6,13 +6,14 @@ from .atten import *
 from .encnet import *
 from .deeplab import *
 from .upernet import *
-from encoding.models.sseg.ref.fuse import *
+from .fusenet import *
 from .danet import *
 from .danet_dep import *
 from .danet_d import *
 from .ppanet import *
 from .lanet import *
 from .danet_psp import *     # process depth using PSP module, then concat it with RGB as main input
+from .unet import *
 
 
 def get_segmentation_model(name, **kwargs):
@@ -32,5 +33,8 @@ def get_segmentation_model(name, **kwargs):
         'ppa': get_ppanet,
         'lanet': get_lanet,
         'danet_psp': get_danet_psp,
+        'unet': get_Unet,
+        'att_unet': get_AttUnet,
+        'mfnet': get_mfnet
     }
     return models[name.lower()](**kwargs)
