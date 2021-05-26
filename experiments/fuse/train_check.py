@@ -29,7 +29,7 @@ from encoding.datasets import get_dataset
 from encoding.models import get_segmentation_model
 
 BASE_DIR = '.'
-CONFIG_PATH = 'experiments/fuse/results/config.yaml'
+CONFIG_PATH = 'experiments/linknet/results/config.yaml'
 SMY_PATH = os.path.dirname(CONFIG_PATH)
 GPUS = [0,1]
 
@@ -66,8 +66,6 @@ nclass = trainset.num_class
 # model
 
 model = get_segmentation_model(args.model, dataset=args.dataset,
-                               root = './encoding/models/pretrain', dropout = 0.5
-                               # multi_grid=args.multi_grid, multi_dilation=args.multi_dilation, os=args.os
                                )
 
 print(model)
@@ -108,7 +106,7 @@ for i, (image, dep, target) in enumerate(trainloader):
 scheduler(optimizer, i, epoch, best_pred)
 
 optimizer.zero_grad()
-outputs = model(image, dep)
+outputs = model(image)
 
 
 loss = criterion(outputs, target)

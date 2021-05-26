@@ -8,7 +8,7 @@ __all__ = ['FuseNet', 'get_fuse', 'MFNet', 'get_mfnet']
 
 
 class FuseNet(nn.Module):
-    def __init__(self, img_ch=3, output_ch=1, dropout=None, ):
+    def __init__(self, img_ch=3, output_ch=1, dropout=None):
         super(FuseNet, self).__init__()
         if dropout:
             self.drop_out = True

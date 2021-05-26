@@ -14,7 +14,8 @@ from .ppanet import *
 from .lanet import *
 from .danet_psp import *     # process depth using PSP module, then concat it with RGB as main input
 from .unet import *
-
+from .linknet import *
+from .munet import *
 
 def get_segmentation_model(name, **kwargs):
     models = {
@@ -35,6 +36,8 @@ def get_segmentation_model(name, **kwargs):
         'danet_psp': get_danet_psp,
         'unet': get_Unet,
         'att_unet': get_AttUnet,
-        'mfnet': get_mfnet
+        'mfnet': get_mfnet,
+        'linknet': get_linknet,
+        'munet': get_munet
     }
     return models[name.lower()](**kwargs)

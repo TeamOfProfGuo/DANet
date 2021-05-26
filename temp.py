@@ -86,11 +86,16 @@ torch.nn.Dropout
 
 import torchvision.models.detection.faster_rcnn
 
+import torchvision.models as models
+models.resnet34()
+
+models.resnet50()
+
 
 import torch
 net = torch.hub.load('milesial/Pytorch-UNet', 'unet_carvana')
 
-
+torch.utils.model_zoo.load_url()
 
 
 import torch.nn as nn
@@ -100,3 +105,10 @@ modules.append(nn.Linear(10, 10))
 modules.append(nn.Linear(10, 10))
 
 sequential = nn.Sequential(*modules)
+
+
+
+model = torchvision.models.resnet34(pretrained=True)
+model = torchvision.models.mobilenet_v2(pretrained=True)
+
+
