@@ -64,6 +64,21 @@ class up_conv(nn.Module):
         return x
 
 
+# class up_conv(nn.Module):
+#     def __init__(self, ch_in, ch_out):
+#         super(up_conv, self).__init__()
+#         self.up = nn.MaxUnpool2d(kernel_size=2, stride=2)
+#         self.conv = nn.Sequential(
+#             nn.Conv2d(ch_in, ch_out, kernel_size=3, stride=1, padding=1, bias=True),
+#             nn.BatchNorm2d(ch_out),
+#             nn.ReLU(inplace=True))
+#
+#     def forward(self, x, idx):
+#         x = self.conv(x)
+#         x = self.up(x, idx)
+#         return x
+
+
 class single_conv(nn.Module):
     def __init__(self, ch_in, ch_out):
         super(single_conv, self).__init__()
@@ -102,7 +117,7 @@ class Attention_block(nn.Module):
     def forward(self, g, x):
         g1 = self.W_g(g)
         x1 = self.W_x(x)
-        psi = self.relu(g1 + x1)
+        psi = self.relu(g1 + x1)   # no bias
         psi = self.psi(psi)
 
         return x * psi

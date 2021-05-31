@@ -16,6 +16,7 @@ from .danet_psp import *     # process depth using PSP module, then concat it wi
 from .unet import *
 from .linknet import *
 from .munet import *
+from .lmfnet import *
 
 def get_segmentation_model(name, **kwargs):
     models = {
@@ -38,6 +39,8 @@ def get_segmentation_model(name, **kwargs):
         'att_unet': get_AttUnet,
         'mfnet': get_mfnet,
         'linknet': get_linknet,
-        'munet': get_munet
+        'munet': get_munet,
+        'attlinknet': get_attlinknet,
+        'link_mfnet': get_LinkMFNet,
     }
     return models[name.lower()](**kwargs)

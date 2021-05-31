@@ -17,6 +17,7 @@ from ..model_store import get_model_file
 __all__ = ['ResNet', 'Bottleneck',
            'resnet50', 'resnet101', 'resnet152']
 
+
 class Bottleneck(nn.Module):
     """ResNet Bottleneck
     """

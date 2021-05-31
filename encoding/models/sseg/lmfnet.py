@@ -1,5 +1,5 @@
 import torch
-import os
+import os, copy
 import torch.nn as nn
 from torch.nn import init
 from .base import BaseNet
@@ -8,7 +8,7 @@ from torch.autograd import Variable
 from torchvision.models import resnet
 from ...nn import conv_block, up_conv, Attention_block, init_weights
 
-__all__ = ['LinkNet', 'get_linknet', 'AttLinkNet', 'get_attlinknet']
+__all__ = ['LinkMFNet', 'get_LinkMFNet',]
 
 
 class Decoder(nn.Module):
@@ -34,18 +34,13 @@ class Decoder(nn.Module):
         return x
 
 
-class LinkNet(nn.Module):
+class LinkMFNet(nn.Module):
     """
     Generate Model Architecture
     """
 
-    def __init__(self, n_classes=21, backbone='resnet18', pretrained=True, root='./encoding/models/pretrain', ):
-        """
-        Model initialization
-        :param x_n: number of input neurons
-        :type x_n: int
-        """
-        super(LinkNet, self).__init__()
+    def __init__(self, n_classes=21, backbone='resnet18', pretrained=True, root='./encoding/models/pretrain', train_a=False):
+        super(LinkMFNet, self).__init__()
 
         # base = resnet.resnet18(pretrained=True)
         base = resnet.resnet18(pretrained=False)
@@ -56,17 +51,21 @@ class LinkNet(nn.Module):
                 raise FileNotFoundError('the pretrained model can not be found')
             base.load_state_dict(torch.load(f_path), strict=False)
 
-        self.in_block = nn.Sequential(   # [B, 64, h/4, w/4]
-            base.conv1,
-            base.bn1,
-            base.relu,
-            base.maxpool
-        )
-
+        self.encoder0 = nn.Sequential(base.conv1, base.bn1, base.relu, base.maxpool)  # [B, 64, h/4, w/4]
         self.encoder1 = base.layer1    # [B, 64, h/4, w/4]
         self.encoder2 = base.layer2    # [B, 128, h/8, w/8]
         self.encoder3 = base.layer3    # [B, 256, h/16, w/16]
         self.encoder4 = base.layer4    # [B, 512, h/32, w/32]
+
+        dep_base = copy.deepcopy(base)
+        dep_base.conv1 = nn.Conv2d(1, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
+        torch.nn.init.kaiming_normal(dep_base.conv1.weight)
+
+        self.dep_enc0 = nn.Sequential(dep_base.conv1, dep_base.bn1, dep_base.relu, dep_base.maxpool)
+        self.dep_enc1 = dep_base.layer1   # [B, 64, h/4, w/4]
+        self.dep_enc2 = dep_base.layer2   # [B, 128, h/8, w/8]
+        self.dep_enc3 = dep_base.layer3   # [B, 256, h/16, w/16]
+        self.dep_enc4 = dep_base.layer4   # [B, 512, h/32, w/32]
 
         self.decoder1 = Decoder(64, 64, kernel_size=3, stride=1, padding=1,)
         self.decoder2 = Decoder(128, 64, kernel_size=3, stride=2, padding=1, output_padding=1)
@@ -82,34 +81,48 @@ class LinkNet(nn.Module):
                                 nn.ReLU(inplace=True),)
         self.tp_conv2 = nn.ConvTranspose2d(32, n_classes, kernel_size=2,stride=2, padding=0)
 
-    def forward(self, x):
+        # trainable alpha
+        self.alpha0 = nn.Parameter(torch.ones(1)) if train_a else 1
+        self.alpha1 = nn.Parameter(torch.ones(1)) if train_a else 1
+        self.alpha2 = nn.Parameter(torch.ones(1)) if train_a else 1
+        self.alpha3 = nn.Parameter(torch.ones(1)) if train_a else 1
+
+    def forward(self, x, d):
         # Initial block
-        x = self.in_block(x)    # [B, 64, h/4, w/4]   120
+        x = self.encoder0(x)    # [B, 64, h/4, w/4]   120
+        d = self.dep_enc0(d)    # [B, 64, h/4, w/4]   120
 
         # Encoder blocks
         e1 = self.encoder1(x)   # [B, 64, h/4, w/4]  120
+        d1 = self.dep_enc1(d)   # [B, 64, h/4, w/4]  120
+
         e2 = self.encoder2(e1)  # [B, 128, h/8, w/8]  60
+        d2 = self.dep_enc2(d1)  # [B, 128, h/8, w/8]  60
+
         e3 = self.encoder3(e2)  # [B, 256, h/16, w/16]  30
+        d3 = self.dep_enc3(d2)  # [B, 256, h/16, w/16]  30
+
         e4 = self.encoder4(e3)  # [B, 512, h/32, w/32]  15
+        d4 = self.dep_enc4(d3)  # [B, 512, h/32, w/32]  15
 
         # Decoder blocks
-        #d4 = e3 + self.decoder4(e4)
-        d4 = e3 + self.decoder4(e4)  # [B, 256, h/16, w/16]  30
-        d3 = e2 + self.decoder3(d4)  # [B, 128, h/8, w/8]  60
-        d2 = e1 + self.decoder2(d3)  # [B, 64, h/4, w/4]  120
-        d1 = x + self.decoder1(d2)   # [B, 64, h/4, w/4]  120
+        y4 = e4 + d4
+        y3 = (e3+d3)*self.alpha3 + self.decoder4(y4)  # [B, 256, h/16, w/16]  30
+        y2 = (e2+d2)*self.alpha2 + self.decoder3(y3)  # [B, 128, h/8, w/8]  60
+        y1 = (e1+d1)*self.alpha1 + self.decoder2(y2)  # [B, 64, h/4, w/4]  120
+        y0 = (x + d)*self.alpha0 + self.decoder1(y1)   # [B, 64, h/4, w/4]  120
 
         # Classifier
-        y = self.tp_conv1(d1)  # [B, 32, h/2, w/2] 240
+        y = self.tp_conv1(y0)  # [B, 32, h/2, w/2] 240
         y = self.conv2(y)      # [B, 32, h/2, w/2] 240
         y = self.tp_conv2(y)   # [B, nclass, h, w] 480
 
         return y
 
 
-def get_linknet(dataset='nyud', backbone='resnet34', root='./encoding/models/pretrain',):
+def get_LinkMFNet(dataset='nyud', backbone='resnet18', root='./encoding/models/pretrain',train_a=False):
     from ...datasets import datasets
-    model = LinkNet(datasets[dataset.lower()].NUM_CLASS, backbone=backbone, root=root)
+    model = LinkMFNet(datasets[dataset.lower()].NUM_CLASS, backbone=backbone, root=root, train_a=train_a)
     return model
 
 
@@ -190,7 +203,3 @@ class AttLinkNet(nn.Module):
         return y
 
 
-def get_attlinknet(dataset='nyud', backbone='resnet18', pretrained=True, root='./encoding/models/pretrain',):
-    from ...datasets import datasets
-    model = AttLinkNet(datasets[dataset.lower()].NUM_CLASS, backbone=backbone, pretrained=pretrained, root=root)
-    return model

@@ -112,3 +112,12 @@ model = torchvision.models.resnet34(pretrained=True)
 model = torchvision.models.mobilenet_v2(pretrained=True)
 
 
+
+import torch.nn
+import copy
+
+l = torch.nn.Linear(3,1)
+c = copy.deepcopy(l)
+print([type(p) for p in l.parameters()])
+print([type(p) for p in c.parameters()])
+

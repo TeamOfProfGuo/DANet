@@ -6,10 +6,10 @@ from ...nn import conv_block, up_conv, Attention_block, init_weights
 
 
 class U_Net(nn.Module):
-    def __init__(self, img_ch=3, output_ch=1):
+    def __init__(self, img_ch=3, output_ch=1, dropout=None):
         super(U_Net, self).__init__()
 
-        self.Maxpool = nn.MaxPool2d(kernel_size=2, stride=2)
+        self.Maxpool = nn.MaxPool2d(kernel_size=2, stride=2, return_indices=True)
 
         self.Conv1 = conv_block(ch_in=img_ch, ch_out=64)
         self.Conv2 = conv_block(ch_in=64, ch_out=128)
@@ -33,34 +33,34 @@ class U_Net(nn.Module):
 
     def forward(self, x):
         # encoding path
-        x1 = self.Conv1(x)
+        x1 = self.Conv1(x)           # [64, h, w]
 
-        x2 = self.Maxpool(x1)
-        x2 = self.Conv2(x2)
+        x2, idx2 = self.Maxpool(x1)  # [64, h/2, w/2]
+        x2 = self.Conv2(x2)          # [128, h/2, w/2]
 
-        x3 = self.Maxpool(x2)
-        x3 = self.Conv3(x3)
+        x3, idx3 = self.Maxpool(x2)  # [128, h/4, w/4]
+        x3 = self.Conv3(x3)          # [256, h/4, w/4]
 
-        x4 = self.Maxpool(x3)
-        x4 = self.Conv4(x4)
+        x4, idx4 = self.Maxpool(x3)  # [256, h/8, w/8]
+        x4 = self.Conv4(x4)          # [512, h/8, w/8]
 
-        x5 = self.Maxpool(x4)
-        x5 = self.Conv5(x5)
+        x5, idx5 = self.Maxpool(x4)  # [512, h/16, w/16]
+        x5 = self.Conv5(x5)          # [1024, h/2, w/2]
 
         # decoding + concat path
-        d5 = self.Up5(x5)
+        d5 = self.Up5(x5, idx5)      # [128, h/2, w/2]
         d5 = torch.cat((x4, d5), dim=1)
         d5 = self.Up_conv5(d5)
 
-        d4 = self.Up4(d5)
+        d4 = self.Up4(d5, idx4)
         d4 = torch.cat((x3, d4), dim=1)
         d4 = self.Up_conv4(d4)
 
-        d3 = self.Up3(d4)
+        d3 = self.Up3(d4, idx3)
         d3 = torch.cat((x2, d3), dim=1)
         d3 = self.Up_conv3(d3)
 
-        d2 = self.Up2(d3)
+        d2 = self.Up2(d3, idx2)
         d2 = torch.cat((x1, d2), dim=1)
         d2 = self.Up_conv2(d2)
 
@@ -110,32 +110,32 @@ class AttU_Net(nn.Module):
 
     def forward(self, x):
         # encoding path
-        x1 = self.Conv1(x)       # [h, w]
+        x1 = self.Conv1(x)
 
         x2 = self.Maxpool(x1)
-        x2 = self.Conv2(x2)      # [h/2, w/2]
+        x2 = self.Conv2(x2)
 
         x3 = self.Maxpool(x2)
-        x3 = self.Conv3(x3)      # [h/4, w/4]
+        x3 = self.Conv3(x3)
 
         x4 = self.Maxpool(x3)
-        x4 = self.Conv4(x4)      # [h/8, w/8]
+        x4 = self.Conv4(x4)
 
         x5 = self.Maxpool(x4)
-        x5 = self.Conv5(x5)      # [h/16, w/16]
+        x5 = self.Conv5(x5)
 
         # decoding + concat path
-        d5 = self.Up5(x5)       # [h/8, w/8]
+        d5 = self.Up5(x5)
         x4 = self.Att5(g=d5, x=x4)
         d5 = torch.cat((x4, d5), dim=1)
         d5 = self.Up_conv5(d5)
 
-        d4 = self.Up4(d5)      # [h/4, w/4]
+        d4 = self.Up4(d5)
         x3 = self.Att4(g=d4, x=x3)
         d4 = torch.cat((x3, d4), dim=1)
         d4 = self.Up_conv4(d4)
 
-        d3 = self.Up3(d4)      # [h/2, w/2]
+        d3 = self.Up3(d4)
         x2 = self.Att3(g=d3, x=x2)
         d3 = torch.cat((x2, d3), dim=1)
         d3 = self.Up_conv3(d3)
@@ -157,3 +157,4 @@ def get_AttUnet(dataset='pascal_voc', backbone='resnet50', pretrained=False,
     model = AttU_Net(img_ch=3, output_ch=datasets[dataset.lower()].NUM_CLASS)
     # init_weights(model)  # optional
     return model
+
