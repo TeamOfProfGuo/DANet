@@ -7,10 +7,8 @@
 import os, sys
 BASE_DIR = os.path.dirname(os.path.dirname(os.getcwd()))
 sys.path.append(BASE_DIR)
-import copy
 import yaml
 import logging
-import argparse
 import numpy as np
 from tqdm import tqdm
 from addict import Dict
@@ -27,9 +25,9 @@ from encoding.nn import SegmentationLosses, SyncBatchNorm
 from encoding.parallel import DataParallelModel, DataParallelCriterion
 from encoding.datasets import get_dataset
 from encoding.models import get_segmentation_model
-CONFIG_PATH = os.path.join(BASE_DIR, 'results/danet_d1_resnet50/config.yaml')
+CONFIG_PATH = './results/config.yaml'
 SMY_PATH = os.path.dirname(CONFIG_PATH)
-GPUS = [0,1]
+GPUS = [0, 1]
 
 class Trainer():
     def __init__(self, args):
@@ -54,24 +52,17 @@ class Trainer():
         self.nclass = trainset.num_class
 
         # model and params
-        model = get_segmentation_model(args.model, dataset=args.dataset,
-                                       backbone=args.backbone, aux=args.aux,
-                                       se_loss=args.se_loss,  # norm_layer=SyncBatchNorm,
-                                       base_size=args.base_size, crop_size=args.crop_size,
-                                       dep_main=False, fuse_type='a', depth_order=1, train_a=True,
-                                       root = '../../encoding/models/pretrain',
-                                       # multi_grid=args.multi_grid, multi_dilation=args.multi_dilation, os=args.os
+        model = get_segmentation_model(args.model, dataset=args.dataset, backbone=args.backbone, pretrained=True,
+                                       root='../../encoding/models/pretrain', n_features=256
                                        )
-
         print(model)
         # optimizer using different LR
-        params_list = [{'params': model.pretrained.parameters(), 'lr': args.lr},]
-        if hasattr(model, 'head'):
-            params_list.append({'params': model.head.parameters(), 'lr': args.lr * 10})
-        if hasattr(model, 'auxlayer'):
-            params_list.append({'params': model.auxlayer.parameters(), 'lr': args.lr * 10})
-        self.optimizer = torch.optim.SGD(params_list, lr=args.lr,
-                                         momentum=args.momentum, weight_decay=args.weight_decay)
+        base_ids = list(map(id, model.base.parameters()))
+        other_params = filter(lambda p: id(p) not in base_ids, model.parameters())
+        self.optimizer = torch.optim.SGD([{'params': model.base.parameters(), 'lr': args.lr},
+                                          {'params': other_params, 'lr': args.lr * 10}],
+                                         lr=args.lr, momentum=args.momentum, weight_decay=args.weight_decay)
+
         # criterions
         self.criterion = SegmentationLosses(se_loss=args.se_loss,
                                             aux=args.aux,
@@ -86,8 +77,7 @@ class Trainer():
         self.device = torch.device("cuda:0" if args.cuda else "cpu")
         if args.cuda:
             if torch.cuda.device_count() > 1:
-                print("Let's use", torch.cuda.device_count(),
-                      "GPUs!")  # dim = 0 [30, xxx] -> [10, ...], [10, ...], [10, ...] on 3 GPUs
+                print("Let's use", torch.cuda.device_count(), "GPUs!")  # [30,xxx]->[10,...],[10,...],[10,...] on 3 GPUs
                 model = nn.DataParallel(model, device_ids=GPUS)
         self.model = model.to(self.device)
 
@@ -111,25 +101,38 @@ class Trainer():
         if args.ft:
             args.start_epoch = 0
 
-
     def training(self, epoch):
         train_loss = 0.0
         self.model.train()
+
+        total_inter, total_union, total_correct, total_label, total_loss = 0, 0, 0, 0, 0
         for i, (image, dep, target) in enumerate(self.trainloader):
             image, dep, target = image.to(self.device), dep.to(self.device), target.to(self.device)
             self.scheduler(self.optimizer, i, epoch, self.best_pred)
             self.optimizer.zero_grad()
-            outputs = self.model(image, dep)
-            outputs = [outputs[1]]                                                          # only use the main output
-            loss = self.criterion(*outputs, target)
+            outputs = self.model(image)
+            loss = self.criterion(outputs, target)
             loss.backward()
             self.optimizer.step()
 
+            correct, labeled = utils.batch_pix_accuracy(outputs.data, target)
+            inter, union = utils.batch_intersection_union(outputs.data, target, self.nclass)
+            total_correct += correct
+            total_label += labeled
+            total_inter += inter
+            total_union += union
             train_loss += loss.item()
+
             if (i+1) % 50 == 0:
                 print('epoch {}, step {}, loss {}'.format(epoch + 1, i + 1, train_loss / 50))
                 self.writer.add_scalar('train_loss', train_loss / 50, epoch * len(self.trainloader) + i)
                 train_loss = 0.0
+        pixAcc = 1.0 * total_correct / (np.spacing(1) + total_label)
+        IOU = 1.0 * total_inter / (np.spacing(1) + total_union)
+        mIOU = IOU.mean()
+        print('epoch {}, pixel Acc {}, mean IOU {}'.format(epoch + 1, pixAcc, mIOU))
+        self.writer.add_scalar("mean_iou/train", mIOU, epoch)
+        self.writer.add_scalar("pixel accuracy/train", pixAcc, epoch)
 
     def train_n_evaluate(self):
 
@@ -154,15 +157,13 @@ class Trainer():
             utils.save_checkpoint({'epoch': epoch + 1,
                                    'state_dict': self.model.module.state_dict(),
                                    'optimizer': self.optimizer.state_dict(),
-                                   'best_pred': self.best_pred},
-                                  self.args, is_best)
+                                   'best_pred': self.best_pred}, self.args, is_best)
 
     def validation(self, epoch):
         # Fast test during the training
         def eval_batch(model, image, dep, target):
             # model, image, target already moved to gpus
-            outputs = model(image, dep)
-            pred = outputs[1]
+            pred = model(image)
             loss = self.criterion(pred, target)
             correct, labeled = utils.batch_pix_accuracy(pred.data, target)
             inter, union = utils.batch_intersection_union(pred.data, target, self.nclass)
@@ -184,7 +185,7 @@ class Trainer():
             IOU = 1.0 * total_inter / (np.spacing(1) + total_union)
             mIOU = IOU.mean()
 
-            if i % 10 == 0:
+            if i % 20 == 0:
                 print('eval mean IOU {}'.format(mIOU))
             loss = total_loss / len(self.valloader)
 

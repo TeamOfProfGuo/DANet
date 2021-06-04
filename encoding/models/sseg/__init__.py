@@ -17,6 +17,7 @@ from .unet import *
 from .linknet import *
 from .munet import *
 from .lmfnet import *
+from .refinenet import *
 
 def get_segmentation_model(name, **kwargs):
     models = {
@@ -42,5 +43,6 @@ def get_segmentation_model(name, **kwargs):
         'munet': get_munet,
         'attlinknet': get_attlinknet,
         'link_mfnet': get_LinkMFNet,
+        'refinenet': get_refinenet
     }
     return models[name.lower()](**kwargs)

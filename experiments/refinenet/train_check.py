@@ -29,7 +29,7 @@ from encoding.datasets import get_dataset
 from encoding.models import get_segmentation_model
 
 BASE_DIR = '.'
-CONFIG_PATH = 'experiments/linknet/results/config.yaml'
+CONFIG_PATH = 'experiments/refinenet/results/config.yaml'
 SMY_PATH = os.path.dirname(CONFIG_PATH)
 GPUS = [0,1]
 
@@ -65,7 +65,7 @@ nclass = trainset.num_class
 
 # model
 
-model = get_segmentation_model(args.model, dataset=args.dataset, backbone=args.backbone,
+model = get_segmentation_model(args.model, dataset=args.dataset, backbone=args.backbone, pretrained=True,
                                root = './encoding/models/pretrain',
                                # multi_grid=args.multi_grid, multi_dilation=args.multi_dilation, os=args.os
                                )
@@ -73,7 +73,12 @@ model = get_segmentation_model(args.model, dataset=args.dataset, backbone=args.b
 print(model)
 
 # optimizer using different LR
-optimizer = torch.optim.SGD(model.parameters(),lr=args.lr,momentum=args.momentum, weight_decay=args.weight_decay)
+
+base_ids = list(map(id, model.base.parameters()))
+other_params = filter(lambda p: id(p) not in base_ids, model.parameters())
+optimizer = torch.optim.SGD([{'params': model.base.parameters(), 'lr': args.lr},
+                             {'params': other_params, 'lr': args.lr*10}],
+                            lr=args.lr,momentum=args.momentum, weight_decay=args.weight_decay)
 
 # criterions
 criterion = SegmentationLosses(se_loss=args.se_loss,
@@ -96,6 +101,7 @@ model = model.to(device)
 
 
 
+
 # ==================== train =====================
 train_loss = 0.0
 epoch = 1
@@ -107,15 +113,23 @@ for i, (image, dep, target) in enumerate(trainloader):
 scheduler(optimizer, i, epoch, best_pred)
 
 optimizer.zero_grad()
-outputs = model(image)
 
-# =================== check CPU/GPU usage
+
+
+# check CPU/GPU usage
 import torch.autograd.profiler as profiler
+
+with profiler.profile(record_shapes=True) as prof:
+    with profiler.record_function("model_inference"):
+        outputs = model(image)
+
+print(prof.key_averages().table(sort_by="cpu_time_total", row_limit=10))
+
+# check memory usage
 with profiler.profile(profile_memory=True, record_shapes=True) as prof:
     outputs = model(image)
+
 print(prof.key_averages().table(sort_by="self_cpu_memory_usage", row_limit=10))
-
-
 
 loss = criterion(outputs, target)
 loss.backward()
