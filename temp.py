@@ -121,3 +121,23 @@ c = copy.deepcopy(l)
 print([type(p) for p in l.parameters()])
 print([type(p) for p in c.parameters()])
 
+
+def foo(a, *args):
+    print('a {}'.format(a))
+    print(args)
+    print(type(args))
+    for i in args:
+        print('next argument through args: {}'.format(i))
+
+foo(1, 5, 6)
+
+
+
+def foo(a, args):
+    print('a {}'.format(a))
+    print(args)
+    print(type(args))
+    for i in args:
+        print('next argument through args: {}'.format(i))
+
+foo(1, (5, 6))
