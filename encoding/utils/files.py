@@ -8,15 +8,16 @@ import torch
 
 __all__ = ['save_checkpoint', 'download', 'mkdir', 'check_sha1']
 
-def save_checkpoint(state, args, is_best, filename='checkpoint.pth.tar'):
+def save_checkpoint(state, args, is_best, filename='checkpoint.pth.tar', settings =None):
     """Saves checkpoint to disk"""
-    if hasattr(args, 'backbone'):
-        directory = "runs/%s/%s/%s/%s/"%(args.dataset, args.model, args.backbone, args.checkname)
+    if settings:
+        tp = "/".join(("{}-{}".format(*i) for i in settings.__dict__.items()))
+        directory = os.path.join('runs', tp)
     else:
         directory = "runs/%s/%s/%s/"%(args.dataset, args.model, args.checkname)
     if not os.path.exists(directory):
         os.makedirs(directory)
-    filename = directory + filename
+    filename = os.path.join(directory,filename)
     torch.save(state, filename)
     if is_best:
         shutil.copyfile(filename, directory + 'model_best.pth.tar')

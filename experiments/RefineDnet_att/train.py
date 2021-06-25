@@ -10,6 +10,7 @@ sys.path.append(BASE_DIR)
 import yaml
 import argparse
 import numpy as np
+from tqdm import tqdm
 from addict import Dict
 
 import torch
@@ -28,13 +29,11 @@ CONFIG_PATH = './results/config.yaml'
 SMY_PATH = os.path.dirname(CONFIG_PATH)
 GPUS = [0, 1]
 
-# model settings
+# model and dataset
 parser = argparse.ArgumentParser(description='model specification')
 parser.add_argument('--with_att', action='store_true', default= False, help='whether use attention to fuse rgb and dep')
 parser.add_argument('--att_type', type=str, default='AG2', help='Attention type to fuse rgb and dep')
 settings= parser.parse_args()
-print('settings attention {} attention type {}'.format(settings.with_att, settings.att_type))
-
 
 class Trainer():
     def __init__(self, args):
@@ -61,8 +60,7 @@ class Trainer():
         # model and params
         model = get_segmentation_model(args.model, dataset=args.dataset, backbone=args.backbone, pretrained=True,
                                        root='../../encoding/models/pretrain', n_features=256, with_CRP=False, with_conv=True,
-                                       with_att=settings.with_att, att_type=settings.att_type
-                                       )
+                                       with_att=settings.with_att, att_type=settings.att_type)
 
         print(model)
         # optimizer using different LR
@@ -82,7 +80,7 @@ class Trainer():
                                             aux_weight=args.aux_weight)
         # lr scheduler
         self.scheduler = utils.LR_Scheduler_Head(args.lr_scheduler, args.lr, args.epochs,
-                                                 iters_per_epoch=len(self.trainloader), warmup_epochs=5)
+                                                 iters_per_epoch=len(self.trainloader), warmup_epochs=10)
         self.best_pred = 0.0
 
         # using cuda
@@ -94,8 +92,7 @@ class Trainer():
         self.model = model.to(self.device)
 
         # for writing summary
-        path = "/".join(("{}-{}".format(*i) for i in settings.__dict__.items()))
-        self.writer = SummaryWriter(os.path.join(SMY_PATH, path))
+        self.writer = SummaryWriter(SMY_PATH)
         # resuming checkpoint
         if args.resume is not None and args.resume != 'None':
             if not os.path.isfile(args.resume):
@@ -157,7 +154,7 @@ class Trainer():
             self.training(epoch)
 
             # evaluate for one epoch on the validation set
-            print('\n===============start testing, training epoch {}\n'.format(epoch))
+            print('\n+++++++++++++++++++++start testing, epoch {}+++++++++++++++++++++\n'.format(epoch))
             pixAcc, mIOU, loss = self.validation(epoch)
             print('evaluation pixel acc {}, mean IOU {}, loss {}'.format(pixAcc, mIOU, loss))
 
@@ -170,7 +167,7 @@ class Trainer():
             utils.save_checkpoint({'epoch': epoch + 1,
                                    'state_dict': self.model.module.state_dict(),
                                    'optimizer': self.optimizer.state_dict(),
-                                   'best_pred': self.best_pred}, self.args, is_best, settings)
+                                   'best_pred': self.best_pred}, self.args, is_best)
 
     def validation(self, epoch):
         # Fast test during the training

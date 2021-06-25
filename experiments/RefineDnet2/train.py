@@ -32,8 +32,9 @@ GPUS = [0, 1]
 parser = argparse.ArgumentParser(description='model specification')
 parser.add_argument('--with_att', action='store_true', default= False, help='whether use attention to fuse rgb and dep')
 parser.add_argument('--att_type', type=str, default='AG2', help='Attention type to fuse rgb and dep')
+parser.add_argument('--fuse_type', type=str, default='Type1', help='Use Attention to fuse rgb and dep: Fuse Type')
 settings= parser.parse_args()
-print('settings attention {} attention type {}'.format(settings.with_att, settings.att_type))
+print('settings attention:{} attention type:{} fuse type:{}'.format(settings.with_att, settings.att_type, settings.fuse_type))
 
 
 class Trainer():
@@ -61,7 +62,7 @@ class Trainer():
         # model and params
         model = get_segmentation_model(args.model, dataset=args.dataset, backbone=args.backbone, pretrained=True,
                                        root='../../encoding/models/pretrain', n_features=256, with_CRP=False, with_conv=True,
-                                       with_att=settings.with_att, att_type=settings.att_type
+                                       with_att=settings.with_att, att_type=settings.att_type, fuse_type=settings.fuse_type
                                        )
 
         print(model)
@@ -170,7 +171,7 @@ class Trainer():
             utils.save_checkpoint({'epoch': epoch + 1,
                                    'state_dict': self.model.module.state_dict(),
                                    'optimizer': self.optimizer.state_dict(),
-                                   'best_pred': self.best_pred}, self.args, is_best, settings)
+                                   'best_pred': self.best_pred}, self.args, is_best)
 
     def validation(self, epoch):
         # Fast test during the training

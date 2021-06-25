@@ -1,3 +1,5 @@
+# encoding:utf-8
+
 import os
 import copy
 import torch
@@ -7,13 +9,13 @@ import torchvision.models as models
 from ...nn import ResidualConvUnit, MultiResolutionFusion, ChainedResidualPool, RefineNetBlock
 from ...nn import AttGate2
 
-__all__ = ['RefineDNet', 'get_refined']
+__all__ = ['RefineDNet2', 'get_refined2']
 
 
-class RefineDNet(nn.Module):
+class RefineDNet2(nn.Module):
     def __init__(self, n_classes=21, backbone='resnet18', pretrained=True, root='./encoding/models/pretrain',
-                 n_features=256, with_CRP=False, with_conv=False, with_att=False, att_type='AG2'):
-        super(RefineDNet, self).__init__()
+                 n_features=256, with_CRP=False, with_conv=False, with_att=False, att_type='AG2', fuse_type='Type1'):
+        super(RefineDNet2, self).__init__()
         # self.do = nn.Dropout(p=0.5)
         self.base = models.resnet18(pretrained=False)
         if pretrained:
@@ -38,11 +40,12 @@ class RefineDNet(nn.Module):
         self.d_layer3 = self.dep_base.layer3
         self.d_layer4 = self.dep_base.layer4
 
-        self.fuse1 = RGBDFusionBlock(64, n_features, with_conv=with_conv, with_att=with_att, att_type=att_type)
-        self.fuse2 = RGBDFusionBlock(128, n_features, with_conv=with_conv, with_att=with_att, att_type=att_type)
-        self.fuse3 = RGBDFusionBlock(256, n_features, with_conv=with_conv, with_att=with_att, att_type=att_type)
-        self.fuse4 = RGBDFusionBlock(512, 2*n_features, with_conv=with_conv, with_att=with_att, att_type=att_type)
+        self.fuse1 = RGBDFusionBlock(64, n_features, with_conv=with_conv, with_att=with_att, att_type=att_type, fuse_type=fuse_type)
+        self.fuse2 = RGBDFusionBlock(128, n_features, with_conv=with_conv, with_att=with_att, att_type=att_type, fuse_type=fuse_type)
+        self.fuse3 = RGBDFusionBlock(256, n_features, with_conv=with_conv, with_att=with_att, att_type=att_type, fuse_type=fuse_type)
+        self.fuse4 = RGBDFusionBlock(512, 2*n_features, with_conv=with_conv, with_att=with_att, att_type=att_type, fuse_type=fuse_type)
 
+        # 第二个参数：小feature map在前，大feature map在后
         self.refine4 = RefineNetBlock(2*n_features, [(2*n_features, 32)], with_CRP=with_CRP)
         self.refine3 = RefineNetBlock(n_features, [(2*n_features, 32), (n_features, 16)], with_CRP=with_CRP)
         self.refine2 = RefineNetBlock(n_features, [(n_features, 16), (n_features, 8)], with_CRP=with_CRP)
@@ -81,18 +84,19 @@ class RefineDNet(nn.Module):
         return out
 
 
-def get_refined(dataset='nyud', backbone='resnet18', pretrained=True, root='./encoding/models/pretrain', n_features=256,
-                with_CRP=False, with_conv=False, with_att=False, att_type='AG2'):
+def get_refined2(dataset='nyud', backbone='resnet18', pretrained=True, root='./encoding/models/pretrain', n_features=256,
+                with_CRP=False, with_conv=False, with_att=False, att_type='AG2', fuse_type='Type1'):
     from ...datasets import datasets
-    model = RefineDNet(datasets[dataset.lower()].NUM_CLASS, backbone=backbone, pretrained=pretrained, root=root,
-                      n_features=n_features, with_CRP=with_CRP, with_conv=with_conv, with_att=with_att, att_type=att_type)
+    model = RefineDNet2(datasets[dataset.lower()].NUM_CLASS, backbone=backbone, pretrained=pretrained, root=root,
+                        n_features=n_features, with_CRP=with_CRP, with_conv=with_conv,
+                        with_att=with_att, att_type=att_type, fuse_type=fuse_type)
     return model
 
 
 class RGBDFusionBlock(nn.Module):
-    def __init__(self, in_ch, out_ch, with_conv=False, n_rcu=1, with_att=False, att_type='AG2'):
+    def __init__(self, in_ch, out_ch, with_conv=False, n_rcu=1, with_att=False, att_type='AG2', fuse_type='Type1'):
         super().__init__()
-        self.with_conv, self.with_att = with_conv, with_att
+        self.with_conv, self.with_att, self.fuse_type = with_conv, with_att, fuse_type
 
         self.rgb_conv = nn.Conv2d(in_ch, in_ch, kernel_size=3, stride=1, padding=1, bias=False)
         self.dep_conv = nn.Conv2d(in_ch, in_ch, kernel_size=3, stride=1, padding=1, bias=False)
@@ -101,16 +105,16 @@ class RGBDFusionBlock(nn.Module):
             self.rgb_rcu.add_module('rgb_rcu{}'.format(i), ResidualConvUnit(in_ch))
             self.dep_rcu.add_module('dep_rcu{}'.format(i), ResidualConvUnit(in_ch))
         if with_conv:
-            self.rgb_conv1 = nn.Sequential(nn.Conv2d(in_ch, in_ch, kernel_size=3, stride=1, padding=1, bias=False),
-                                           nn.ReLU(inplace=True))
-            self.dep_conv1 = nn.Sequential(nn.Conv2d(in_ch, in_ch, kernel_size=3, stride=1, padding=1, bias=False),
-                                           nn.ReLU(inplace=True))
-
+            self.rgb_conv1 = nn.Conv2d(in_ch, in_ch, kernel_size=3, stride=1, padding=1, bias=False)
+            self.dep_conv1 = nn.Conv2d(in_ch, in_ch, kernel_size=3, stride=1, padding=1, bias=False)
+        self.relu = nn.ReLU(inplace=True)
         # fuse with attention
         if with_att:
+            self.rgb_pre_att = nn.Sequential(nn.BatchNorm2d(in_ch), nn.ReLU(inplace=True))
+            self.dep_pre_att = nn.Sequential(nn.BatchNorm2d(in_ch), nn.ReLU(inplace=True))
             if att_type == 'AG2':
-                self.att_module = AttGate2(in_ch=in_ch, M=2, r=16)
-
+                self.att_module = AttGate2(in_ch=in_ch, M=2, r=16, ret_att=True)
+        # out conv 调整channel数
         self.out_conv = nn.Conv2d(in_ch, out_ch, kernel_size=3, stride=1, padding=1, bias=False)
 
     def forward(self, x, d):
@@ -120,7 +124,16 @@ class RGBDFusionBlock(nn.Module):
             x = self.rgb_conv1(x)            # [B, in_ch, w, h]
             d = self.dep_conv1(d)            # [B, in_ch, w, h]
         if self.with_att:
-            out = self.att_module(x, d)
+            x1 = self.rgb_pre_att(x)          # 进入attention之前预处理
+            d1 = self.dep_pre_att(d)          # 进入attention之前预处理
+            value, att_score = self.att_module(x1, d1)                # [B, 2, c, 1, 1]
+            if self.fuse_type == 'Type1':
+                out = value
+            elif self.fuse_type == 'Type2':
+                feats = torch.cat((x,d), dim=1)                                    # [B, 2c, h, w]
+                feats = feats.view(x.size(0), 2, x.size(1), x.size(2), x.size(3))  # [B, 2, c, h, w]
+                out = torch.sum(feats * att_score, dim=1)                          # [B, c, h, w]
+                out = self.relu(out)                                               # [B, c, h, w]
         else:
-            out = x + d
+            out = self.relu(x + d)
         return self.out_conv(out)

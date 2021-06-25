@@ -20,3 +20,5 @@ from .dropblock import *
 from .da_att import *
 from .unet_att import *
 from .refine import *
+from .att import *
+from .basic import *

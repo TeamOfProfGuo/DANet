@@ -19,6 +19,10 @@ from .munet import *
 from .lmfnet import *
 from .refinenet import *
 from .refined import *
+from .acdnet import *
+from .refined_v2 import *
+from .refined_v3 import *
+from .mynet import *
 
 
 def get_segmentation_model(name, **kwargs):
@@ -46,6 +50,10 @@ def get_segmentation_model(name, **kwargs):
         'attlinknet': get_attlinknet,
         'link_mfnet': get_LinkMFNet,
         'refinenet': get_refinenet,
-        'refined': get_refined
+        'refined': get_refined,
+        'acdnet': get_acdnet,
+        'refined2': get_refined2,
+        'refined3': get_refined3,
+        'mynet': get_mynet,
     }
     return models[name.lower()](**kwargs)
