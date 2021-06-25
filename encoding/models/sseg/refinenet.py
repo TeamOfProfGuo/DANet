@@ -3,7 +3,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torchvision.models as models
-from ...nn import ResidualConvUnit, MultiResolutionFusion, ChainedResidualPool, ChainedResidualPoolImproved
+from ...nn import ResidualConvUnit, MultiResolutionFusion, ChainedResidualPool
 
 __all__ = ['RefineNet', 'get_refinenet']
 
@@ -116,5 +116,5 @@ class BaseRefineNetBlock(nn.Module):
 
 
 class RefineNetBlock(BaseRefineNetBlock):
-    def __init__(self, features, shapes, with_CRP=True):
+    def __init__(self, features, shapes, with_CRP=False):
         super().__init__(features, ResidualConvUnit, MultiResolutionFusion, ChainedResidualPool, shapes, with_CRP=with_CRP)

@@ -32,8 +32,10 @@ GPUS = [0, 1]
 parser = argparse.ArgumentParser(description='model specification')
 parser.add_argument('--with_att', action='store_true', default= False, help='whether use attention to fuse rgb and dep')
 parser.add_argument('--att_type', type=str, default='AG2', help='Attention type to fuse rgb and dep')
-settings= parser.parse_args()
-print('settings attention:{} attention type:{}'.format(settings.with_att, settings.att_type))
+parser.add_argument('--att_type2', type=str, default='AT1', help='Attention type to for multi-scale fusion')
+parser.add_argument('--with_bn', action='store_true', default=False, help='whether to use bn in multi-scale attention')
+settings = parser.parse_args()
+print(settings)
 
 
 class Trainer():
@@ -62,6 +64,7 @@ class Trainer():
         model = get_segmentation_model(args.model, dataset=args.dataset, backbone=args.backbone, pretrained=True,
                                        root='../../encoding/models/pretrain', n_features=256,
                                        with_conv=True, with_att=settings.with_att, att_type=settings.att_type,
+                                       att_type2 = settings.att_type2, with_bn = settings.with_bn
                                        )
 
         print(model)

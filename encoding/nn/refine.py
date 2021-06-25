@@ -103,14 +103,14 @@ class BaseRefineNetBlock(nn.Module):
 
 class RefineNetBlock(BaseRefineNetBlock):
     def __init__(self, features, shapes, with_CRP=False):
-        self.mrf = MultiResolutionFusion(features, shapes) if len(shapes)!=1 else None
         super().__init__(features, ResidualConvUnit, ChainedResidualPool, shapes, with_CRP=with_CRP)
+        self.mrf = MultiResolutionFusion(features, shapes) if len(shapes) != 1 else None
 
 
 class RefineAttBlock(BaseRefineNetBlock):
-    def __init__(self, features, shapes):
-        self.mrf = MultiScaleAtt(features, shapes, att_type='AT1')
+    def __init__(self, features, shapes, att_type2='AT1', with_bn=False):
         super().__init__(features, ResidualConvUnit, ChainedResidualPool, shapes)
+        self.mrf = MultiScaleAtt(features, shapes, att_type=att_type2, with_bn=with_bn) if len(shapes) != 1 else None
 
 
 class MultiScaleAtt(nn.Module):
@@ -153,11 +153,10 @@ class AttBlock2(nn.Module):
         self.with_bn = with_bn
         out_ch = max( in_ch//r, 32 )
         self.conv1 = nn.Conv2d(in_ch*2, out_ch, kernel_size=1, stride=1, padding=0, bias=True)
-        self.bn = nn.BatchNorm2d(out_ch)
-        self.relu = nn.ReLU(inplace=True)
+        self.relu1 = nn.ReLU(inplace=True)
 
         self.conv2 = nn.Conv2d(out_ch, 1, kernel_size=1, stride=1, padding=0, bias=True)
-        self.sigmoid = nn.Sigmoid
+        self.sigmoid = nn.Sigmoid()
 
         if self.with_bn:
             self.bn1 = nn.BatchNorm2d(out_ch)
@@ -167,7 +166,7 @@ class AttBlock2(nn.Module):
         m = self.conv1(m)              # [B, out_c, h, w]
         if self.with_bn:
             m = self.bn1(m)
-        m = self.relu(m)
+        m = self.relu1(m)
 
         att = self.conv2(m)      # [B, 1, h, w]
         att = self.sigmoid(att)  # [B, 1, h, w]
