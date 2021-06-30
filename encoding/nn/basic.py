@@ -18,9 +18,9 @@ class BasicBlock(nn.Module):
             self.conv2 = nn.Sequential(nn.Conv2d(planes, planes, kernel_size=3, stride=1, padding=1, bias=False),
                                        nn.BatchNorm2d(planes))
         else:
-            self.conv2=nn.Sequential(nn.ConvTranspose2d(planes, planes, kernel_size=4, stride=2, padding=1, bias=False),
+            self.conv2=nn.Sequential(nn.ConvTranspose2d(planes, planes, kernel_size=2, stride=2, padding=0, bias=False),
                                      nn.BatchNorm2d(planes))
-            self.up = nn.Sequential(nn.ConvTranspose2d(inplanes, planes, kernel_size=4, stride=2, padding=1, bias=False),
+            self.up = nn.Sequential(nn.ConvTranspose2d(inplanes, planes, kernel_size=2, stride=2, padding=0, bias=False),
                                     nn.BatchNorm2d(planes))
         self.relu = nn.ReLU(inplace=True)
 

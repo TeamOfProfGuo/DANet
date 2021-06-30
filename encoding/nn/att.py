@@ -3,7 +3,7 @@ import torch
 import torch.nn as nn
 from functools import reduce
 from torch.nn import Module, Softmax, Parameter
-__all__ = ['AttGate2', 'AttGate3']
+__all__ = ['AttGate1', 'AttGate2', 'AttGate3']
 
 
 # class AttGate2(Module):
@@ -33,10 +33,28 @@ __all__ = ['AttGate2', 'AttGate3']
 #         out = torch.mul(x, att[:, :, 0:1, :]) + torch.mul(y, att[:, :, 1:2, :])
 #         return out
 
+class AttGate1(nn.Module):
+    def __init__(self, in_ch, r=4):
+        """same as the channel attention in SE module"""
+        super(AttGate1, self).__init__()
+        int_ch = max(in_ch//r, 32)
+        self.gap = nn.AdaptiveAvgPool2d((1,1))
+        self.fc = nn.Sequential(nn.Conv2d(in_ch, int_ch, kernel_size=1, stride=1),
+                                nn.BatchNorm2d(int_ch),
+                                nn.ReLU(inplace=True),
+                                nn.Conv2d(int_ch, in_ch, kernel_size=1, stride=1),
+                                nn.Sigmoid())
+
+    def forward(self, x):
+        att = self.gap(x)
+        att = self.fc(att)  # [B, in_c, 1, 1]
+        out = att*x
+        return out
+
 
 class AttGate2(nn.Module):
-    def __init__(self, in_ch, M=2, r=16, ret_att=False):
-        """ Constructor
+    def __init__(self, in_ch, M=2, r=4, ret_att=False):
+        """ Attention as in SKNet (selective kernel)
         Args:
             features/in_ch: input channel dimensionality.
             M: the number of branches.
@@ -84,7 +102,7 @@ class AttGate2(nn.Module):
 
 
 class AttGate3(nn.Module):
-    def __init__(self, in_ch, M=2, r=16):
+    def __init__(self, in_ch, M=2, r=4):
         # 输入特征的通道数， 2个分支，bottle-net layer的 reduction rate
         super(AttGate3, self).__init__()
         d = max(int(in_ch*2 / r), 32)

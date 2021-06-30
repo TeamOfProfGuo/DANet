@@ -23,6 +23,8 @@ from .acdnet import *
 from .refined_v2 import *
 from .refined_v3 import *
 from .mynet import *
+from .rfunet import *
+from .rfnet import *
 
 
 def get_segmentation_model(name, **kwargs):
@@ -55,5 +57,8 @@ def get_segmentation_model(name, **kwargs):
         'refined2': get_refined2,
         'refined3': get_refined3,
         'mynet': get_mynet,
+        'rfunet': get_rfunet,
+        'rfnet': get_rfnet,
+
     }
     return models[name.lower()](**kwargs)

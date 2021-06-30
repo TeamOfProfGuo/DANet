@@ -14,8 +14,8 @@ __all__ = ['RefineDNet3', 'get_refined3']
 
 class RefineDNet3(nn.Module):
     def __init__(self, n_classes=21, backbone='resnet18', pretrained=True, root='./encoding/models/pretrain',
-                 n_features=256, with_conv=False, with_att=False, att_type='AG2',
-                 att_type2='AT2', with_bn=False):
+                 n_features=256, with_conv=False, att_type='AG2',
+                 att_type2='AT2', n_cbr=1,  with_bn=False):
         super(RefineDNet3, self).__init__()
         # self.do = nn.Dropout(p=0.5)
         self.base = models.resnet18(pretrained=False)
@@ -41,16 +41,16 @@ class RefineDNet3(nn.Module):
         self.d_layer3 = self.dep_base.layer3
         self.d_layer4 = self.dep_base.layer4
 
-        self.fuse1 = RGBDFusionBlock(64, n_features, with_conv=with_conv, with_att=with_att, att_type=att_type)
-        self.fuse2 = RGBDFusionBlock(128, n_features, with_conv=with_conv, with_att=with_att, att_type=att_type)
-        self.fuse3 = RGBDFusionBlock(256, n_features, with_conv=with_conv, with_att=with_att, att_type=att_type)
-        self.fuse4 = RGBDFusionBlock(512, 2*n_features, with_conv=with_conv, with_att=with_att, att_type=att_type)
+        self.fuse1 = RGBDFusionBlock(64, n_features, with_conv=with_conv,  att_type=att_type)
+        self.fuse2 = RGBDFusionBlock(128, n_features, with_conv=with_conv,  att_type=att_type)
+        self.fuse3 = RGBDFusionBlock(256, n_features, with_conv=with_conv,  att_type=att_type)
+        self.fuse4 = RGBDFusionBlock(512, 2*n_features, with_conv=with_conv,  att_type=att_type)
 
         # 第二个参数：小feature map在前，大feature map在后
-        self.refine4 = RefineAttBlock(2*n_features, [(2*n_features, 32)], att_type2=att_type2, with_bn=with_bn)
-        self.refine3 = RefineAttBlock(n_features, [(2*n_features, 32), (n_features, 16)], att_type2=att_type2, with_bn=with_bn)
-        self.refine2 = RefineAttBlock(n_features, [(n_features, 16), (n_features, 8)], att_type2=att_type2, with_bn=with_bn)
-        self.refine1 = RefineAttBlock(n_features, [(n_features, 8), (n_features, 4)], att_type2=att_type2, with_bn=with_bn)
+        self.refine4 = RefineAttBlock(2*n_features, [(2*n_features, 32)], att_type2=att_type2, n_cbr=n_cbr, with_bn=with_bn)
+        self.refine3 = RefineAttBlock(n_features, [(2*n_features, 32), (n_features, 16)], att_type2=att_type2, n_cbr=n_cbr, with_bn=with_bn)
+        self.refine2 = RefineAttBlock(n_features, [(n_features, 16), (n_features, 8)], att_type2=att_type2, n_cbr=n_cbr, with_bn=with_bn)
+        self.refine1 = RefineAttBlock(n_features, [(n_features, 8), (n_features, 4)], att_type2=att_type2, n_cbr=n_cbr, with_bn=with_bn)
 
         self.out_conv = nn.Sequential(
             ResidualConvUnit(n_features), ResidualConvUnit(n_features),
@@ -86,17 +86,18 @@ class RefineDNet3(nn.Module):
 
 
 def get_refined3(dataset='nyud', backbone='resnet18', pretrained=True, root='./encoding/models/pretrain', n_features=256,
-                 with_conv=False, with_att=False, att_type='AG2', att_type2='AT2', with_bn=False):
+                 with_conv=False, att_type='AG2', att_type2='AT2', n_cbr=1, with_bn=False):
     from ...datasets import datasets
     model = RefineDNet3(datasets[dataset.lower()].NUM_CLASS, backbone, pretrained, root=root, n_features=n_features,
-                        with_conv=with_conv, with_att=with_att, att_type=att_type, att_type2=att_type2, with_bn=with_bn)
+                        with_conv=with_conv, att_type=att_type,
+                        att_type2=att_type2, n_cbr=n_cbr, with_bn=with_bn)
     return model
 
 
 class RGBDFusionBlock(nn.Module):
-    def __init__(self, in_ch, out_ch, with_conv=False, n_rcu=1, with_att=False, att_type='AG2'):
+    def __init__(self, in_ch, out_ch, with_conv=False, n_rcu=1, att_type=None):
         super().__init__()
-        self.with_conv, self.with_att = with_conv, with_att
+        self.with_conv, self.att_type = with_conv, att_type
 
         self.rgb_conv = nn.Conv2d(in_ch, in_ch, kernel_size=3, stride=1, padding=1, bias=False)
         self.dep_conv = nn.Conv2d(in_ch, in_ch, kernel_size=3, stride=1, padding=1, bias=False)
@@ -109,10 +110,10 @@ class RGBDFusionBlock(nn.Module):
             self.dep_conv1 = nn.Conv2d(in_ch, in_ch, kernel_size=3, stride=1, padding=1, bias=False)
         self.relu = nn.ReLU(inplace=True)
         # fuse with attention
-        if with_att:
+        if self.att_type:
             self.rgb_pre_att = nn.Sequential(nn.BatchNorm2d(in_ch), nn.ReLU(inplace=True))
             self.dep_pre_att = nn.Sequential(nn.BatchNorm2d(in_ch), nn.ReLU(inplace=True))
-            if att_type == 'AG2':
+            if self.att_type == 'AG2':
                 self.att_module = AttGate2(in_ch=in_ch, M=2, r=16, ret_att=True)
         # out conv 调整channel数
         self.out_conv = nn.Conv2d(in_ch, out_ch, kernel_size=3, stride=1, padding=1, bias=False)
@@ -123,7 +124,7 @@ class RGBDFusionBlock(nn.Module):
         if self.with_conv:
             x = self.rgb_conv1(x)            # [B, in_ch, w, h]
             d = self.dep_conv1(d)            # [B, in_ch, w, h]
-        if self.with_att:
+        if self.att_type:
             x1 = self.rgb_pre_att(x)          # 进入attention之前预处理
             d1 = self.dep_pre_att(d)          # 进入attention之前预处理
             out, att_score = self.att_module(x1, d1)                # [B, 2, c, 1, 1]
