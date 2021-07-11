@@ -37,7 +37,7 @@ GPUS = [0,1]
 # =====================  setup  ======================
 # model settings
 parser = argparse.ArgumentParser(description='model specification')
-parser.add_argument('--mmf_att', type=str, default='CA9', help='Attention type to fuse rgb and dep')
+parser.add_argument('--mrf_att', type=str, default='PA0', help='Attention type to fuse rgb and dep')
 settings = parser.parse_args([])
 print(settings)
 
@@ -70,7 +70,7 @@ nclass = trainset.num_class
 
 # model
 model = get_segmentation_model(args.model, dataset=args.dataset, backbone=args.backbone, pretrained=True,
-                               root='./encoding/models/pretrain', mmf_att=settings.mmf_att)
+                               root='./encoding/models/pretrain', mrf_att=settings.mrf_att)
 
 print(model)
 

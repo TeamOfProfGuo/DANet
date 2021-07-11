@@ -6,11 +6,11 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torchvision.models as models
-from ...nn import BasicBlock, AttGate1, AttGate2, AttGate3
+from ...nn import BasicBlock, AttGate1, AttGate2, AttGate3, AttGate3a, AttGate3b, AttGate4c, AttGate5c, AttGate6, AttGate9
+from ...nn import PosAtt0, PosAtt1, PosAtt2, PosAtt3, PosAtt3a, PosAtt3c, PosAtt4, PosAtt4a, PosAtt5, PosAtt6, PosAtt6a, PosAtt9
 
 # RFUNet: Res Fuse U-Net
 __all__ = ['RFUNet', 'get_rfunet']
-
 
 
 class RFUNet(nn.Module):
@@ -43,19 +43,19 @@ class RFUNet(nn.Module):
         self.d_layer3 = self.dep_base.layer3
         self.d_layer4 = self.dep_base.layer4
 
-        self.fuse0 = RGBDFuse(64, mmf_att=mmf_att)
-        self.fuse1 = RGBDFuse(64, mmf_att=mmf_att)
-        self.fuse2 = RGBDFuse(128,mmf_att=mmf_att)
-        self.fuse3 = RGBDFuse(256,mmf_att=mmf_att)
-        self.fuse4 = RGBDFuse(512,mmf_att=mmf_att)
+        self.fuse0 = RGBDFuse(64, mmf_att=mmf_att, shape=(240, 240))
+        self.fuse1 = RGBDFuse(64, mmf_att=mmf_att, shape=(120, 120))
+        self.fuse2 = RGBDFuse(128,mmf_att=mmf_att, shape=(60, 60))
+        self.fuse3 = RGBDFuse(256,mmf_att=mmf_att, shape=(30, 30))
+        self.fuse4 = RGBDFuse(512,mmf_att=mmf_att, shape=(15, 15))
 
         self.up4 = nn.Sequential(BasicBlock(512, 512), BasicBlock(512, 256, upsample=True))
         self.up3 = nn.Sequential(BasicBlock(256, 256), BasicBlock(256, 128, upsample=True))
         self.up2 = nn.Sequential(BasicBlock(128, 128), BasicBlock(128, 64, upsample=True))
 
-        self.level_fuse3 = LevelFuse(256)
-        self.level_fuse2 = LevelFuse(128)
-        self.level_fuse1 = LevelFuse(64)
+        self.level_fuse3 = LevelFuse(256, mrf_att=mrf_att)
+        self.level_fuse2 = LevelFuse(128, mrf_att=mrf_att)
+        self.level_fuse1 = LevelFuse(64, mrf_att=mrf_att)
 
         self.out_conv = nn.Sequential(BasicBlock(64, 128, upsample=True), BasicBlock(128, 128),
                                       nn.Conv2d(128, n_classes, kernel_size=1, stride=1, padding=0, bias=True))
@@ -108,7 +108,7 @@ def get_rfunet(dataset='nyud', backbone='resnet18', pretrained=True, root='./enc
 
 
 class RGBDFuse(nn.Module):
-    def __init__(self, in_ch, mmf_att=None):
+    def __init__(self, in_ch, mmf_att=None, shape=None):
         super().__init__()
         self.mmf_att = mmf_att
         if mmf_att == 'CA0':     # RGB 与 Dep feature先分别通过channel attention re-weight, 然后相加
@@ -121,25 +121,88 @@ class RGBDFuse(nn.Module):
             self.att_module = AttGate2(in_ch=in_ch)
         elif mmf_att == 'CA3':
             self.att_module = AttGate3(in_ch=in_ch)
+        elif mmf_att == 'CA3a':
+            self.att_module = AttGate3a(in_ch=in_ch)
+        elif mmf_att == 'CA3b':
+            self.att_module = AttGate3b(in_ch=in_ch)
+        elif mmf_att == 'CA4c':
+            self.rgb_att = AttGate4c(in_ch=in_ch, shape=shape)
+            self.dep_att = AttGate4c(in_ch=in_ch, shape=shape)
+        elif mmf_att == 'CA5c':
+            self.rgb_att = AttGate5c(in_ch=in_ch)
+            self.dep_att = AttGate5c(in_ch=in_ch)
+        elif mmf_att == 'CA6':
+            self.att_module = AttGate6(in_ch=in_ch)
+        elif mmf_att == 'CA9':
+            self.att_module = AttGate9(in_ch=in_ch)
+        elif mmf_att == 'PA0': # 这里被改过了， 本来是a*x + (1-a)*t
+            self.att_module = PosAtt0(ch=in_ch)
+            self.out_conv = nn.Conv2d(in_ch * 2, in_ch, kernel_size=1, stride=1)
+        elif mmf_att == 'PA1':
+            self.att_module = PosAtt1(ch=in_ch)
+        elif mmf_att == 'PA2':
+            self.att_module = PosAtt2(in_ch=in_ch)
+        elif mmf_att == 'PA3':
+            self.att_module = PosAtt3()
+        elif mmf_att == 'PA3a':
+            self.att_module = PosAtt3a(in_ch=in_ch)
+        elif mmf_att == 'PA4':
+            self.att_module = PosAtt4(in_ch=in_ch)
+        elif mmf_att == 'PA4a':
+            self.att_module = PosAtt4a(in_ch=in_ch)
+        elif mmf_att == 'PA5':
+            self.att_module = PosAtt5(in_ch=in_ch)
+        elif mmf_att == 'PA6':
+            self.att_module = PosAtt6(in_ch=in_ch)
+        elif mmf_att == 'PA6a':
+            self.att_module = PosAtt6a(in_ch=in_ch)
+
+        elif mmf_att == 'PA9':
+            self.rgb_att = PosAtt9(in_ch=in_ch)
+            self.dep_att = PosAtt9(in_ch=in_ch)
+        elif mmf_att == 'PA3c':
+            self.rgb_att = PosAtt3c(in_ch=in_ch)
+            self.dep_att = PosAtt3c(in_ch=in_ch)
 
     def forward(self, x, d):
-        if self.mmf_att == 'CA0':
+        batch_size, ch, _, _ = x.size()
+        if self.mmf_att in ['CA0', 'CA4c', 'CA5c']:
             return self.rgb_att(x) + self.dep_att(d)
         elif self.mmf_att == 'CA1':
             inputs = torch.cat((x, d), dim=1)  # [B, 2c, h, w]
             out = self.att_module(inputs)      # [B, 2c, h, w]
-            return self.out_conv(out)          # [B, c, h, w]
+            #return self.out_conv(out)          # [B, c, h, w]
+            return out[:, :ch] + out[:, ch:]
         elif self.mmf_att == 'CA2':
             return self.att_module(x, d)
-        elif self.mmf_att == 'CA3':
+        elif self.mmf_att in ['CA3', 'CA3a', 'CA3b', 'CA6', 'CA9']:
+            return self.att_module(x, d)      # 'CA6'这里需要注意顺序，rgb在前面，dep在后面，对dep进行reweight
+        elif self.mmf_att == 'PA0':  # 这里被改过了， 本来是a*x + (1-a)*t
+            d = self.att_module(x, d)
+            return self.out_conv(torch.cat((x,d), dim=1))
+        elif self.mmf_att in ['PA0', 'PA1', 'PA2', 'PA3', 'PA3a', 'PA4', 'PA4a', 'PA5', 'PA6', 'PA6a']:
             return self.att_module(x, d)
+        elif self.mmf_att in ['PA9', 'PA3c']:
+            return self.rgb_att(x) + self.dep_att(d)
         else:
             return x + d
 
 
 class LevelFuse(nn.Module):
-    def __init__(self, in_ch):
+    def __init__(self, in_ch, mrf_att=None):
         super().__init__()
+        self.mrf_att = mrf_att
+        if mrf_att == 'PA0':
+            self.att_module = PosAtt0(ch=in_ch)
+            self.out_conv = nn.Conv2d(in_ch * 2, in_ch, kernel_size=1, stride=1)
+        elif mrf_att == 'CA6':
+            self.att_module = AttGate6(in_ch=in_ch)
 
     def forward(self, c, x):
-        return c + x
+        if self.mrf_att in ['CA6']:
+            return self.att_module(c, x) # 注意深层feature在前，浅层feature在后，对浅层feature进行变换
+        elif self.mrf_att == 'PA0':
+            x = self.att_module(c, x)
+            return self.out_conv( torch.cat((c, x), dim=1) )
+        else:
+            return c + x

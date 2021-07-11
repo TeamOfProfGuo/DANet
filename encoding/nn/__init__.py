@@ -22,3 +22,4 @@ from .unet_att import *
 from .refine import *
 from .att import *
 from .basic import *
+from .posatt import *

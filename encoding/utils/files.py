@@ -8,11 +8,10 @@ import torch
 
 __all__ = ['save_checkpoint', 'download', 'mkdir', 'check_sha1']
 
-def save_checkpoint(state, args, is_best, filename='checkpoint.pth.tar', settings =None):
+def save_checkpoint(state, args, is_best, filename='checkpoint.pth.tar', path=None):
     """Saves checkpoint to disk"""
-    if settings:
-        tp = "/".join(("{}-{}".format(*i) for i in settings.__dict__.items()))
-        directory = os.path.join('runs', tp)
+    if path:
+        directory = path
     else:
         directory = "runs/%s/%s/%s/"%(args.dataset, args.model, args.checkname)
     if not os.path.exists(directory):

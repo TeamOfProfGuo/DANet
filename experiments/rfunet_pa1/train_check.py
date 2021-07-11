@@ -37,7 +37,7 @@ GPUS = [0,1]
 # =====================  setup  ======================
 # model settings
 parser = argparse.ArgumentParser(description='model specification')
-parser.add_argument('--mmf_att', type=str, default='CA9', help='Attention type to fuse rgb and dep')
+parser.add_argument('--mmf_att', type=str, default='CA5c', help='Attention type to fuse rgb and dep')
 settings = parser.parse_args([])
 print(settings)
 
@@ -122,16 +122,17 @@ optimizer.zero_grad()
 
 # check CPU/GPU usage
 import torch.autograd.profiler as profiler
-# check memory usage
-with profiler.profile(profile_memory=True, record_shapes=True) as prof:
-    outputs = model(image, dep)
-print(prof.key_averages().table(sort_by="self_cpu_memory_usage", row_limit=10))
 
 # with profiler.profile(record_shapes=True) as prof:
 #     with profiler.record_function("model_inference"):
 #         outputs = model(image, dep)
 # print(prof.key_averages().table(sort_by="cpu_time_total", row_limit=10))
 
+# check memory usage
+with profiler.profile(profile_memory=True, record_shapes=True) as prof:
+    outputs = model(image, dep)
+
+print(prof.key_averages().table(sort_by="self_cpu_memory_usage", row_limit=10))
 
 loss = criterion(outputs, target)
 loss.backward()

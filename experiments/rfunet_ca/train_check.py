@@ -37,7 +37,7 @@ GPUS = [0,1]
 # =====================  setup  ======================
 # model settings
 parser = argparse.ArgumentParser(description='model specification')
-parser.add_argument('--mmf_att', type=str, default='CA9', help='Attention type to fuse rgb and dep')
+parser.add_argument('--mmf_att', type=str, default='CA3b', help='Attention type to fuse rgb and dep')
 settings = parser.parse_args([])
 print(settings)
 
