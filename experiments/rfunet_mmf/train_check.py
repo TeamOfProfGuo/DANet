@@ -5,8 +5,8 @@
 ###########################################################################
 
 import os, sys
-sys.path.append(os.path.dirname(os.path.dirname(os.getcwd())))
-sys.path.append('../..')
+BASE_DIR = os.path.dirname(os.path.dirname(os.getcwd()))
+sys.path.append(BASE_DIR)
 import copy
 import yaml
 import logging
@@ -27,25 +27,28 @@ from encoding.nn import SegmentationLosses, SyncBatchNorm
 from encoding.parallel import DataParallelModel, DataParallelCriterion
 from encoding.datasets import get_dataset
 from encoding.models import get_segmentation_model
-CONFIG_PATH = 'results/danet_resnet50/config.yaml'
-GPUS = [0, 1]
 
-def get_arguments():
-    '''
-    parse all the arguments from command line inteface
-    return a list of parsed arguments
-    '''
-
-    parser = argparse.ArgumentParser(description='semantic segmentation using PASCAL VOC')
-    parser.add_argument('--config_path', type=str, help='path of a config file')
-    return parser.parse_args(['--config_path', CONFIG_PATH])
-    #return parser.parse_args()
+BASE_DIR = '.'
+CONFIG_PATH = 'experiments/rfunet/results/config.yaml'
+SMY_PATH = os.path.dirname(CONFIG_PATH)
+GPUS = [0,1]
 
 
 # =====================  setup  ======================
-config = get_arguments()
+# model settings
+parser = argparse.ArgumentParser(description='model specification')
+parser.add_argument('--mmf_att', type=str, default='CA6+PA9', help='Attention type to fuse rgb and dep')
+settings = parser.parse_args([])
+print(settings)
+
+# if '_' in settings.mmf_att:
+#     mmf_att = settings.mmf_att.split('_')
+# else:
+#     mmf_att = settings.mmf_att
+
+
 # configuration
-args = Dict(yaml.safe_load(open(config.config_path)))
+args = Dict(yaml.safe_load(open(CONFIG_PATH)))
 args.cuda = (args.use_cuda and torch.cuda.is_available())
 torch.manual_seed(args.seed)
 args.batch_size = 2
@@ -72,23 +75,21 @@ valloader = data.DataLoader(testset, batch_size=args.batch_size, drop_last=False
 nclass = trainset.num_class
 
 # model
-model = get_segmentation_model(args.model, dataset=args.dataset,
-                               backbone=args.backbone, aux=args.aux,
-                               se_loss=args.se_loss, # norm_layer=SyncBatchNorm,
-                               base_size=args.base_size, crop_size=args.crop_size,
-                               # multi_grid=args.multi_grid, multi_dilation=args.multi_dilation, os=args.os
-                               # for resNet
-                               )
+model = get_segmentation_model(args.model, dataset=args.dataset, backbone=args.backbone, pretrained=True,
+                               root='./encoding/models/pretrain', mmf_att=settings.mmf_att)
 
 print(model)
+
 # optimizer using different LR
-params_list = [{'params': model.pretrained.parameters(), 'lr': args.lr}, ]
-if hasattr(model, 'head'):
-    params_list.append({'params': model.head.parameters(), 'lr': args.lr * 10})
-if hasattr(model, 'auxlayer'):
-    params_list.append({'params': model.auxlayer.parameters(), 'lr': args.lr * 10})
-optimizer = torch.optim.SGD(params_list, lr=args.lr,
-                            momentum=args.momentum, weight_decay=args.weight_decay)
+
+base_ids = list(map(id, model.base.parameters()))
+base_dep_ids = list(map(id, model.dep_base.parameters()))
+other_params = filter(lambda p: id(p) not in base_ids+base_dep_ids, model.parameters())
+optimizer = torch.optim.SGD([{'params': model.base.parameters(), 'lr': args.lr},
+                             {'params': model.dep_base.parameters(), 'lr': args.lr*2},
+                             {'params': other_params, 'lr': args.lr*10}],
+                            lr=args.lr,momentum=args.momentum, weight_decay=args.weight_decay)
+
 # criterions
 criterion = SegmentationLosses(se_loss=args.se_loss,
                                     aux=args.aux,
@@ -96,7 +97,7 @@ criterion = SegmentationLosses(se_loss=args.se_loss,
                                     se_weight=args.se_weight,
                                     aux_weight=args.aux_weight)
 
-scheduler = utils.LR_Scheduler_Head(args.lr_scheduler, args.lr, args.epochs, len(trainloader))
+scheduler = utils.LR_Scheduler_Head(args.lr_scheduler, args.lr, args.epochs, len(trainloader), warmup_epochs=1)
 best_pred = 0.0
 
 # using cuda
@@ -107,6 +108,7 @@ if args.cuda:
               "GPUs!")  # dim = 0 [30, xxx] -> [10, ...], [10, ...], [10, ...] on 3 GPUs
         model = nn.DataParallel(model, device_ids=GPUS)
 model = model.to(device)
+
 
 
 
@@ -121,10 +123,23 @@ for i, (image, dep, target) in enumerate(trainloader):
 scheduler(optimizer, i, epoch, best_pred)
 
 optimizer.zero_grad()
-outputs = model(image)
-outputs = [outputs[0]]
 
-loss = criterion(*outputs, target)
+
+
+# check CPU/GPU usage
+import torch.autograd.profiler as profiler
+# check memory usage
+with profiler.profile(profile_memory=True, record_shapes=True) as prof:
+    outputs = model(image, dep)
+print(prof.key_averages().table(sort_by="self_cpu_memory_usage", row_limit=10))
+
+# with profiler.profile(record_shapes=True) as prof:
+#     with profiler.record_function("model_inference"):
+#         outputs = model(image, dep)
+# print(prof.key_averages().table(sort_by="cpu_time_total", row_limit=10))
+
+
+loss = criterion(outputs, target)
 loss.backward()
 optimizer.step()
 

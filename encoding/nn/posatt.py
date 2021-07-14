@@ -5,7 +5,8 @@ from torch.nn import functional as F
 from .customize import PyramidPooling
 
 __all__ = ['PosAtt0', 'PosAtt1', 'PosAtt2', 'PosAtt3', 'PosAtt3a', 'PosAtt3c', 'PosAtt4', 'PosAtt4a', 'PosAtt5',
-           'PosAtt6', 'PosAtt6a', 'PosAtt9']
+           'PosAtt6', 'PosAtt6a', 'PosAtt7', 'PosAtt7a', 'PosAtt7b', 'PosAtt7d', 'PosAtt9', 'PosAtt9a',
+           'CMPA1', 'CMPA1a', 'CMPA2', 'CMPA2a']
 up_kwargs = {'mode': 'bilinear', 'align_corners': True}
 
 
@@ -272,6 +273,73 @@ class PosAtt6a(nn.Module):
         out = x * att[:, :1].contiguous() + y * att[:, 1:].contiguous()
         return out
 
+
+class PosAtt7(nn.Module):
+    def __init__(self, in_ch):
+        super().__init__()
+        self.y_conv = nn.Sequential(nn.Conv2d(in_ch, 1, kernel_size=1),
+                                    nn.Sigmoid())
+
+    def forward(self, x, y):
+        # x is dep, y is rgb.  x 浅层网络特征， y为深层网络特征
+        y1 = self.y_conv(y)     # [B, 1, h, w]
+        x1 = torch.mul(x, y1)
+        return x1 + y
+
+
+class PosAtt7a(nn.Module):
+    def __init__(self, in_ch):
+        super().__init__()
+        self.y_conv = nn.Sequential(nn.Conv2d(in_ch, 1, kernel_size=1, bias=False),
+                                    nn.BatchNorm2d(1),
+                                    nn.Sigmoid())
+        self.x_conv = nn.Sequential(nn.Conv2d(in_ch, in_ch, 3, padding=1, bias=False),
+                                    nn.BatchNorm2d(in_ch))
+
+    def forward(self, x, y):
+        # x is dep, y is rgb.  x 浅层网络特征， y为深层网络特征
+        y1 = self.y_conv(y)     # [B, 1, h, w] weight
+        x1 = self.x_conv(x)     # [B, c, h, w]
+        out = torch.mul(x1, y1) + y
+        return out
+
+
+class PosAtt7b(nn.Module):
+    def __init__(self, in_ch):
+        super().__init__()
+        self.y_conv = nn.Conv2d(in_ch, 1, kernel_size=1, bias=False)
+        self.x_conv = nn.Sequential(nn.Conv2d(in_ch, in_ch, 3, padding=1, bias=False),
+                                    nn.BatchNorm2d(in_ch))
+
+    def forward(self, x, y):
+        # x is dep, y is rgb.  x 浅层网络特征， y为深层网络特征
+        y1 = self.y_conv(y)  # [B, 1, h, w] weight
+        y_bn = nn.LayerNorm(y1.size()[1:])
+        y1 = F.sigmoid(y_bn(y1))  # [B, 1, h, w] 归一化并进行sigmoid
+
+        x1 = self.x_conv(x)  # [B, c, h, w]
+        out = torch.mul(x1, y1) + y
+        return out
+
+
+class PosAtt7d(nn.Module):
+    def __init__(self, in_ch):
+        super().__init__()
+        self.y_conv = nn.Sequential(nn.Conv2d(in_ch, 1, kernel_size=1, bias=False),
+                                    nn.BatchNorm2d(1),
+                                    nn.ReLU(inplace=True))
+        self.x_conv = nn.Sequential(nn.Conv2d(in_ch, in_ch, 3, padding=1, bias=False),
+                                    nn.BatchNorm2d(in_ch))
+
+    def forward(self, x, y):
+        # x is dep, y is rgb.  x 浅层网络特征， y为深层网络特征
+        y1 = self.y_conv(y)     # [B, 1, h, w] weight
+        x1 = self.x_conv(x)     # [B, c, h, w]
+        out = torch.mul(x1, y1) + y
+        return out
+
+
+
 class PosAtt9(nn.Module):
     def __init__(self, in_ch):
         super().__init__()
@@ -280,14 +348,155 @@ class PosAtt9(nn.Module):
 
     def forward(self, x):
         batch_size, ch, h, w = x.size()
-        z = self.conv(x)
-        z = self.sigmoid(z)
+        z = self.conv(x)       # [B, c, h, w]
+        z = self.sigmoid(z)    # [B, c, h, w]
         out = torch.mul(x, z.view(batch_size, 1, h, w))
         return out
 
 
+class PosAtt9a(nn.Module):
+    def __init__(self, in_ch):
+        super().__init__()
+        self.conv = nn.Sequential(nn.Conv2d(in_ch, 1, kernel_size=1),
+                                  nn.Sigmoid())
+        self.gap = nn.AdaptiveAvgPool2d(1)
+        self.conv_gap = nn.Sequential(nn.Conv2d(in_ch, in_ch, kernel_size=1, bias=False),
+                                      nn.BatchNorm2d(in_ch))
+
+    def forward(self, x):
+        batch_size, ch, h, w = x.size()
+        z = self.conv(x)       # [B, c, h, w]
+        out = torch.mul(x, z.view(batch_size, 1, h, w))
+
+        x_gap = self.gap(x).view(batch_size, ch, 1, 1)   # [B, c, 1, 1]
+        x_gap = self.conv_gap(x_gap)                     # [B, c, 1, 1]
+        return out+x_gap
 
 
 
+class CMPA1(nn.Module):
+    def __init__(self, in_ch=None, shape=None):
+        super().__init__()
+        h, w =shape
+        self.ap1 = nn.AdaptiveAvgPool2d(1)
+        self.ap2 = nn.AdaptiveAvgPool2d(2)
+        self.ap3 = nn.AdaptiveAvgPool2d(3)
+        self.ap6 = nn.AdaptiveAvgPool2d(6)
 
+        self.fc = nn.Sequential(nn.Linear(1+4+9+36, w*w),
+                                nn.BatchNorm1d(w*w),
+                                nn.ReLU(inplace=True))
+
+    def forward(self, y, x):
+        # x is dep, y is rgb.  x 浅层网络特征， y为深层网络特征
+        batch_size, ch, h, w = y.size()
+        y1 = torch.mean(y, 1).unsqueeze(1)         # [B, 1, h, w]
+        y1_1 = self.ap1(y1).view(batch_size, 1)    # [B, 1, 1, 1] -> [B, 1]
+        y1_2 = self.ap2(y1).view(batch_size, 4)    # [B, 1, 2, 2] -> [B, 4]
+        y1_3 = self.ap3(y1).view(batch_size, 9)
+        y1_6 = self.ap6(y1).view(batch_size, 36)
+
+        y2 = torch.cat((y1_1, y1_2, y1_3, y1_6), dim=1)
+        att = self.fc(y2).view(batch_size, -1, h, w).contiguous()   # [B, w*w] -> [B, 1, h, w]
+
+        x1 = torch.mul(x, att)
+        return x1 + y
+
+
+class CMPA1a(nn.Module):
+    def __init__(self, in_ch=None, shape=None):
+        super().__init__()
+        h, w = shape
+        self.ap1 = nn.AdaptiveAvgPool2d(1)
+        self.ap2 = nn.AdaptiveAvgPool2d(2)
+        self.ap3 = nn.AdaptiveAvgPool2d(3)
+        self.ap6 = nn.AdaptiveAvgPool2d(6)
+
+        self.fc = nn.Sequential(nn.Linear(1 + 4 + 9 + 36, w * w),
+                                nn.BatchNorm1d(w * w),
+                                nn.Sigmoid())
+
+    def forward(self, y, x):
+        # x is dep, y is rgb.  x 浅层网络特征， y为深层网络特征
+        batch_size, ch, h, w = y.size()
+        y1 = torch.mean(y, 1).unsqueeze(1)  # [B, 1, h, w]
+        y1_1 = self.ap1(y1).view(batch_size, 1)  # [B, 1, 1, 1] -> [B, 1]
+        y1_2 = self.ap2(y1).view(batch_size, 4)  # [B, 1, 2, 2] -> [B, 4]
+        y1_3 = self.ap3(y1).view(batch_size, 9)
+        y1_6 = self.ap6(y1).view(batch_size, 36)
+
+        y2 = torch.cat((y1_1, y1_2, y1_3, y1_6), dim=1)
+        att = self.fc(y2).view(batch_size, -1, h, w).contiguous()  # [B, w*w] -> [B, 1, h, w]
+
+        x1 = torch.mul(x, att)
+        return x1 + y
+
+
+
+class CMPA2(nn.Module):
+    def __init__(self, in_ch=None, shape=None):
+        super().__init__()
+        h, w = shape
+        self.ap1 = nn.AdaptiveAvgPool2d(1)
+        self.ap2 = nn.AdaptiveAvgPool2d(2)
+        self.ap3 = nn.AdaptiveAvgPool2d(3)
+        self.ap5 = nn.AdaptiveAvgPool2d(5)
+        self.ap10 = nn.AdaptiveAvgPool2d(10) if w>15 else None
+        self.ap15 = nn.AdaptiveAvgPool2d(15) if w>30 else None
+        self.ap30 = nn.AdaptiveAvgPool2d(30) if w>60 else None
+
+        ch = sum([1 if i is not None else 0 for i in [self.ap10, self.ap15, self.ap30]]) + 5
+        self.fc = nn.Sequential(nn.Conv2d(ch, 1, kernel_size=1),    # [B, 1, h, w]
+                                nn.BatchNorm2d(1),
+                                nn.ReLU(inplace=True))
+
+    def forward(self, y, x):
+        # x is dep, y is rgb.  x 浅层网络特征， y为深层网络特征
+        batch_size, ch, h, w = y.size()
+        y1 = torch.mean(y, 1).unsqueeze(1)  # [B, 1, h, w]
+        y2 = y1
+        for ap in [self.ap1, self.ap2, self.ap3, self.ap5, self.ap10, self.ap15, self.ap30]:
+            if ap:
+                p = ap(y1)
+                p = F.interpolate(p, (h, w), **up_kwargs)   # [B, 1, h, w]
+                y2 = torch.cat((y2, p), dim=1)
+        y2 = y2.contiguous()
+        att = self.fc(y2)      # [B, 1, h, w]
+
+        x1 = torch.mul(x, att)
+        return x1 + y
+
+
+class CMPA2a(nn.Module):
+    def __init__(self, in_ch=None, shape=None):
+        super().__init__()
+        h, w = shape
+        self.ap1 = nn.AdaptiveAvgPool2d(1)
+        self.ap2 = nn.AdaptiveAvgPool2d(2)
+        self.ap3 = nn.AdaptiveAvgPool2d(3)
+        self.ap5 = nn.AdaptiveAvgPool2d(5)
+        self.ap10 = nn.AdaptiveAvgPool2d(10) if w>15 else None
+        self.ap15 = nn.AdaptiveAvgPool2d(15) if w>30 else None
+        self.ap30 = nn.AdaptiveAvgPool2d(30) if w>60 else None
+
+        ch = sum([1 if i is not None else 0 for i in [self.ap10, self.ap15, self.ap30]]) + 5
+        self.fc = nn.Sequential(nn.Conv2d(ch, 1, kernel_size=1),    # [B, 1, h, w]
+                                nn.BatchNorm2d(1),
+                                nn.Sigmoid())
+
+    def forward(self, y, x):
+        # x is dep, y is rgb.  x 浅层网络特征， y为深层网络特征
+        batch_size, ch, h, w = y.size()
+        y1 = torch.mean(y, 1).unsqueeze(1)  # [B, 1, h, w]
+        y2 = y1
+        for ap in [self.ap1, self.ap2, self.ap3, self.ap5, self.ap10, self.ap15, self.ap30]:
+            if ap:
+                p = ap(y1)
+                p = F.interpolate(p, (h, w), **up_kwargs)   # [B, 1, h, w]
+                y2 = torch.cat((y2, p), dim=1)
+        y2 = y2.contiguous()
+        att = self.fc(y2)      # [B, 1, h, w]
+
+        x1 = torch.mul(x, att)
+        return x1 + y
 

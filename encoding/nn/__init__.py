@@ -20,6 +20,7 @@ from .dropblock import *
 from .da_att import *
 from .unet_att import *
 from .refine import *
-from .att import *
+from .chaatt import *
 from .basic import *
 from .posatt import *
+from .att import *

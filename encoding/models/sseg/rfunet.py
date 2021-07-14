@@ -7,7 +7,9 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torchvision.models as models
 from ...nn import BasicBlock, AttGate1, AttGate2, AttGate3, AttGate3a, AttGate3b, AttGate4c, AttGate5c, AttGate6, AttGate9
-from ...nn import PosAtt0, PosAtt1, PosAtt2, PosAtt3, PosAtt3a, PosAtt3c, PosAtt4, PosAtt4a, PosAtt5, PosAtt6, PosAtt6a, PosAtt9
+from ...nn import PosAtt0, PosAtt1, PosAtt2, PosAtt3, PosAtt3a, PosAtt3c, PosAtt4, PosAtt4a, PosAtt5, PosAtt6, PosAtt6a
+from ...nn import PosAtt7, PosAtt7a, PosAtt7b, PosAtt7d, PosAtt9, PosAtt9a, CMPA1, CMPA1a, CMPA2, CMPA2a
+from ...nn import ContextBlock, FPA
 
 # RFUNet: Res Fuse U-Net
 __all__ = ['RFUNet', 'get_rfunet']
@@ -110,82 +112,140 @@ def get_rfunet(dataset='nyud', backbone='resnet18', pretrained=True, root='./enc
 class RGBDFuse(nn.Module):
     def __init__(self, in_ch, mmf_att=None, shape=None):
         super().__init__()
+
         self.mmf_att = mmf_att
-        if mmf_att == 'CA0':     # RGB 与 Dep feature先分别通过channel attention re-weight, 然后相加
+
+        if self.mmf_att == 'CA0':     # RGB 与 Dep feature先分别通过channel attention re-weight, 然后相加
             self.rgb_att = AttGate1(in_ch=in_ch)
             self.dep_att = AttGate1(in_ch=in_ch)
-        elif mmf_att == 'CA1':   # RGB 与 Dep feature先concat, 然后通过channel attention re-weight, 然后通过conv降维
+        elif self.mmf_att == 'CA1':   # RGB 与 Dep feature先concat, 然后通过channel attention re-weight, 然后通过conv降维
             self.att_module = AttGate1(in_ch=in_ch*2)
             self.out_conv = nn.Conv2d(in_ch*2, in_ch, kernel_size=1, stride=1)
-        elif mmf_att == 'CA2':   # RGB 与 Dep feature直接通过SKNet Attention, 分别计算RGB 与 Dep的channel weight, 然后相加
+        elif self.mmf_att == 'CA2':   # RGB 与 Dep feature直接通过SKNet Attention, 分别计算RGB 与 Dep的channel weight, 然后相加
             self.att_module = AttGate2(in_ch=in_ch)
-        elif mmf_att == 'CA3':
+        elif self.mmf_att == 'CA3':
             self.att_module = AttGate3(in_ch=in_ch)
-        elif mmf_att == 'CA3a':
+        elif self.mmf_att == 'CA3a':
             self.att_module = AttGate3a(in_ch=in_ch)
-        elif mmf_att == 'CA3b':
+        elif self.mmf_att == 'CA3b':
             self.att_module = AttGate3b(in_ch=in_ch)
-        elif mmf_att == 'CA4c':
+        elif self.mmf_att == 'CA4c':
             self.rgb_att = AttGate4c(in_ch=in_ch, shape=shape)
             self.dep_att = AttGate4c(in_ch=in_ch, shape=shape)
-        elif mmf_att == 'CA5c':
+        elif self.mmf_att == 'CA5c':
             self.rgb_att = AttGate5c(in_ch=in_ch)
             self.dep_att = AttGate5c(in_ch=in_ch)
-        elif mmf_att == 'CA6':
+        elif self.mmf_att == 'CA6':
             self.att_module = AttGate6(in_ch=in_ch)
-        elif mmf_att == 'CA9':
+        elif self.mmf_att == 'CA9':
             self.att_module = AttGate9(in_ch=in_ch)
-        elif mmf_att == 'PA0': # 这里被改过了， 本来是a*x + (1-a)*t
+        elif self.mmf_att == 'PA0': # 这里被改过了， 本来是a*x + (1-a)*t
             self.att_module = PosAtt0(ch=in_ch)
             self.out_conv = nn.Conv2d(in_ch * 2, in_ch, kernel_size=1, stride=1)
-        elif mmf_att == 'PA1':
+        elif self.mmf_att == 'PA1':
             self.att_module = PosAtt1(ch=in_ch)
-        elif mmf_att == 'PA2':
+        elif self.mmf_att == 'PA2':
             self.att_module = PosAtt2(in_ch=in_ch)
-        elif mmf_att == 'PA3':
+        elif self.mmf_att == 'PA3':
             self.att_module = PosAtt3()
-        elif mmf_att == 'PA3a':
+        elif self.mmf_att == 'PA3a':
             self.att_module = PosAtt3a(in_ch=in_ch)
-        elif mmf_att == 'PA4':
+        elif self.mmf_att == 'PA4':
             self.att_module = PosAtt4(in_ch=in_ch)
-        elif mmf_att == 'PA4a':
+        elif self.mmf_att == 'PA4a':
             self.att_module = PosAtt4a(in_ch=in_ch)
-        elif mmf_att == 'PA5':
+        elif self.mmf_att == 'PA5':
             self.att_module = PosAtt5(in_ch=in_ch)
-        elif mmf_att == 'PA6':
+        elif self.mmf_att == 'PA6':
             self.att_module = PosAtt6(in_ch=in_ch)
-        elif mmf_att == 'PA6a':
+        elif self.mmf_att == 'PA6a':
             self.att_module = PosAtt6a(in_ch=in_ch)
-
-        elif mmf_att == 'PA9':
+        elif self.mmf_att == 'PA7':
+            self.att_module = PosAtt7(in_ch=in_ch)
+        elif self.mmf_att == 'PA7a':
+            self.att_module = PosAtt7a(in_ch=in_ch)
+        elif self.mmf_att == 'PA7b':
+            self.att_module = PosAtt7b(in_ch=in_ch)
+        elif self.mmf_att == 'PA7d':
+            self.att_module = PosAtt7d(in_ch=in_ch)
+        elif self.mmf_att == 'CB':
+            self.rgb_att = ContextBlock(in_ch=in_ch)
+            self.dep_att = ContextBlock(in_ch=in_ch)
+        elif self.mmf_att == 'PA9':
             self.rgb_att = PosAtt9(in_ch=in_ch)
             self.dep_att = PosAtt9(in_ch=in_ch)
-        elif mmf_att == 'PA3c':
+        elif self.mmf_att == 'PA9a':
+            self.rgb_att = PosAtt9a(in_ch=in_ch)
+            self.dep_att = PosAtt9a(in_ch=in_ch)
+        elif self.mmf_att == 'PA3c':
             self.rgb_att = PosAtt3c(in_ch=in_ch)
             self.dep_att = PosAtt3c(in_ch=in_ch)
+        elif self.mmf_att == 'CMPA1':
+            self.att_module = CMPA1(shape=shape)
+        elif self.mmf_att == 'CMPA1a':
+            self.att_module = CMPA1a(shape=shape)
+        elif self.mmf_att == 'CMPA2':
+            self.att_module = CMPA2(shape=shape)
+        elif self.mmf_att == 'CMPA2a':
+            self.att_module = CMPA2a(shape=shape)
+
+        elif self.mmf_att == 'CA6_CB':
+            self.att_module = AttGate6(in_ch=in_ch)
+            self.att_module1 = ContextBlock(in_ch=in_ch)
+        elif self.mmf_att == 'CA6_PA9':
+            self.att_module = AttGate6(in_ch=in_ch)
+            self.att_module1 = PosAtt9(in_ch=in_ch)
+        elif self.mmf_att == 'PA9_CA6':
+            self.rgb_att = PosAtt9(in_ch=in_ch)
+            self.dep_att = PosAtt9(in_ch=in_ch)
+            self.att_module1 = AttGate6(in_ch=in_ch)
+        elif self.mmf_att in ['CA6+PA9', 'CA6vPA9']:
+            self.att_module = AttGate6(in_ch=in_ch)
+            self.rgb_att = PosAtt9(in_ch=in_ch)
+            self.dep_att = PosAtt9(in_ch=in_ch)
 
     def forward(self, x, d):
         batch_size, ch, _, _ = x.size()
         if self.mmf_att in ['CA0', 'CA4c', 'CA5c']:
-            return self.rgb_att(x) + self.dep_att(d)
+            out = self.rgb_att(x) + self.dep_att(d)
         elif self.mmf_att == 'CA1':
             inputs = torch.cat((x, d), dim=1)  # [B, 2c, h, w]
             out = self.att_module(inputs)      # [B, 2c, h, w]
             #return self.out_conv(out)          # [B, c, h, w]
             return out[:, :ch] + out[:, ch:]
-        elif self.mmf_att == 'CA2':
-            return self.att_module(x, d)
-        elif self.mmf_att in ['CA3', 'CA3a', 'CA3b', 'CA6', 'CA9']:
-            return self.att_module(x, d)      # 'CA6'这里需要注意顺序，rgb在前面，dep在后面，对dep进行reweight
+        elif self.mmf_att in ['CA2', 'CA3', 'CA3a', 'CA3b', 'CA6', 'CA9']:
+            out = self.att_module(x, d)      # 'CA6'这里需要注意顺序，rgb在前面，dep在后面，对dep进行reweight
         elif self.mmf_att == 'PA0':  # 这里被改过了， 本来是a*x + (1-a)*t
             d = self.att_module(x, d)
-            return self.out_conv(torch.cat((x,d), dim=1))
-        elif self.mmf_att in ['PA0', 'PA1', 'PA2', 'PA3', 'PA3a', 'PA4', 'PA4a', 'PA5', 'PA6', 'PA6a']:
-            return self.att_module(x, d)
-        elif self.mmf_att in ['PA9', 'PA3c']:
-            return self.rgb_att(x) + self.dep_att(d)
+            out = self.out_conv(torch.cat((x,d), dim=1))
+        elif self.mmf_att in ['PA0', 'PA1', 'PA2', 'PA3', 'PA3a', 'PA4', 'PA4a', 'PA5', 'PA6', 'PA6a', 'PA7', 'PA7a',
+                              'PA7b', 'PA7d', 'CMPA1', 'CMPA1a', 'CMPA2', 'CMPA2a']:
+            out = self.att_module(x, d)   # x is rgb, d is dep
+        elif self.mmf_att in ['PA9', 'PA9a', 'PA3c', 'CB']:
+            out = self.rgb_att(x) + self.dep_att(d)
+
+        elif self.mmf_att == 'CA6_CB':
+            out0 = self.att_module(x, d)
+            out = self.att_module1(out0)
+        elif self.mmf_att == 'CA6_PA9':
+            out0 = self.att_module(x, d)
+            out = self.att_module1(out0)
+        elif self.mmf_att == 'PA9_CA6':
+            rgb0 = self.rgb_att(x)
+            dep0 = self.dep_att(d)
+            out = self.att_module1(rgb0, dep0)
+        elif self.mmf_att == 'CA6+PA9':
+            out1 = self.rgb_att(x) + self.dep_att(d)
+            out2 = self.att_module(x, d)
+            out = out1 + out2
+        elif self.mmf_att == 'CA6vPA9':
+            out1 = self.rgb_att(x) + self.dep_att(d)
+            out2 = self.att_module(x, d)
+            out = torch.max(out1, out2)
         else:
-            return x + d
+            out = x + d
+
+        return out
 
 
 class LevelFuse(nn.Module):
